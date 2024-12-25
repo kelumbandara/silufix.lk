@@ -11,7 +11,6 @@ function redirect($url='')
     if(!empty($url))
     {
         echo '<script>location.href="'.base_url .$url.'"</script>';
-        echo '<script> Only test ...</script>';
     }    
 }
 

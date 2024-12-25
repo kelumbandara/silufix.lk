@@ -1,0 +1,22 @@
+
+//-------------------------------------------------------
+<?php
+
+// Include the logging function
+require_once '../class/logging.php';
+
+// Call the logging function with your message
+writeToLogFile('This is message from server - 125');
+
+?>
+
+//--------------------------------------------------------
+<script src="../sky/js/write_LogFile.js"></script>
+<script>
+   function handleClick() 
+    {
+        var data = "Errro handle sucess...2";
+        //alert(data);
+        writeToLogFile(data);
+    }
+</script>

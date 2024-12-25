@@ -1,0 +1,71 @@
+
+
+//-------------- NAMING CONVENTION RULES ----------------------------------------------------
+1. fun / id_		: Type of element (fun, id, )
+2. Location		: page short name (home, Model etx..)
+3. Short Name for page	: CrePlanMnt = CreatePlannedMaintenance	
+4. Type or Category 	: Create, SelectFilter, Close, Update etc
+5.	_		: Underscore , Separator
+6. ElementType		: inp, sel, btn, tbl, etc..
+7. Name			: Meaning full name to identify the element.
+
+//--------------- Model Page : Crreate Breakdown --------------------------------
+1. PAGE : mod_BreakDownCreate.php
+
+    1.1 Model ID : id_ModBrkDownCre
+
+    ID
+        1.1 id_ModBrkDownCre_SelMcCategory  : Select Machine Category box
+        1.2 id_ModBrkDownCre_SelMachineNo   : 
+        1.3 id_ModBrkDownCre_SelFaultType   : Select Fault type select box
+        1.4 id_ModBrkDownCre_SelFaultLevel  :
+        1.5 id_ModBrkDownCre_dtmDateTime
+        1.6 id_ModBrkDownCre_inpNote
+
+    Functions
+        1.1 funModBrkDownCre_Filter : Filter select box function
+        1.2 funModBrkDownCre_Update
+
+//--------------- Model Page : Create Planned Maintenance ----------------------
+2. PAGE : mod_PlannedMaintenanceCreate.php
+
+    ID
+        1.1 id_ModPlanMntCre_SelMcCategory  : Select Machine Category box
+        1.2 id_ModPlanMntCre_SelMachineNo   : 
+        1.3 id_ModPlanMntCre_dtmDateTime
+        1.4 id_ModPlanMntCre_inpNote
+
+    Functions
+        1.1 funModPlanMntCre_Filter : Filter select box function
+        1.2 funModPlanMntCre_Update
+        1.3 
+
+//--------------- Model Page : Create Red Tag ----------------------
+2. PAGE : mod_RedTagCreate.php
+
+    ID
+        1.1 id_ModRedTagCre_SelMcCategory  : Select Machine Category box
+        1.2 id_ModRedTagCre_SelMachineNo   : 
+        1.3 id_ModRedTagCre_dtmDateTime
+        1.4 id_ModRedTagCre_inpNote
+
+    Functions
+        1.1 funModRedTagCre_Filter : Filter select box function
+        1.2 funModRedTagCre_Update
+        1.3
+
+
+//--------------- Model Page : Work Order Details ----------------------
+2. PAGE : mod_WoDetails.php , id_ModWoDetails
+        
+    ID
+        1.1 id_ModWoDetails_WoNo  : Work Order Number
+        1.2 id_ModWoDetails_WoDate_
+        1.3 id_ModWoDetails_WoProblem_
+        1.4 id_ModWoDetails_Machine
+
+    Functions
+        1.1 funMoWoDetails_Close()
+        1.2 funModWoDetails_WoClose()
+        1.3 funModWoDetails_AllocateMC()
+        1.4 funModWoDetails_CheckIn()
