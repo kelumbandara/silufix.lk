@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>mmsnoyon</title>
-    <link rel="icon" type="image/x-icon" href="../myimg/favicon.ico">
+    <title>MMS Silueta</title>
+    <link rel="icon" type="image/x-icon" href="../myimg/favicon-96x96.png">
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
@@ -21,7 +21,7 @@
     <div class="login-box">        
         <div class="login-logo">
             <div>
-                <img src="../myimg/Noyon_Logo.jpg" class="user-image" alt="User Image" width="60" hight="70">  
+                <img src="../myimg/Logo-Silueta.jpg" class="user-image" alt="User Image" width="120" hight="105">  
             </div>
             <h3>Maintenance Management System <h3>
         </div>

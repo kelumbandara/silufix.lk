@@ -4,7 +4,7 @@
              <p>Copyright © 2024 Sky Smart Technology Pvt Ltd. All Rights Reserved</p>
         </div>
         <div class="col-md-6 px-1 pt-1">
-             <p> Soft Ver: 4.8</p>
+             <p> Soft Ver: 1.0</p>
         </div>
     </div>
 </footer>

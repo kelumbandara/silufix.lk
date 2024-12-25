@@ -13,10 +13,10 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="../../myimg/Noyon_Logo.jpg" class="img-fluid active " alt="User Image">
+                <img src="../../myimg/Logo-Silueta.jpg" class="img-fluid active " alt="User Image">
             </div>
             <div class="info">
-                <a href="https://www.noyonlanka.com" class="d-block">Noyon Lanka</a>
+                <a href="https://www.mas-silueta.com/" class="d-block">MAS Silueta</a>
             </div>
         </div>       
         <!-- Sidebar Menu -->
