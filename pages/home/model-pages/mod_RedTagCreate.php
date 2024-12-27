@@ -15,7 +15,7 @@
                
                 <div class="row p-1">                    
                     <div class="col-md-12">                   
-                        <label style="font-weight: bolder">Red Tag Category</label>    
+                        <label style="font-weight: bolder">Site</label>    
                         <select class="form-control select2" id="id_ModRedTagCre_SelRedTagCategory" style="width: 100%;">
                             <option selected="none">Safety</option>  
                             <option selected="none">Leakages</option>  
@@ -29,13 +29,13 @@
                 
                 <div class="row p-1">                    
                     <div class="col-md-6">                   
-                        <label style="font-weight: bolder">Machine Category</label>    
+                        <label style="font-weight: bolder">Building</label>    
                         <select class="form-control select2" onchange="funModRedTagCre_SelMachineCategoryFilter()" id="id_ModRedTagCre_SelMcCategory" style="width: 100%;">
                             <option selected="none"></option>                            
                         </select>
                     </div>
                     <div class="col-md-6">                      
-                         <label style="font-weight: bolder">Machine No</label>    
+                         <label style="font-weight: bolder">Issuer Type</label>    
                         <select class="form-control select2" onchange="funModRedTagCre_Filter()" id="id_ModRedTagCre_SelMachineNo" style="width: 100%; background-color: blue">
                             <option selected="none"></option>                            
                         </select>               
@@ -43,17 +43,12 @@
                 </div> 
                 <div class="row p-1">
                     <div class="col-md-6">                   
-                        <label style="font-weight: bolder">Fault Type</label>    
+                        <label style="font-weight: bolder">Issuer Description</label>    
                         <select class="form-control select2" onchange="funModRedTagCre_SelFaultTypeFilter()" id="id_ModRedTagCre_SelFaultType" style="width: 100%; background-color: blue">
                             <option selected="none"></option>                            
                         </select>
                     </div>
-                    <div class="col-md-6">                      
-                         <label style="font-weight: bolder">Fault Level</label>    
-                        <select class="form-control select2" onchange="funModRedTagCre_Filter()" id="id_ModRedTagCre_SelFaultLevel" style="width: 100%; background-color: blue">
-                            <option selected="none"></option>                            
-                        </select>               
-                    </div>
+                    
                 </div> 
                 <br/>
                 <div class="row p-1">   
