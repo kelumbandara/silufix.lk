@@ -49,9 +49,9 @@ function funModRedTagCreateClicked()
     // Add the default option
     var defaultOption = document.createElement("option");
     defaultOption.textContent = "Select data";
-    defaultOption.value = ""; // You can leave the value empty or set it as per your requirement
-    defaultOption.disabled = true; // Optional: To prevent selecting this as a valid value
-    defaultOption.selected = true; // Optional: To make it the selected option by default
+    defaultOption.value ="Select data"; // You can leave the value empty or set it as per your requirement
+    //defaultOption.disabled = true; // Optional: To prevent selecting this as a valid value
+    //defaultOption.selected = true; // Optional: To make it the selected option by default
     sel_shoporderno.appendChild(defaultOption);
 
     // Fill the select box with new items
@@ -65,6 +65,7 @@ function funModRedTagCreateClicked()
     }
 });
 
+funModRedTagCre_SelSiteFilter();
 
      
 }
@@ -226,9 +227,9 @@ function funModRedTagCre_SelissuerFilter()
             // Add the default option
             var defaultOption = document.createElement("option");
             defaultOption.textContent = "Select data";
-            defaultOption.value = ""; // You can leave the value empty or set it as per your requirement
-            defaultOption.disabled = true; // Optional: To prevent selecting this as a valid value
-            defaultOption.selected = true; // Optional: To make it the selected option by default
+            defaultOption.value = "Select data"; // You can leave the value empty or set it as per your requirement
+            //defaultOption.disabled = true; // Optional: To prevent selecting this as a valid value
+            //defaultOption.selected = true; // Optional: To make it the selected option by default
             sel_FaultLevel.appendChild(defaultOption);
 
             //------------ Fill New Items -------------------------------------
@@ -298,9 +299,9 @@ function funModRedTagCre_SelSiteFilter()
             // Add the default option
             var defaultOption = document.createElement("option");
             defaultOption.textContent = "Select data";
-            defaultOption.value = ""; // You can leave the value empty or set it as per your requirement
-            defaultOption.disabled = true; // Optional: To prevent selecting this as a valid value
-            defaultOption.selected = true; // Optional: To make it the selected option by default
+            defaultOption.value = "Select data"; // You can leave the value empty or set it as per your requirement
+            //defaultOption.disabled = true; // Optional: To prevent selecting this as a valid value
+            //defaultOption.selected = true; // Optional: To make it the selected option by default
             sel_shoporderno.appendChild(defaultOption);
 
             //------------ Fill New Items -------------------------------------
@@ -331,6 +332,7 @@ function funModRedTagCre_SelSiteFilter()
             });
         }
     });
+    funModRedTagCre_SelBuildingFilter();
     
 }
 
@@ -367,9 +369,9 @@ function funModRedTagCre_SelBuildingFilter()
             // Add the default option
             var defaultOption = document.createElement("option");
             defaultOption.textContent = "Select data";
-            defaultOption.value = ""; // You can leave the value empty or set it as per your requirement
-            defaultOption.disabled = true; // Optional: To prevent selecting this as a valid value
-            defaultOption.selected = true; // Optional: To make it the selected option by default
+            defaultOption.value = "Select data"; // You can leave the value empty or set it as per your requirement
+            //defaultOption.disabled = true; // Optional: To prevent selecting this as a valid value
+            //defaultOption.selected = true; // Optional: To make it the selected option by default
             sel_FaultLevel.appendChild(defaultOption);
 
             //------------ Fill New Items -------------------------------------
@@ -399,5 +401,6 @@ function funModRedTagCre_SelBuildingFilter()
                 document.getElementById("id_ModRedTagCre_Issu_Type").appendChild(el5);
             });            
         }     
-    });   
+    });  
+    funModRedTagCre_SelissuerFilter(); 
 }
