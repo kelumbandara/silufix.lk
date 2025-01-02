@@ -15,48 +15,43 @@
                
                 <div class="row p-1">                    
                     <div class="col-md-12">                   
-                        <label style="font-weight: bolder">Red Tag Category</label>    
-                        <select class="form-control select2" id="id_ModRedTagCre_SelRedTagCategory" style="width: 100%;">
-                            <option selected="none">Safety</option>  
-                            <option selected="none">Leakages</option>  
-                            <option selected="none">Worn Out or Broken Part</option>  
-                            <option selected="none">Unusual Vibration/Heat</option>  
-			    <option selected="none">Hard to Clean Area</option> 
-                            <option selected="none">Other</option>                               
+                        <label style="font-weight: bolder">Site</label>    
+                        <select class="form-control select2" onchange="funModRedTagCre_SelSiteFilter()" id="id_ModRedTagCre_SelSite" style="width: 100%;">
+                        <option selected="none"></option>                             
                         </select>
                     </div>                    
                 </div> 
                 
                 <div class="row p-1">                    
-                    <div class="col-md-6">                   
-                        <label style="font-weight: bolder">Machine Category</label>    
-                        <select class="form-control select2" onchange="funModRedTagCre_SelMachineCategoryFilter()" id="id_ModRedTagCre_SelMcCategory" style="width: 100%;">
+                    <div class="col-md-12">                   
+                        <label style="font-weight: bolder">Building</label>    
+                        <select class="form-control select2" onchange="funModRedTagCre_SelBuildingFilter()" id="id_ModRedTagCre_SelBuilding" style="width: 100%;">
                             <option selected="none"></option>                            
                         </select>
                     </div>
-                    <div class="col-md-6">                      
-                         <label style="font-weight: bolder">Machine No</label>    
-                        <select class="form-control select2" onchange="funModRedTagCre_Filter()" id="id_ModRedTagCre_SelMachineNo" style="width: 100%; background-color: blue">
+                    <div class="col-md-12">                      
+                         <label style="font-weight: bolder">Issuer Type</label>    
+                        <select class="form-control select2"  onchange="funModRedTagCre_SelissuerFilter()" id="id_ModRedTagCre_Issu_Type" style="width: 100%; background-color: blue">
                             <option selected="none"></option>                            
                         </select>               
                     </div>
                 </div> 
                 <div class="row p-1">
-                    <div class="col-md-6">                   
-                        <label style="font-weight: bolder">Fault Type</label>    
-                        <select class="form-control select2" onchange="funModRedTagCre_SelFaultTypeFilter()" id="id_ModRedTagCre_SelFaultType" style="width: 100%; background-color: blue">
+                    <div class="col-md-12">                   
+                        <label style="font-weight: bolder">Issuer Description</label>    
+                        <select class="form-control select2"  id="id_ModRedTagCre_SelDescriptionType" style="width: 100%; background-color: blue">
                             <option selected="none"></option>                            
                         </select>
                     </div>
-                    <div class="col-md-6">                      
+                    <!-- <div class="col-md-6">                      
                          <label style="font-weight: bolder">Fault Level</label>    
                         <select class="form-control select2" onchange="funModRedTagCre_Filter()" id="id_ModRedTagCre_SelFaultLevel" style="width: 100%; background-color: blue">
                             <option selected="none"></option>                            
                         </select>               
-                    </div>
+                    </div> -->
                 </div> 
                 <br/>
-                <div class="row p-1">   
+                <!-- <div class="row p-1">   
                     <div class="col-md-6">
                         <input type="datetime-local" id="id_ModRedTagCre_dtmDateTime" class="form-control" onchange="funDateChanged()" name="startDate" required/>                           
                     </div>
@@ -64,10 +59,11 @@
                         <input type="text" id="id_ModRedTagCre_inpNote" class="form-control" name="Note" placeholder="Note"> 
                     </div>
                     
-                </div>        		
+                </div>        		 -->
                  
             </div>
             <div class="modal-footer bg-light">
+                
                 <button type="submit" id="id_ModRedTagCre_Update" class="btn btn-primary" onclick="funModRedTagCre_Update()" >Submit</button>
                 <button type="submit" class="btn btn-primary" onclick="funModRedTagCre_Cancel()" >Cancel</button>
             </div>
