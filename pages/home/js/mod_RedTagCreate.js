@@ -167,11 +167,11 @@ function funModRedTagCre_Update()
     else
     {
 	             
-            alert(DataAry);
-            alert("Select ok");
+            //alert(DataAry);
+            //alert("Select ok");
             $.post('class/insertData_WoBrakdown.php', { userpara: DataAry }, function(json_data2) 
             {
-                alert(json_data2);           
+                //alert(json_data2);           
                 var res = $.parseJSON(json_data2);
                 //alert(res.Status_Ary[0]);
                 if(res.Status_Ary[0] === "true")

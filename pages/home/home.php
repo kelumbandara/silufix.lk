@@ -809,38 +809,38 @@
                     let strWoCategory   = res.Data_Ary[i][4];
                     let strDescription  = "";
                     
-                    if(strWoCategory === "BreakDown")
-                    {
-                        //alert("Breakdown");
-                        strDescription = res.Data_Ary[i][6] + " (" +res.Data_Ary[i][7] + ")";
-                    }
-                    else if(strWoCategory === "PlanMaintenance")
-                    {
-                        //alert("PlanMaintenance");
-                        strDescription = res.Data_Ary[i][6] + " (" +res.Data_Ary[i][9] + ")";
-                        //strDescription = res.Data_Ary[i][9];
-                    }  
-                    else if(strWoCategory === "RedTag")
-                    {
-                        //alert("RedTag");
-                        strDescription = res.Data_Ary[i][6] + " (" +res.Data_Ary[i][9] + ")";
-                        //strDescription = res.Data_Ary[i][9];
-                    }  
-                    else if(strWoCategory === "BuildingMaintenance")
-                    {
-                        //alert("BuildingMaintenance");
-                        strDescription = res.Data_Ary[i][9];
-                    }  
-                    else if(strWoCategory === "OtherProject")
-                    {
-                        //alert("OtherProject");
-                        strDescription = res.Data_Ary[i][5] + " (" +res.Data_Ary[i][9] + ")";
-                    }
-                    else        // Error Wo CAtegory not found
-                    {
-                        alert("Wo Category not found");
-                        writeToLogFile("Home Table: Wo Category not found");
-                    }  
+                    // if(strWoCategory === "BreakDown")
+                    // {
+                    //     //alert("Breakdown");
+                    //     strDescription = res.Data_Ary[i][6] + " (" +res.Data_Ary[i][7] + ")";
+                    // }
+                    // else if(strWoCategory === "PlanMaintenance")
+                    // {
+                    //     //alert("PlanMaintenance");
+                    //     strDescription = res.Data_Ary[i][6] + " (" +res.Data_Ary[i][9] + ")";
+                    //     //strDescription = res.Data_Ary[i][9];
+                    // }  
+                    // else if(strWoCategory === "RedTag")
+                    // {
+                    //     //alert("RedTag");
+                    //     strDescription = res.Data_Ary[i][6] + " (" +res.Data_Ary[i][9] + ")";
+                    //     //strDescription = res.Data_Ary[i][9];
+                    // }  
+                    // else if(strWoCategory === "BuildingMaintenance")
+                    // {
+                    //     //alert("BuildingMaintenance");
+                    //     strDescription = res.Data_Ary[i][9];
+                    // }  
+                    // else if(strWoCategory === "OtherProject")
+                    // {
+                    //     //alert("OtherProject");
+                    //     strDescription = res.Data_Ary[i][5] + " (" +res.Data_Ary[i][9] + ")";
+                    // }
+                    // else        // Error Wo CAtegory not found
+                    // {
+                    //     alert("Wo Category not found");
+                    //     writeToLogFile("Home Table: Wo Category not found");
+                    // }  
                     //------------------ Chat and Department ----------------------
                     //if(intDebugEnable === 1)    alert("res.Data_Ary[i][13] : " + res.Data_Ary[i][13]);
                     if(Number(res.Data_Ary[i][13]) === 0) 
@@ -858,10 +858,10 @@
                         intX, 
                         res.Data_Ary[i][1],
                         res.Data_Ary[i][3].substring(2, 16), 
-                        strWoDepartment, 
-                        res.Data_Ary[i][8],
-                        res.Data_Ary[i][4], 
-                        strDescription, 
+                        strWoDepartment,  
+                        res.Data_Ary[i][8],//user
+                        res.Data_Ary[i][4], //
+                        res.Data_Ary[i][6], 
                         res.Data_Ary[i][10],
                         res.Data_Ary[i][12]
                     ]).draw(false);
