@@ -3,7 +3,7 @@ $dev_data = array('id'=>'-1','firstname'=>'Developer','lastname'=>'','username'=
 //if(!defined('base_url')) define('base_url','http://winroengineering.lk/');
 if(!defined('base_url'))
 {
-    define('base_url','http://localhost/mms1810b/Silueta-mms/');
+    define('base_url','http://localhost/Silueta-mms/');
     //define('base_url','http://silueta-mms.vercel.app/Silueta-mms/');
 }
 if(!defined('base_app'))
