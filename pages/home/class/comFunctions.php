@@ -235,6 +235,17 @@
             $strSearchValue = $num[5];
             $strSQL = "SELECT DISTINCT " . $strFieldName . " FROM " . $strTableName . " WHERE " . $strSearchField . "='" . $strSearchValue . "'";
         }
+        else if($intNoOfSearchParameters == 2)
+        {
+            
+            $strSearchField1 = $num[4]; 
+            $strSearchValue1 = $num[5];
+            
+            $strSearchField2 = $num[6]; 
+            $strSearchValue2 = $num[7];            
+            
+            $strSQL = "SELECT DISTINCT " . $strFieldName . " FROM " . $strTableName . " WHERE " . $strSearchField1 . "='" . $strSearchValue1 . "' AND " . $strSearchField2 . "='" . $strSearchValue2 . "'";
+        }
         else if($intNoOfSearchParameters == 3)
         {
             
@@ -267,7 +278,7 @@
             $strSearchValue1 = $num[5];
             
             $strSearchField2 = $num[6]; 
-            $strSearchValue2 = $num[7];            
+             $strSearchValue2 = $num[7];            
             
             $strSQL = "SELECT DISTINCT " . $strFieldName . " FROM " . $strTableName . " WHERE " . $strSearchField1 . "='" . $strSearchValue1 . "' AND " . $strSearchField2 . "='" . $strSearchValue2 . "'";
         }

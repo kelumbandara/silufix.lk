@@ -40,7 +40,7 @@
     
     //-------------- Machine Category Disinct Values ----------------------- 
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $stmt = $conn->prepare("SELECT WorkOrderNo,CreatedDateTime,CreatedFaultType,WorkOrderCategory,WorkOrderSubCategory,WoDescription,WoDepartment,MachineNo,AllocatedUser,WoEventLog FROM tblwo_event WHERE WorkOrderNo =:wono");
+    $stmt = $conn->prepare("SELECT WorkOrderNo,CreatedDateTime,FaultType,WorkOrderCategory,WorkOrderSubCategory,WoDescription,CreatedDepartment,Site,AllocatedUser,WoEventLog FROM tblwo_event WHERE WorkOrderNo =:wono");
     $stmt->bindParam(':wono', $strWoNumber);
     $stmt->execute();
     $stmt->setFetchMode(PDO::FETCH_ASSOC);        
@@ -49,12 +49,12 @@
     {           
         $WorkOrderNo_ary[$i]      = $row['WorkOrderNo'];
         $CreatedDateTime_ary[$i]  = $row['CreatedDateTime'];          
-        $FaultType_ary[$i]              = $row['CreatedFaultType'];
+        $FaultType_ary[$i]              = $row['FaultType'];
         $WorkOrderCategory_ary[$i]      = $row['WorkOrderCategory'];
         $WorkOrderSubCategory_ary[$i]   = $row['WorkOrderSubCategory']; 
         $WoDescription_ary[$i]    = $row['WoDescription'];      
-        $WoDepartment_ary[$i]     = $row['WoDepartment'];
-        $MachineNo_ary[$i]        = $row['MachineNo'];
+        $WoDepartment_ary[$i]     = $row['CreatedDepartment'];
+        $MachineNo_ary[$i]        = $row['Site'];
         $AllocatedUser_ary[$i]    = $row['AllocatedUser'];        
         $WoEventLog_ary[$i]       = explode(',', $row['WoEventLog']);   //$row['WoEventLog'];        
         $i++;

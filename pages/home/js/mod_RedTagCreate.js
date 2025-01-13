@@ -24,6 +24,7 @@ function funModRedTagCreateClicked()
     //---------- Open Model_Plan Maintenance -------------------------------
     var varmodbox = document.getElementById("id_ModRedTagCre");
     varmodbox.style.display = "block";
+    document.getElementById("id_ModBrkDownCre_lblUserDep").innerHTML = "User's Department : " + JS_SessionArry[0].CurrentUserDepartment;
     const DataAry = []; 
     //alert("Select Site Category filter value");  
 
