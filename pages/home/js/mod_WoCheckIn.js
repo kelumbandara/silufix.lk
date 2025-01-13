@@ -203,70 +203,66 @@ function funOpenMod_WoCheckIn()
         $.post('class/getData_WoCheckIn.php', { userpara: DataAry }, function(json_data2) 
         {
             var res = $.parseJSON(json_data2);
-            if(intDebugEnable === 1) alert("json_data2 :" + json_data2);         
-            strMachineDepartment    = res.Data_Ary[1];
-            strWorkOrderDepartment  = JS_SessionArry[0].WorkOrderDepartment;
-            strLoggingDepartment       = JS_SessionArry[0].LoggingUserDepartment;        
-            if(intDebugEnable === 1) alert("strMachineDepartment:" + strMachineDepartment);
-            if(intDebugEnable === 1) alert("strWorkOrderDepartment:" + strWorkOrderDepartment);
-            if(intDebugEnable === 1) alert("strLoggingDepartment:" + strLoggingDepartment);
-            
-            if(strMachineDepartment === strLoggingDepartment)
-            {
-                if(intDebugEnable === 1) alert("You have permission:");
-                //---------- Open CheckIn Model Box --------------------------------------------------
-                //---------- Check Current User Already Checkin --------------------------------------    
-                //const DataAry = []; 
-                DataAry[0]  = "funGetFilteredData";
-                DataAry[1]  = "WorkOrderNo";
-                DataAry[2]  = "tblwo_allcheckinusers";
-                DataAry[3]  = "2";
-                DataAry[4]  = "CheckInUser";
-                DataAry[5]  = JS_SessionArry[0].CurrentUserEPF;
-                DataAry[6]  = "Status";
-                DataAry[7]  = "Active";              
-                //alert("funOpenMod_WoCheckIn, DataAry :" + DataAry);
-                //if(intDebugEnable === 1) alert("funOpenMod_WoCheckIn, DataAry :" + DataAry);
-                $.post('class/comFunctions.php', { userpara: DataAry }, function(json_data2) 
-                {
-                    var res = $.parseJSON(json_data2);
-                    //alert("funOpenMod_WoCheckIn, json_data2 :" + json_data2);
-                    //if(intDebugEnable === 1) alert("funOpenMod_WoCheckIn, json_data2 :" + json_data2);      
-                    if(res.Status_Ary[0] === "true")
-                    {            
-                        // success, error, warning, info, question
-                        Swal.fire({title: 'User Alreay CkecIn.!',text: res.Data_Ary[0],icon: 'info', confirmButtonText: 'OK'});
-                    }
-                    else
-                    {
-                        //---------- Open Model_Wo Checkin --------------------------------------
-                        var varmodbox = document.getElementById("id_ModWoCheckIn");
-                        varmodbox.style.display = "block";
+            if (intDebugEnable === 1) alert("json_data2 :" + json_data2);
 
-                        document.getElementById("id_ModWoCheckIn_WoNo").innerHTML           = JS_SessionArry[0].WorkOrderNo;   
-                        document.getElementById("id_ModWoCheckIn_AllocatedMc").innerHTML    = JS_SessionArry[0].CurrentUserName;
-                        //---------------- Load Now Date and time to Model Box --------------------------
-                        // Get the current date and time
-                        const now = new Date();
-                        // Format the date and time as required by the datetime-local input
-                        const year = now.getFullYear().toString().padStart(4, '0');
-                        const month = (now.getMonth() + 1).toString().padStart(2, '0');
-                        const day = now.getDate().toString().padStart(2, '0');
-                        const hours = now.getHours().toString().padStart(2, '0');
-                        const minutes = now.getMinutes().toString().padStart(2, '0');
+            // Assuming JS_SessionArry is correctly populated
+            var strWorkOrderDepartment = JS_SessionArry[0].WorkOrderDepartment;
+            var LoggingUserEPF = JS_SessionArry[0].LoggingUserEPF;
+            if (intDebugEnable === 1) alert("strWorkOrderDepartment:" + strWorkOrderDepartment);
+            if (intDebugEnable === 1) alert("strLoggingEPF:" + LoggingUserEPF);
 
-                        // Set the value of the input
-                        const datetimeInput = document.getElementById('id_ModWoCheckIn_dtmDateTime');
+            var Allocating_users = false;
+
+            // Assuming DataAry is an array in res.Data_Ary
+            var DataAry = res.Data_Ary;
+            for (var i = 0; i < DataAry.length; i++) {
+            if (DataAry[i] === LoggingUserEPF) {  // Adjust condition as necessary
+                Allocating_users = true;
+                break;  // Exit the loop when condition is met
+            }
+            }
+
+            if (Allocating_users) {
+            if (intDebugEnable === 1) alert("You have permission:");
+
+            DataAry[0] = "funGetFilteredData";
+            DataAry[1] = "WorkOrderNo";
+            DataAry[2] = "tblwo_allcheckinusers";
+            DataAry[3] = "2";
+            DataAry[4] = "CheckInUser";
+            DataAry[5] = JS_SessionArry[0].CurrentUserEPF;
+            DataAry[6] = "Status";
+            DataAry[7] = "Active";
+
+            $.post('class/comFunctions.php', { userpara: DataAry }, function(json_data2) {
+                var res = $.parseJSON(json_data2);
+                if (res.Status_Ary[0] === "true") {
+                    Swal.fire({ title: 'User Already Checked In!', text: res.Data_Ary[0], icon: 'info', confirmButtonText: 'OK' });
+                } else {
+                    var varmodbox = document.getElementById("id_ModWoCheckIn");
+                    varmodbox.style.display = "block";
+
+                    document.getElementById("id_ModWoCheckIn_WoNo").innerHTML = JS_SessionArry[0].WorkOrderNo;
+                    document.getElementById("id_ModWoCheckIn_AllocatedMc").innerHTML = JS_SessionArry[0].CurrentUserName;
+
+                    const now = new Date();
+                    const year = now.getFullYear().toString().padStart(4, '0');
+                    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+                    const day = now.getDate().toString().padStart(2, '0');
+                    const hours = now.getHours().toString().padStart(2, '0');
+                    const minutes = now.getMinutes().toString().padStart(2, '0');
+
+                    const datetimeInput = document.getElementById('id_ModWoCheckIn_dtmDateTime');
+                    if (datetimeInput) {
                         datetimeInput.value = `${year}-${month}-${day}T${hours}:${minutes}`;
                         datetimeInput.disabled = true;
-                    }        
-                });  
+                    }
+                }
+            });
+            } else {
+            Swal.fire({ title: 'Error', text: "Your department does not match.", icon: 'error', confirmButtonText: 'OK' });
             }
-            else
-            {
-                // success, error, warning, info, question
-                Swal.fire({title: 'Error',text: "Your department is not match.",icon: 'error', confirmButtonText: 'OK'});
-            }
+
         });
     }
     else
