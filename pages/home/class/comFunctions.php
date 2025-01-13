@@ -6,7 +6,7 @@
     
     $num = $_POST["userpara"];     
     $strFuncType = $num[0];    
-    //$strFuncType = "funUpdateEventLog";    
+    //$strFuncType = "funGetFilteredData";    
     //----------- Set TimeZone ----------------------------
     date_default_timezone_set('Asia/Colombo');
     $strServerDateTime = date("Y-m-d H:i:s");   
@@ -210,11 +210,14 @@
     } 
     else if($strFuncType === "funGetFilteredData") //------------- funCheckUserCredentials --------------------
     {
-        //$num[1] = "Level1";
-        //$num[2] = "tblwo_errorlevel";
-        //$num[3] = "0";
-        //$num[4] = "FaultType";
-        //$num[5] = "pneumatic";
+        
+        // $num[1] = "IssueType";
+        // $num[2] = "tblwo_errorlevel_redtag";
+        // $num[3] = "3";
+        // $num[4] = "SiteName";
+        // $num[5] = "c";
+        // $num[6] = "Building";
+        // $num[7] = "3";
         
         $strFieldName   = $num[1];  
         $strTableName   = $num[2];  
@@ -222,21 +225,60 @@
         $strSQL = "NA";
         if($intNoOfSearchParameters == 0)    // No WHERE Condition
         {
+            
             $strSQL = "SELECT DISTINCT " . $strFieldName . " FROM " . $strTableName;            
         }
         else if($intNoOfSearchParameters == 1)
         {
+            
             $strSearchField = $num[4]; 
             $strSearchValue = $num[5];
             $strSQL = "SELECT DISTINCT " . $strFieldName . " FROM " . $strTableName . " WHERE " . $strSearchField . "='" . $strSearchValue . "'";
         }
-        else
+        else if($intNoOfSearchParameters == 2)
         {
+            
             $strSearchField1 = $num[4]; 
             $strSearchValue1 = $num[5];
             
             $strSearchField2 = $num[6]; 
             $strSearchValue2 = $num[7];            
+            
+            $strSQL = "SELECT DISTINCT " . $strFieldName . " FROM " . $strTableName . " WHERE " . $strSearchField1 . "='" . $strSearchValue1 . "' AND " . $strSearchField2 . "='" . $strSearchValue2 . "'";
+        }
+        else if($intNoOfSearchParameters == 3)
+        {
+            
+            $strSearchField1 = $num[4]; 
+            $strSearchValue1 = $num[5];
+            
+            $strSearchField2 = $num[6]; 
+            $strSearchValue2 = $num[7];            
+            
+            $strSQL = "SELECT DISTINCT " . $strFieldName . " FROM " . $strTableName . " WHERE " . $strSearchField1 . "='" . $strSearchValue1 . "' AND " . $strSearchField2 . "='" . $strSearchValue2 . "'";
+        }
+        else if($intNoOfSearchParameters == 4)
+        {
+            
+            $strSearchField1 = $num[4]; 
+            $strSearchValue1 = $num[5];
+            
+            $strSearchField2 = $num[6]; 
+            $strSearchValue2 = $num[7];  
+            
+            $strSearchField3 = $num[8]; 
+            $strSearchValue3 = $num[9]; 
+            
+            $strSQL = "SELECT DISTINCT " . $strFieldName . " FROM " . $strTableName . " WHERE " . $strSearchField1 . "='" . $strSearchValue1 . "' AND " . $strSearchField2 . "='" . $strSearchValue2 ."' AND " . $strSearchField3 . "='" . $strSearchValue3 . "'";
+        }
+        else
+        {
+            
+            $strSearchField1 = $num[4]; 
+            $strSearchValue1 = $num[5];
+            
+            $strSearchField2 = $num[6]; 
+             $strSearchValue2 = $num[7];            
             
             $strSQL = "SELECT DISTINCT " . $strFieldName . " FROM " . $strTableName . " WHERE " . $strSearchField1 . "='" . $strSearchValue1 . "' AND " . $strSearchField2 . "='" . $strSearchValue2 . "'";
         }

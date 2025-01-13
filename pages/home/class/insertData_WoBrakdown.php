@@ -24,40 +24,36 @@
    $WorkOrderCategory       = $num[3];  
    $WorkOrderSubCategory    = $num[4];  // Placeholder value
    $WorkOrderSubCategory2   = $num[5]; // Placeholder value
-   $WoDepartment            = $num[6];      //YourDepartment';
-   $CreatedDateTime     = $num[7];
-   $CreatedUser         = $num[8];
-   $AllocatedUser       = ''; // Placeholder value
-   $McCategory          = $num[9];
-   $MachineNo           = $num[10];
-   $ValueAdd            = $num[11];
-   $CreatedFaultType    = $num[12];
-   $CreatedFaultLevel1  = $num[13];
-   $CreatedFaultLevel2  = ''; // Placeholder value
-   $CreatedFaultLevel3  = ''; // Placeholder value
-   $CreatedFaultLevel4  = ''; // Placeholder value
-   $RespondDateTime     = $num[7];
-   $RespondUser         = ''; // Placeholder value
-   $ClosedDateTime      = $num[7];
+
+   $site            = $num[6];      //YourDepartment';
+   $building     = $num[7];
+   $issuer_type         = $num[8];
+   $isuer_description   = $num[9];
+   $Issue_Description2  = $num[10];
+
+   $Note            = "";
+   $CreatedDateTime    = $num[11];
+   $CreatedDepartment  = $num[12];
+   $CreatedUser  = $num[13];
+   $PlannedDateTime  = $num[14];
+   $AllocatedUser  = ''; // Placeholder value
+   $StartedDateTime     = $num[15];
+   $StartedUser         = ''; // Placeholder value
+   $CloseDateTime      = $num[16];
    $ClosedUser          = ''; // Placeholder value
-   $ClosedFaultType     = ''; // Placeholder value
-   $ClosedFaultLevel1   = ''; // Placeholder value
-   $ClosedFaultLevel2   = ''; // Placeholder value
-   $ClosedFaultLevel3   = ''; // Placeholder value
-   $ClosedFaultLevel4   = ''; // Placeholder value
-   $VerifiedDateTime    = $num[7];
-   $VerifiedUser        = ''; // Placeholder value
-   $ReOpenedDateTime    = $num[7];
-   $ReOpenedUser        = ''; // Placeholder value
-   $WoDescription       = $num[14];
-   $WoEventLog          = $num[15];
-   $Shift               = $num[16];
-   $WoStatus            = $num[17];
-   $WoVerify            = $num[18];
-   $WoReOpen            = $num[19];
-   $AlertSentState      = $num[20];
-   $EmailSentState      = $num[21];
-   $State               = $num[22];
+   $FaultType     = ''; // Placeholder value
+   $UsedSpairParts   = ''; // Placeholder value
+   $Remark   = ''; // Placeholder value
+   $VerifiedDateTime   = $num[17];
+   $VerifiedUser   = ''; // Placeholder value
+   $WoDescription    = "";
+   $WoEventLog          = $num[18];
+   $Shift               = $num[19];
+   $WoStatus            = $num[20];
+   $AlertSentState            = "";
+   $Attachment            = "";
+   $State      = $num[21];
+   
    
    //----------- Declare Variables -----------------------    
     $Status_ary     = array();
@@ -105,53 +101,46 @@
                 $Status_ary[1] = "Data Alraedy Inserted"; 
             }
             else
-            {
+            { echo("hi");
                 // WoStatus is not "New" or "Inprogress", proceed with insertion
-                $stmt = $conn->prepare("INSERT INTO tblwo_event(ServerDateTime, FactoryCode, Unit, RelatedDepartment, WorkOrderNo, WorkOrderCategory, WorkOrderSubCategory, WorkOrderSubCategory2, WoDepartment, CreatedDateTime, CreatedUser, AllocatedUser, McCategory, MachineNo, ValueAdd, CreatedFaultType, CreatedFaultLevel1, CreatedFaultLevel2, CreatedFaultLevel3, CreatedFaultLevel4, RespondDateTime, RespondUser, ClosedDateTime, ClosedUser, ClosedFaultType, ClosedFaultLevel1, ClosedFaultLevel2, ClosedFaultLevel3, ClosedFaultLevel4, VerifiedDateTime, VerifiedUser, ReOpenedDateTime, ReOpenedUser, WoDescription, WoEventLog, Shift, WoStatus, WoVerify, WoReOpen, AlertSentState, EmailSentState, State) 
-                                            VALUES (:svrdt, :faccod, :unit, :reldep, :wono, :wocat, :wosubcat, :wosubcat2, :wodep, :credt, :creusr, :alocusr, :mccat, :mcno, :valadd, :creflttyp, :crefltlvl1, :crefltlvl2, :crefltlvl3, :crefltlvl4, :respdt, :respusr, :closdt, :closusr, :clsflttyp, :clsfltlvl1, :clsfltlvl2, :clsfltlvl3, :clsfltlvl4, :veridt, :veryusr, :reopendt, :reopenusr, :wodescrip, :woevntlog, :shft, :wostats, :woveri, :woreopn, :altsntst, :emlsntst, :stat)");
-                // Bind parameters
-                $stmt->bindParam(':svrdt', $strServerDateTime);
-                $stmt->bindParam(':faccod', $FactoryCode);
-                $stmt->bindParam(':unit', $Unit);
-                $stmt->bindParam(':reldep', $RelatedDepartment);
-                $stmt->bindParam(':wono', $WorkOrderNo);
-                $stmt->bindParam(':wocat', $WorkOrderCategory);
-                $stmt->bindParam(':wosubcat', $WorkOrderSubCategory);
-                $stmt->bindParam(':wosubcat2', $WorkOrderSubCategory2);
-                $stmt->bindParam(':wodep', $WoDepartment);
-                $stmt->bindParam(':credt', $strServerDateTime);             //$CreatedDateTime);
-                $stmt->bindParam(':creusr', $CreatedUser);
-                $stmt->bindParam(':alocusr', $AllocatedUser);
-                $stmt->bindParam(':mccat', $McCategory);
-                $stmt->bindParam(':mcno', $MachineNo);
-                $stmt->bindParam(':valadd', $ValueAdd);                
-                $stmt->bindParam(':creflttyp', $CreatedFaultType);
-                $stmt->bindParam(':crefltlvl1', $CreatedFaultLevel1);
-                $stmt->bindParam(':crefltlvl2', $CreatedFaultLevel2);
-                $stmt->bindParam(':crefltlvl3', $CreatedFaultLevel3);
-                $stmt->bindParam(':crefltlvl4', $CreatedFaultLevel4);
-                $stmt->bindParam(':respdt', $strServerDateTime);             //$RespondDateTime);
-                $stmt->bindParam(':respusr', $RespondUser);
-                $stmt->bindParam(':closdt', $strServerDateTime);             //$ClosedDateTime);
-                $stmt->bindParam(':closusr', $ClosedUser);
-                $stmt->bindParam(':clsflttyp', $ClosedFaultType);
-                $stmt->bindParam(':clsfltlvl1', $ClosedFaultLevel1);
-                $stmt->bindParam(':clsfltlvl2', $ClosedFaultLevel2);
-                $stmt->bindParam(':clsfltlvl3', $ClosedFaultLevel3);
-                $stmt->bindParam(':clsfltlvl4', $ClosedFaultLevel4);
-                $stmt->bindParam(':veridt', $strServerDateTime);             //$VerifiedDateTime);
-                $stmt->bindParam(':veryusr', $VerifiedUser);
-                $stmt->bindParam(':reopendt', $strServerDateTime);             //$ReOpenedDateTime);
-                $stmt->bindParam(':reopenusr', $ReOpenedUser);
-                $stmt->bindParam(':wodescrip', $WoDescription);
-                $stmt->bindParam(':woevntlog', $WoEventLog);
-                $stmt->bindParam(':shft', $Shift);
-                $stmt->bindParam(':wostats', $WoStatus);
-                $stmt->bindParam(':woveri', $WoVerify);
-                $stmt->bindParam(':woreopn', $WoReOpen);
-                $stmt->bindParam(':altsntst', $AlertSentState);
-                $stmt->bindParam(':emlsntst', $EmailSentState);
-                $stmt->bindParam(':stat', $State);
+                $stmt = $conn->prepare("INSERT INTO tblwo_event(ServerDateTime, FactoryCode, Unit, RelatedDepartment, WorkOrderNo, WorkOrderCategory, WorkOrderSubCategory, WorkOrderSubCategory2, Site, Building, IssueType, IssueDescription1, Issue_Description2, Note, CreatedDateTime, CreatedDepartment, CreatedUser, PlannedDateTime, AllocatedUser, StartedDateTime, StartedUser, CloseDateTime, ClosedUser, FaultType, UsedSpairParts, Remark, VerifiedDateTime, VerifiedUser, WoDescription, WoEventLog, Shift, WoStatus, AlertSentState, Attachment, State) 
+                        VALUES (:svrdt, :faccod, :unit, :reldep, :wono, :wocat, :wosubcat, :wosubcat2, :site, :bldg, :issuetype, :issuedesc1, :issuedesc2, :note, :credt, :credep, :creusr, :plndt, :alocusr, :stddt, :stdusr, :clsdt, :clsusr, :fltType, :spairparts, :remark, :veridt, :verusr, :wodescrip, :woevntlog, :shft, :wostats, :altsntst, :attach, :stat)");
+                        // Bind parameters
+                    $stmt->bindParam(':svrdt', $strServerDateTime);
+                    $stmt->bindParam(':faccod', $FactoryCode);
+                    $stmt->bindParam(':unit', $Unit);
+                    $stmt->bindParam(':reldep', $RelatedDepartment);
+                    $stmt->bindParam(':wono', $WorkOrderNo);
+                    $stmt->bindParam(':wocat', $WorkOrderCategory);
+                    $stmt->bindParam(':wosubcat', $WorkOrderSubCategory);
+                    $stmt->bindParam(':wosubcat2', $WorkOrderSubCategory2);
+                    $stmt->bindParam(':site', $site);
+                    $stmt->bindParam(':bldg', $building);
+                    $stmt->bindParam(':issuetype', $issuer_type);
+                    $stmt->bindParam(':issuedesc1', $isuer_description);
+                    $stmt->bindParam(':issuedesc2', $Issue_Description2);
+                    $stmt->bindParam(':note', $Note);
+                    $stmt->bindParam(':credt', $CreatedDateTime);
+                    $stmt->bindParam(':credep', $CreatedDepartment);
+                    $stmt->bindParam(':creusr', $CreatedUser);
+                    $stmt->bindParam(':plndt', $PlannedDateTime);
+                    $stmt->bindParam(':alocusr', $AllocatedUser);
+                    $stmt->bindParam(':stddt', $StartedDateTime);
+                    $stmt->bindParam(':stdusr', $StartedUser);
+                    $stmt->bindParam(':clsdt', $CloseDateTime);
+                    $stmt->bindParam(':clsusr', $ClosedUser);
+                    $stmt->bindParam(':fltType', $FaultType);
+                    $stmt->bindParam(':spairparts', $UsedSpairParts);
+                    $stmt->bindParam(':remark', $Remark);
+                    $stmt->bindParam(':veridt', $VerifiedDateTime);
+                    $stmt->bindParam(':verusr', $VerifiedUser);
+                    $stmt->bindParam(':wodescrip', $WoDescription);
+                    $stmt->bindParam(':woevntlog', $WoEventLog);
+                    $stmt->bindParam(':shft', $Shift);
+                    $stmt->bindParam(':wostats', $WoStatus);
+                    $stmt->bindParam(':altsntst', $AlertSentState);
+                    $stmt->bindParam(':attach', $Attachment);
+                    $stmt->bindParam(':stat', $State);
 
                 // Execute the insertion query
                 $stmt->execute();
@@ -170,51 +159,44 @@
         }
         else
         {
-            $stmt = $conn->prepare("INSERT INTO tblwo_event(ServerDateTime, FactoryCode, Unit, RelatedDepartment, WorkOrderNo, WorkOrderCategory, WorkOrderSubCategory, WorkOrderSubCategory2, WoDepartment, CreatedDateTime, CreatedUser, AllocatedUser, McCategory, MachineNo, ValueAdd, CreatedFaultType, CreatedFaultLevel1, CreatedFaultLevel2, CreatedFaultLevel3, CreatedFaultLevel4, RespondDateTime, RespondUser, ClosedDateTime, ClosedUser, ClosedFaultType, ClosedFaultLevel1, ClosedFaultLevel2, ClosedFaultLevel3, ClosedFaultLevel4, VerifiedDateTime, VerifiedUser, ReOpenedDateTime, ReOpenedUser, WoDescription, WoEventLog, Shift, WoStatus, WoVerify, WoReOpen, AlertSentState, EmailSentState, State) 
-                                   VALUES (:svrdt, :faccod, :unit, :reldep, :wono, :wocat, :wosubcat, :wosubcat2, :wodep, :credt, :creusr, :alocusr, :mccat, :mcno, :valadd, :creflttyp, :crefltlvl1, :crefltlvl2, :crefltlvl3, :crefltlvl4, :respdt, :respusr, :closdt, :closusr, :clsflttyp, :clsfltlvl1, :clsfltlvl2, :clsfltlvl3, :clsfltlvl4, :veridt, :veryusr, :reopendt, :reopenusr, :wodescrip, :woevntlog, :shft, :wostats, :woveri, :woreopn, :altsntst, :emlsntst, :stat)");
-
-            $stmt->bindParam(':svrdt', $strServerDateTime);
-            $stmt->bindParam(':faccod', $FactoryCode);
-            $stmt->bindParam(':unit', $Unit);
-            $stmt->bindParam(':reldep', $RelatedDepartment);
-            $stmt->bindParam(':wono', $WorkOrderNo);
-            $stmt->bindParam(':wocat', $WorkOrderCategory);
-            $stmt->bindParam(':wosubcat', $WorkOrderSubCategory);
-            $stmt->bindParam(':wosubcat2', $WorkOrderSubCategory2);
-            $stmt->bindParam(':wodep', $WoDepartment);
-            $stmt->bindParam(':credt', $CreatedDateTime);
-            $stmt->bindParam(':creusr', $CreatedUser);
-            $stmt->bindParam(':alocusr', $AllocatedUser);
-            $stmt->bindParam(':mccat', $McCategory);
-            $stmt->bindParam(':mcno', $MachineNo);
-            $stmt->bindParam(':valadd', $ValueAdd);                
-            $stmt->bindParam(':creflttyp', $CreatedFaultType);
-            $stmt->bindParam(':crefltlvl1', $CreatedFaultLevel1);
-            $stmt->bindParam(':crefltlvl2', $CreatedFaultLevel2);
-            $stmt->bindParam(':crefltlvl3', $CreatedFaultLevel3);
-            $stmt->bindParam(':crefltlvl4', $CreatedFaultLevel4);
-            $stmt->bindParam(':respdt', $RespondDateTime);
-            $stmt->bindParam(':respusr', $RespondUser);
-            $stmt->bindParam(':closdt', $ClosedDateTime);
-            $stmt->bindParam(':closusr', $ClosedUser);
-            $stmt->bindParam(':clsflttyp', $ClosedFaultType);
-            $stmt->bindParam(':clsfltlvl1', $ClosedFaultLevel1);
-            $stmt->bindParam(':clsfltlvl2', $ClosedFaultLevel2);
-            $stmt->bindParam(':clsfltlvl3', $ClosedFaultLevel3);
-            $stmt->bindParam(':clsfltlvl4', $ClosedFaultLevel4);
-            $stmt->bindParam(':veridt', $VerifiedDateTime);
-            $stmt->bindParam(':veryusr', $VerifiedUser);
-            $stmt->bindParam(':reopendt', $ReOpenedDateTime);
-            $stmt->bindParam(':reopenusr', $ReOpenedUser);
-            $stmt->bindParam(':wodescrip', $WoDescription);
-            $stmt->bindParam(':woevntlog', $WoEventLog);
-            $stmt->bindParam(':shft', $Shift);
-            $stmt->bindParam(':wostats', $WoStatus);
-            $stmt->bindParam(':woveri', $WoVerify);
-            $stmt->bindParam(':woreopn', $WoReOpen);
-            $stmt->bindParam(':altsntst', $AlertSentState);
-            $stmt->bindParam(':emlsntst', $EmailSentState);
-            $stmt->bindParam(':stat', $State);
+            $stmt = $conn->prepare("INSERT INTO tblwo_event(ServerDateTime, FactoryCode, Unit, RelatedDepartment, WorkOrderNo, WorkOrderCategory, WorkOrderSubCategory, WorkOrderSubCategory2, Site, Building, IssueType, IssueDescription1, Issue_Description2, Note, CreatedDateTime, CreatedDepartment, CreatedUser, PlannedDateTime, AllocatedUser, StartedDateTime, StartedUser, CloseDateTime, ClosedUser, FaultType, UsedSpairParts, Remark, VerifiedDateTime, VerifiedUser, WoDescription, WoEventLog, Shift, WoStatus, AlertSentState, Attachment, State) 
+                        VALUES (:svrdt, :faccod, :unit, :reldep, :wono, :wocat, :wosubcat, :wosubcat2, :site, :bldg, :issuetype, :issuedesc1, :issuedesc2, :note, :credt, :credep, :creusr, :plndt, :alocusr, :stddt, :stdusr, :clsdt, :clsusr, :fltType, :spairparts, :remark, :veridt, :verusr, :wodescrip, :woevntlog, :shft, :wostats, :altsntst, :attach, :stat)");
+                        // Bind parameters
+                    $stmt->bindParam(':svrdt', $strServerDateTime);
+                    $stmt->bindParam(':faccod', $FactoryCode);
+                    $stmt->bindParam(':unit', $Unit);
+                    $stmt->bindParam(':reldep', $RelatedDepartment);
+                    $stmt->bindParam(':wono', $WorkOrderNo);
+                    $stmt->bindParam(':wocat', $WorkOrderCategory);
+                    $stmt->bindParam(':wosubcat', $WorkOrderSubCategory);
+                    $stmt->bindParam(':wosubcat2', $WorkOrderSubCategory2);
+                    $stmt->bindParam(':site', $site);
+                    $stmt->bindParam(':bldg', $building);
+                    $stmt->bindParam(':issuetype', $issuer_type);
+                    $stmt->bindParam(':issuedesc1', $isuer_description);
+                    $stmt->bindParam(':issuedesc2', $Issue_Description2);
+                    $stmt->bindParam(':note', $Note);
+                    $stmt->bindParam(':credt', $CreatedDateTime);
+                    $stmt->bindParam(':credep', $CreatedDepartment);
+                    $stmt->bindParam(':creusr', $CreatedUser);
+                    $stmt->bindParam(':plndt', $PlannedDateTime);
+                    $stmt->bindParam(':alocusr', $AllocatedUser);
+                    $stmt->bindParam(':stddt', $StartedDateTime);
+                    $stmt->bindParam(':stdusr', $StartedUser);
+                    $stmt->bindParam(':clsdt', $CloseDateTime);
+                    $stmt->bindParam(':clsusr', $ClosedUser);
+                    $stmt->bindParam(':fltType', $FaultType);
+                    $stmt->bindParam(':spairparts', $UsedSpairParts);
+                    $stmt->bindParam(':remark', $Remark);
+                    $stmt->bindParam(':veridt', $VerifiedDateTime);
+                    $stmt->bindParam(':verusr', $VerifiedUser);
+                    $stmt->bindParam(':wodescrip', $WoDescription);
+                    $stmt->bindParam(':woevntlog', $WoEventLog);
+                    $stmt->bindParam(':shft', $Shift);
+                    $stmt->bindParam(':wostats', $WoStatus);
+                    $stmt->bindParam(':altsntst', $AlertSentState);
+                    $stmt->bindParam(':attach', $Attachment);
+                    $stmt->bindParam(':stat', $State);
 
             $stmt->execute();
             if ($stmt->rowCount() > 0) 

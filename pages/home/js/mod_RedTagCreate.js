@@ -15,60 +15,60 @@ function funModRedTagCre_Cancel()
 }
 function funModRedTagCreateClicked()
 {        
-    let intDebugEnable = 0;  
+    let intDebugEnable = 0  
     if(intDebugEnable === 1)    alert("funModRedTagCreateClicked");
+
+
         
     document.getElementById('id_ModRedTagCre_Update').disabled = false; 
     //---------- Open Model_Plan Maintenance -------------------------------
     var varmodbox = document.getElementById("id_ModRedTagCre");
     varmodbox.style.display = "block";
+    document.getElementById("id_ModBrkDownCre_lblUserDep").innerHTML = "User's Department : " + JS_SessionArry[0].CurrentUserDepartment;
     const DataAry = []; 
-    DataAry[0] = "MachineCategory";
-    DataAry[1] = JS_SessionArry[0].CurrentUserDepartment; 
-    if(intDebugEnable === 1)   alert("DataAry : "  + DataAry);
-    $.post('class/getData_HomeModelCreateWo.php', { userpara: DataAry}, function(json_data2) 
-    {
-        //alert(json_data2);  
-        var res = $.parseJSON(json_data2);
-        var AryMcCategory = new Array();
-        AryMcCategory = res.Data_Ary;           
-       
-        //------------ Remove All Items in "Machine Category" -----------------------------------
-        var options2 = document.querySelectorAll('#id_ModRedTagCre_SelMcCategory option');
-        options2.forEach(o => o.remove());
-        //------------ Fill New Items -------------------------------------
-        var sel_cusordno = document.getElementById("id_ModRedTagCre_SelMcCategory");
-        for(var i = 0; i < AryMcCategory.length; i++)
-        {
-            var opt = AryMcCategory[i];
-            var el = document.createElement("option");
-            el.textContent = opt;
-            el.value = opt;
-            sel_cusordno.appendChild(el);
-        }  
-        //---------------- Load Now Date and time to Model Box --------------------------
-        // Get the current date and time
-        const now = new Date();
-        // Format the date and time as required by the datetime-local input
-        const year = now.getFullYear().toString().padStart(4, '0');
-        const month = (now.getMonth() + 1).toString().padStart(2, '0');
-        const day = now.getDate().toString().padStart(2, '0');
-        const hours = now.getHours().toString().padStart(2, '0');
-        const minutes = now.getMinutes().toString().padStart(2, '0');
+    //alert("Select Site Category filter value");  
 
-        // Set the value of the input
-        const datetimeInput = document.getElementById('id_ModRedTagCre_dtmDateTime');
-        datetimeInput.value = `${year}-${month}-${day}T${hours}:${minutes}`;
-        if(JS_SessionArry[0].CurrentUserDepartment === "Engineering")
-        {
-            datetimeInput.disabled = false;
-        }
-        else
-        {
-            datetimeInput.disabled = true;
-        }        
-    });
-   
+    DataAry[0] = "funGetFilteredData";        // Function Name    
+    DataAry[1] = "SiteName";
+    DataAry[2] = "tblwo_errorlevel_redtag";
+    DataAry[3] = "0";
+    
+    //alert(DataAry);
+    $.post('class/comFunctions.php', { userpara: DataAry }, function(json_data2) 
+{
+    // Parse the received JSON data
+    var res = $.parseJSON(json_data2);                           
+    var ArySite_new = res.Data_Ary; 
+
+    // Remove all existing options in the select box
+    var options3 = document.querySelectorAll('#id_ModRedTagCre_SelSite option');
+    options3.forEach(o => o.remove());
+
+    // Reference to the select box
+    var sel_shoporderno = document.getElementById("id_ModRedTagCre_SelSite");
+
+    // Add the default option
+    var defaultOption = document.createElement("option");
+    defaultOption.textContent = "Select data";
+    defaultOption.value ="Select data"; // You can leave the value empty or set it as per your requirement
+    //defaultOption.disabled = true; // Optional: To prevent selecting this as a valid value
+    //defaultOption.selected = true; // Optional: To make it the selected option by default
+    sel_shoporderno.appendChild(defaultOption);
+
+    // Fill the select box with new items
+    for (var i = 0; i < ArySite_new.length; i++) 
+    {
+        var opt3 = ArySite_new[i];
+        var el3 = document.createElement("option");
+        el3.textContent = opt3;
+        el3.value = opt3;
+        sel_shoporderno.appendChild(el3);
+    }
+});
+
+funModRedTagCre_SelSiteFilter();
+
+     
 }
 
 //----------------------------------------------------------------------------
@@ -121,60 +121,55 @@ function funModRedTagCre_Filter()
 function funModRedTagCre_Update()
 {        
     //alert("function mod Create Plan Maintenance update");
+    const now = new Date();
+    const formattedDateTime = now.getFullYear() + '-' +
+    String(now.getMonth() + 1).padStart(2, '0') + '-' +
+    String(now.getDate()).padStart(2, '0') + ' ' +
+    String(now.getHours()).padStart(2, '0') + ':' +
+    String(now.getMinutes()).padStart(2, '0') + ':' +
+    String(now.getSeconds()).padStart(2, '0');
     
     var strTemp = "";
     //alert("Breakdown Update Clicked");      
     const DataAry = []; 
-    DataAry[0] = "WMS-1760A";
+    DataAry[0] = "mms-1863A";
     DataAry[1] = "Unit-1";
     DataAry[2] = "RelatedDep";
     DataAry[3] = "RedTag";
-    DataAry[4] = document.getElementById("id_ModRedTagCre_SelRedTagCategory").value; // WorkOrderSubCategory
+    DataAry[4] = document.getElementById("id_ModRedTagCre_SelSite").value; // WorkOrderSubCategory
     DataAry[5] = "";                        // WorkOrderSubCategory2
-    DataAry[6] = JS_SessionArry[0].CurrentUserDepartment;                   // WoDepartment
-    DataAry[7] = document.getElementById("id_ModRedTagCre_dtmDateTime").value;     //CreatedDateTime      
-    DataAry[8] = JS_SessionArry[0].CurrentUserName;
+    
       
-    DataAry[9] = document.getElementById("id_ModRedTagCre_SelMcCategory").value;
-    DataAry[10] = document.getElementById("id_ModRedTagCre_SelMachineNo").value;
-    DataAry[12] = document.getElementById("id_ModRedTagCre_SelFaultType").value;
-    DataAry[13] = document.getElementById("id_ModRedTagCre_SelFaultLevel").value;
-    DataAry[14] = document.getElementById("id_ModRedTagCre_inpNote").value; 
-    strTemp = "Red Tag Placed - On " + document.getElementById("id_ModRedTagCre_dtmDateTime").value + " By " + JS_SessionArry[0].CurrentUserName + "(" + JS_SessionArry[0].CurrentUserContact + ")";
+    DataAry[6] = document.getElementById("id_ModRedTagCre_SelSite").value; //site
+    DataAry[7] = document.getElementById("id_ModRedTagCre_SelBuilding").value; // building
+    DataAry[8] = document.getElementById("id_ModRedTagCre_Issu_Type").value; // issuer type
+    DataAry[9] = document.getElementById("id_ModRedTagCre_SelDescriptionType").value; // isuer description
+    DataAry[10] = ""; //Issue_Description2
+    DataAry[11] = formattedDateTime;
+    DataAry[12] = JS_SessionArry[0].CurrentUserDepartment;
+    DataAry[13] = JS_SessionArry[0].CurrentUserName;
+    DataAry[14] = formattedDateTime; //PlannedDateTime
+    DataAry[15] = formattedDateTime; //StartedDateTime
+    DataAry[16] = formattedDateTime; //CloseDateTime
+    DataAry[17] = formattedDateTime; //VerifiedDateTime
+    strTemp = "Red Tag Placed - On " + formattedDateTime  + " By " + JS_SessionArry[0].CurrentUserName + "(" + JS_SessionArry[0].CurrentUserContact + ")";
     //alert(strTemp);
-    DataAry[15] = strTemp;     //WoEventLog 
-    DataAry[16] = 'A';              //Shift
-    DataAry[17] = "New";      //Wo Status
-    DataAry[18] = "-";
-    DataAry[19] = "";
-    DataAry[20] = 1;
+    DataAry[18] = strTemp;     //WoEventLog 
+    DataAry[19] = 'A';              //Shift
+    DataAry[20] = "New";      //Wo Status
     DataAry[21] = 1;
-    DataAry[22] = 1;
+    
     //-------- Check All fields are selected ...................................
-    if((DataAry[9]==="Select data")||(DataAry[10]==="Select data")||(DataAry[12]==="Select data"))
+    if((DataAry[6]==="Select data")||(DataAry[7]==="Select data")||(DataAry[8]==="Select data")||(DataAry[9]==="Select data"))
     {
         //alert("Please select data");
         Swal.fire({title: 'Error.!',text: 'Please select the data',icon: 'error',confirmButtonText: 'OK'});
     }
     else
     {
-	document.getElementById('id_ModRedTagCre_Update').disabled = true; 
-        //---------------- Find ValueAdd in Machine Number ------------------------------
-        const DataAry2 = []; 
-        DataAry2[0] = "funGetFilteredData";        // Function Name    
-        DataAry2[1] = "ValueAdd";
-        DataAry2[2] = "tblwo_machinemanagement";
-        DataAry2[3] = "1";
-        DataAry2[4] = "MachineNumber";
-        DataAry2[5] = document.getElementById("id_ModRedTagCre_SelMachineNo").value;    //MachineNo
-        //alert(DataAry2);
-        $.post('class/comFunctions.php', { userpara: DataAry2 }, function(json_data2) 
-        {
-            //alert(json_data2);           
-            var res = $.parseJSON(json_data2);                           
-            DataAry[11] = res.Data_Ary[0];             
+	             
             //alert(DataAry);
-            ////alert("Select ok");
+            //alert("Select ok");
             $.post('class/insertData_WoBrakdown.php', { userpara: DataAry }, function(json_data2) 
             {
                 //alert(json_data2);           
@@ -194,21 +189,27 @@ function funModRedTagCre_Update()
                 //funRefreshClicked();
                 funRefresh_HomePage();  
             }); 
-        });
+        
     }    
 }
-//-------------------- Fault Type Filter Function -------------------------
-function funModRedTagCre_SelFaultTypeFilter()
+//-------------------- issuer Filter Function -------------------------
+function funModRedTagCre_SelissuerFilter()
 {
-    //alert("Select Fault Type filter value");    
+    //alert("Select issuer filter value");    
      const DataAry = []; 
-    DataAry[0] = "Level1";
-    DataAry[1] = JS_SessionArry[0].CurrentUserDepartment; 
-    DataAry[2] = document.getElementById("id_ModRedTagCre_SelMcCategory").value; 
-    DataAry[3] = document.getElementById("id_ModRedTagCre_SelFaultType").value; 
+     DataAry[0] = "funGetFilteredData";        // Function Name    
+     DataAry[1] = "IssueDescriptionMain";
+     DataAry[2] = "tblwo_errorlevel_redtag";
+     DataAry[3] ="4";
+     DataAry[4] = "SiteName";
+     DataAry[5] = document.getElementById("id_ModRedTagCre_SelSite").value;
+     DataAry[6] = "Building";
+     DataAry[7] = document.getElementById("id_ModRedTagCre_SelBuilding").value;
+     DataAry[8] = "IssueType";
+     DataAry[9] = document.getElementById("id_ModRedTagCre_Issu_Type").value;
     
     //alert(DataAry);
-    $.post('class/getData_HomeModelCreateWo.php', { userpara: DataAry}, function(json_data2) 
+    $.post('class/comFunctions.php', { userpara: DataAry}, function(json_data2) 
     {
         //alert(json_data2);  
         var res = $.parseJSON(json_data2);
@@ -218,10 +219,22 @@ function funModRedTagCre_SelFaultTypeFilter()
         if(res.Status_Ary[0] === "true")
         {
             //---------- Load Level 1 , Select box ----------------------------------      
-            var options5 = document.querySelectorAll('#id_ModRedTagCre_SelFaultLevel option');
+            var options5 = document.querySelectorAll('#id_ModRedTagCre_SelDescriptionType option');
             options5.forEach(o => o.remove());
+
+            // Reference to the select box
+            var sel_FaultLevel = document.getElementById("id_ModRedTagCre_SelDescriptionType");
+
+            // Add the default option
+            var defaultOption = document.createElement("option");
+            defaultOption.textContent = "Select data";
+            defaultOption.value = "Select data"; // You can leave the value empty or set it as per your requirement
+            //defaultOption.disabled = true; // Optional: To prevent selecting this as a valid value
+            //defaultOption.selected = true; // Optional: To make it the selected option by default
+            sel_FaultLevel.appendChild(defaultOption);
+
             //------------ Fill New Items -------------------------------------
-            var sel_FaultLevel = document.getElementById("id_ModRedTagCre_SelFaultLevel");
+            var sel_FaultLevel = document.getElementById("id_ModRedTagCre_SelDescriptionType");
             for(var i = 0; i < AryLevel1.length; i++)
             {
                 var opt5 = AryLevel1[i];
@@ -235,7 +248,7 @@ function funModRedTagCre_SelFaultTypeFilter()
         {
             //alert("Data Not Available");
             //---------- Load Level 1 , Select box ----------------------------------      
-            var options5 = document.querySelectorAll('#id_ModRedTagCre_SelFaultLevel option');
+            var options5 = document.querySelectorAll('#id_ModRedTagCre_SelDescriptionType option');
             options5.forEach(o => o.remove());
             
             var opt5 = ["Select data"];
@@ -244,42 +257,59 @@ function funModRedTagCre_SelFaultTypeFilter()
                 var el5 = document.createElement("option");
                 el5.textContent = value;
                 el5.value = value;
-                document.getElementById("id_ModRedTagCre_SelFaultLevel").appendChild(el5);
+                document.getElementById("id_ModRedTagCre_SelDescriptionType").appendChild(el5);
             });            
         }     
     });   
 }
-//-------------------- Machine Category Filter Function -------------------------
-function funModRedTagCre_SelMachineCategoryFilter()
+
+
+
+
+//-------------------- Site Filter Function -------------------------
+function funModRedTagCre_SelSiteFilter()
 {
-    //alert("Select Machine Category filter value");  
+    //alert("Select site filter value");  
+    
     
     const DataAry = []; 
     DataAry[0] = "funGetFilteredData";        // Function Name    
-    DataAry[1] = "MachineNumber";
-    DataAry[2] = "tblwo_machinemanagement";
+    DataAry[1] = "Building";
+    DataAry[2] = "tblwo_errorlevel_redtag";
     DataAry[3] = "1";
-    DataAry[4] = "MachineCategory";
-    DataAry[5] = document.getElementById("id_ModRedTagCre_SelMcCategory").value;       //"pneumatic";  
+    DataAry[4] = "SiteName";
+    DataAry[5] = document.getElementById("id_ModRedTagCre_SelSite").value;       
     //alert(DataAry);
     $.post('class/comFunctions.php', { userpara: DataAry }, function(json_data2) 
     {
         //alert(json_data2);           
         var res = $.parseJSON(json_data2);                           
-        var AryMachineNo_new = new Array();
+        var ArySite_new = new Array();
 
-        AryMachineNo_new   = res.Data_Ary; 
-        //alert(AryMachineNo_new);
+        ArySite_new   = res.Data_Ary; 
+        //alert(ArySite_new);
         if(res.Status_Ary[0] === "true")
         {
             //------------ Remove All Items in "Machine No" -----------------------------------
-            var options3 = document.querySelectorAll('#id_ModRedTagCre_SelMachineNo option');
+            var options3 = document.querySelectorAll('#id_ModRedTagCre_SelBuilding option');
             options3.forEach(o => o.remove());
+
+            // Reference to the select box
+            var sel_shoporderno = document.getElementById("id_ModRedTagCre_SelBuilding");
+
+            // Add the default option
+            var defaultOption = document.createElement("option");
+            defaultOption.textContent = "Select data";
+            defaultOption.value = "Select data"; // You can leave the value empty or set it as per your requirement
+            //defaultOption.disabled = true; // Optional: To prevent selecting this as a valid value
+            //defaultOption.selected = true; // Optional: To make it the selected option by default
+            sel_shoporderno.appendChild(defaultOption);
+
             //------------ Fill New Items -------------------------------------
-            var sel_shoporderno = document.getElementById("id_ModRedTagCre_SelMachineNo");
-            for(var i = 0; i < AryMachineNo_new.length; i++)
+            var sel_shoporderno = document.getElementById("id_ModRedTagCre_SelBuilding");
+            for(var i = 0; i < ArySite_new.length; i++)
             {
-                var opt3 = AryMachineNo_new[i];
+                var opt3 = ArySite_new[i];
                 var el3 = document.createElement("option");
                 el3.textContent = opt3;
                 el3.value = opt3;
@@ -290,7 +320,7 @@ function funModRedTagCre_SelMachineCategoryFilter()
         {
             //alert("Data Not Available");
             //------------ Remove All Items in "Machine No" -----------------------------------
-            var options3 = document.querySelectorAll('#id_ModRedTagCre_SelMachineNo option');
+            var options3 = document.querySelectorAll('#id_ModRedTagCre_SelBuilding option');
             options3.forEach(o => o.remove());
             
             var opt3 = ["Select data"];
@@ -299,35 +329,79 @@ function funModRedTagCre_SelMachineCategoryFilter()
                 var el3 = document.createElement("option");
                 el3.textContent = value;
                 el3.value = value;
-                document.getElementById("id_ModRedTagCre_SelMachineNo").appendChild(el3);
+                document.getElementById("id_ModRedTagCre_SelBuilding").appendChild(el3);
             });
         }
     });
-    //--------------------- Load Fault Type --------------------------------------------
-    //const DataAry = []; 
-    DataAry[0] = "FaultType";
-    DataAry[1] = JS_SessionArry[0].CurrentUserDepartment; 
-    DataAry[2] = document.getElementById("id_ModRedTagCre_SelMcCategory").value; 
+    funModRedTagCre_SelBuildingFilter();
+    
+}
+
+function funModRedTagCre_SelBuildingFilter()
+{
+    //alert("Select Building Type filter value");    
+     const DataAry = []; 
+     DataAry[0] = "funGetFilteredData";        // Function Name    
+     DataAry[1] = "IssueType";
+     DataAry[2] = "tblwo_errorlevel_redtag";
+     DataAry[3] ="3";
+     DataAry[4] = "SiteName";
+     DataAry[5] = document.getElementById("id_ModRedTagCre_SelSite").value;
+     DataAry[6] = "Building";
+     DataAry[7] = document.getElementById("id_ModRedTagCre_SelBuilding").value;
+    
     //alert(DataAry);
-    $.post('class/getData_HomeModelCreateWo.php', { userpara: DataAry}, function(json_data2) 
+    $.post('class/comFunctions.php', { userpara: DataAry}, function(json_data2) 
     {
         //alert(json_data2);  
         var res = $.parseJSON(json_data2);
-        var AryFaultType = new Array();
-        AryFaultType = res.Data_Ary;           
+        var AryLevel1 = new Array();
+        AryLevel1 = res.Data_Ary;           
   
-        //------------ Remove All Items in "AryFaultType" -----------------------------------
-        var options4 = document.querySelectorAll('#id_ModRedTagCre_SelFaultType option');
-        options4.forEach(o => o.remove());
-        //------------ Fill New Items -------------------------------------
-        var sel_FaultType = document.getElementById("id_ModRedTagCre_SelFaultType");
-        for(var i = 0; i < AryFaultType.length; i++)
+        if(res.Status_Ary[0] === "true")
         {
-            var opt4 = AryFaultType[i];
-            var el4 = document.createElement("option");
-            el4.textContent = opt4;
-            el4.value = opt4;
-            sel_FaultType.appendChild(el4);
-        }        
-    });
+            //---------- Load Level 1 , Select box ----------------------------------      
+            var options5 = document.querySelectorAll('#id_ModRedTagCre_Issu_Type option');
+            options5.forEach(o => o.remove());
+
+            // Reference to the select box
+            var sel_FaultLevel = document.getElementById("id_ModRedTagCre_Issu_Type");
+
+            // Add the default option
+            var defaultOption = document.createElement("option");
+            defaultOption.textContent = "Select data";
+            defaultOption.value = "Select data"; // You can leave the value empty or set it as per your requirement
+            //defaultOption.disabled = true; // Optional: To prevent selecting this as a valid value
+            //defaultOption.selected = true; // Optional: To make it the selected option by default
+            sel_FaultLevel.appendChild(defaultOption);
+
+            //------------ Fill New Items -------------------------------------
+            var sel_FaultLevel = document.getElementById("id_ModRedTagCre_Issu_Type");
+            for(var i = 0; i < AryLevel1.length; i++)
+            {
+                var opt5 = AryLevel1[i];
+                var el5 = document.createElement("option");
+                el5.textContent = opt5;
+                el5.value = opt5;
+                sel_FaultLevel.appendChild(el5);
+            }   
+        }
+        else
+        {
+            //alert("Data Not Available");
+            //---------- Load Level 1 , Select box ----------------------------------      
+            var options5 = document.querySelectorAll('#id_ModRedTagCre_Issu_Type option');
+            options5.forEach(o => o.remove());
+            
+            var opt5 = ["Select data"];
+            opt5.forEach(function(value) 
+            {
+                var el5 = document.createElement("option");
+                el5.textContent = value;
+                el5.value = value;
+                document.getElementById("id_ModRedTagCre_Issu_Type").appendChild(el5);
+            });            
+        }     
+    });  
+    funModRedTagCre_SelissuerFilter(); 
 }

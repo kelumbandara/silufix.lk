@@ -15,43 +15,34 @@
                 <div class="row p-1">
                     
                     <div class="col-md-6">                   
-                        <label style="font-weight: bolder">Machine Category</label>    
-                        <select class="form-control select2" onchange="funModBrkDownCre_SelMachineCategoryFilter()" id="id_ModBrkDownCre_SelMcCategory" style="width: 100%;">
+                        <label style="font-weight: bolder">Site</label>    
+                        <select class="form-control select2" onchange="funModBreakDown_SelSiteFilter()" id="id_ModBrkDownCre_SelSite" style="width: 100%;">
                             <option selected="none"></option>                            
                         </select>
                     </div>
                     <div class="col-md-6">                      
-                         <label style="font-weight: bolder">Machine No</label>    
-                        <select class="form-control select2" onchange="funModBrkDownCre_SelMachineNoFilter()" id="id_ModBrkDownCre_SelMachineNo" style="width: 100%; background-color: blue">
+                         <label style="font-weight: bolder">Building</label>    
+                        <select class="form-control select2" onchange="funModBreakDown_SelBuildingFilter()" id="id_ModBrkDownCre_Selbuilding" style="width: 100%; background-color: blue">
                             <option selected="none"></option>                            
                         </select>               
                     </div>
                 </div> 
                 <div class="row p-1">
                     <div class="col-md-6">                   
-                        <label style="font-weight: bolder">Fault Type</label>    
+                        <label style="font-weight: bolder">Issuer Type</label>    
                         <select class="form-control select2" onchange="funModBrkDownCre_SelFaultTypeFilter()" id="id_ModBrkDownCre_SelFaultType" style="width: 100%; background-color: blue">
                             <option selected="none"></option>                            
                         </select>
                     </div>
                     <div class="col-md-6">                      
-                         <label style="font-weight: bolder">Fault Level</label>    
+                         <label style="font-weight: bolder">Issuer Description</label>    
                         <select class="form-control select2" onchange="funModBrkDownCre_Filter()" id="id_ModBrkDownCre_SelFaultLevel" style="width: 100%; background-color: blue">
                             <option selected="none"></option>                            
                         </select>               
                     </div>
                 </div> 
                 <br/>
-                <div class="row p-1">   
-                    <div class="col-md-6">
-                        <input type="datetime-local" id="id_ModBrkDownCre_dtmDateTime" class="form-control" name="startDate" required/>                           
-                    </div>
-               
-                    <div class="col-md-6">
-                        <input type="text" id="id_ModBrkDownCre_inpNote" class="form-control" name="Note" placeholder="Note"> 
-                    </div>
-                    
-                </div>        		
+                        		
                  
             </div>
             <div class="modal-footer bg-light">

@@ -70,46 +70,35 @@
         try 
         {
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $strSQL = "SELECT
-                        e.MachineNo,
-                        m.Department
-                    FROM
-                        tblwo_event e
-                    JOIN
-                        tblwo_machinemanagement m ON e.MachineNo = m.MachineNumber
-                    WHERE
-                        e.WorkOrderNo = :wono";
-                        
+            $strSQL = "SELECT a.AllocatedUser
+                    FROM tblwo_allocatedusers a
+                    JOIN tblwo_event e ON a.WorkOrderNo = e.WorkOrderNo
+                    WHERE a.WorkOrderNo = :wono";
+
             $stmt = $conn->prepare($strSQL);
             $stmt->bindParam(':wono', $strWoNumber);            
             $stmt->execute();
-            // set the resulting array to associative
+
             $stmt->setFetchMode(PDO::FETCH_ASSOC);        
             $result = $stmt->fetchAll();
-            foreach($result as $row)
-            {                            
-                $ReturnData_ary[0]    = $row['MachineNo']; 
-                $ReturnData_ary[1]    = $row['Department'];                          
+            
+            foreach ($result as $row) {                            
+                $ReturnData_ary[$i] = $row['AllocatedUser']; 
                 $i++;
             }  
-            if($i === 0)    // No Data
-            {
+
+            if ($i === 0) {  // No Data
+                $ReturnData_ary[0] = "NA";  // Set 'NA' if no data is found
                 $Status_ary[0] = "false";
                 $Status_ary[1] = "Data not found"; 
-            }
-            else
-            {
+            } else {
                 $Status_ary[0] = "true";
                 $Status_ary[1] = "Data Available"; 
             }            
-            //echo $strSummaryAry;
-        } 
-        catch(PDOException $ex) 
-        {
-            //$error =  "Error: " . $e->getMessage();
+        } catch (PDOException $ex) {
             $Status_ary[0] = "false";
-            $Status_ary[1] = 'Error Msg: ' .$ex->getMessage();        
-        }    
+            $Status_ary[1] = 'Error Msg: ' . $ex->getMessage();        
+        }   
         $conn = null;
     }
                
