@@ -1,0 +1,78 @@
+  <!-- Navbar -->
+<div class="modal" id="id_ModRedTagCre">
+    <div class="modal-dialog">      
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title text-center" style="width: 100%">Request a RedTag Service</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="funModRedTagCre_Close()">
+                    <span aria-hidden="true" class="text-white close-icon"><i class="fas fa-times"></i></span>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <h6 class="modal-title text-center" id="id_ModRedTagCre_lblUserDep" style="width: 100%">User's Department : Engineering</h6>
+               
+                <div class="row p-1">                    
+                    <div class="col-md-12">                   
+                        <label style="font-weight: bolder">Site</label>    
+                        <select class="form-control select2" onchange="funModRedTagCre_SelSiteFilter()" id="id_ModRedTagCre_SelSite" style="width: 100%;">
+                        <option selected="none"></option>                             
+                        </select>
+                    </div>                    
+                </div> 
+                
+                <div class="row p-1">                    
+                    <div class="col-md-12">                   
+                        <label style="font-weight: bolder">Building</label>    
+                        <select class="form-control select2" onchange="funModRedTagCre_SelBuildingFilter()" id="id_ModRedTagCre_SelBuilding" style="width: 100%;">
+                            <option selected="none"></option>                            
+                        </select>
+                    </div>
+                    <div class="col-md-12">                      
+                         <label style="font-weight: bolder">Location</label>    
+                        <select class="form-control select2"  onchange="funModRedTagCre_SelLocationFilter()" id="id_ModRedTagCre_Location" style="width: 100%; background-color: blue">
+                            <option selected="none"></option>                            
+                        </select>               
+                    </div>
+                    <div class="col-md-12">                      
+                         <label style="font-weight: bolder">Issuer Type</label>    
+                        <select class="form-control select2"  onchange="funModRedTagCre_SelissuerFilter()" id="id_ModRedTagCre_Issu_Type" style="width: 100%; background-color: blue">
+                            <option selected="none"></option>                            
+                        </select>               
+                    </div>
+                </div> 
+                <div class="row p-1">
+                    <div class="col-md-12">                   
+                        <label style="font-weight: bolder">Issuer Description</label>    
+                        <select class="form-control select2"  id="id_ModRedTagCre_SelDescriptionType" style="width: 100%; background-color: blue">
+                            <option selected="none"></option>                            
+                        </select>
+                    </div>
+                    <!-- <div class="col-md-6">                      
+                         <label style="font-weight: bolder">Fault Level</label>    
+                        <select class="form-control select2" onchange="funModRedTagCre_Filter()" id="id_ModRedTagCre_SelFaultLevel" style="width: 100%; background-color: blue">
+                            <option selected="none"></option>                            
+                        </select>               
+                    </div> -->
+                </div> 
+                <br/>
+                <!-- <div class="row p-1">   
+                    <div class="col-md-6">
+                        <input type="datetime-local" id="id_ModRedTagCre_dtmDateTime" class="form-control" onchange="funDateChanged()" name="startDate" required/>                           
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" id="id_ModRedTagCre_inpNote" class="form-control" name="Note" placeholder="Note"> 
+                    </div>
+                    
+                </div>        		 -->
+                 
+            </div>
+            <div class="modal-footer bg-light">
+                
+                <button type="submit" id="id_ModRedTagCre_Update" class="btn btn-primary" onclick="funModRedTagCre_Update()" >Submit</button>
+                <button type="submit" class="btn btn-primary" onclick="funModRedTagCre_Cancel()" >Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
