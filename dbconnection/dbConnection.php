@@ -1,15 +1,15 @@
 <?php
 
-    //$servername = "localhost";
-    //$username = "sky";
-    //$password = "noyoN@1234";
-    //$database = "wms1760g";
-    //$database2 = "wms1760g_mcdata";
-    
-    $servername = "perahara.lk";
-    $username = "kelum";
-    $password = "sKy@1234";
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
     $database = "mms1810a";
+   
+    
+    //$servername = "perahara.lk";
+    //$username = "kelum";
+    //$password = "sKy@1234";
+    //$database = "mms1810a";
     //$database2 = "wms1760g_mcdata";
     
     try 
