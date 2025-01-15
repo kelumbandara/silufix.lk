@@ -52,7 +52,7 @@
                                         <label>ID</label>
                                         <input type="text" class="form-control" id="id_id" readonly>
                                     </div>
-                                    <div class="form-group col-md-1">
+                                    <div class="form-group col-md-2">
                                         <label>EPF</label>
                                         <input type="text" class="form-control" id="id_epf" required>
                                     </div>
@@ -76,15 +76,19 @@
                                 </div>
                                 <div class="form-row"> 
                                     <div class="form-group col-md-2">
+                                        <label>Issue Type</label>                                        
+                                        <select class="form-control" id="id_issuetype" required>                                                                                       
+                                        </select>
+                                    </div>                                     
+                                    <div class="form-group col-md-2">
                                         <label>Contact</label>
                                         <input type="text" class="form-control" id="id_contact" required>
                                     </div>            
                                     <div class="form-group col-md-2">
                                         <label>Email</label>
                                         <input type="text" class="form-control" id="id_email" required>
-                                    </div>
-                         
-                                    <div class="form-group col-md-2">
+                                    </div>                         
+                                    <div class="form-group col-md-1">
                                         <label>User Type</label>                                        
                                         <select class="form-control" id="id_usertype" required>                                           
                                         </select>
@@ -125,6 +129,7 @@
                                             <th>User Name</th>
                                             <th>Password</th>
                                             <th>Department</th>
+                                            <th>Issue Type</th>
                                             <th>Contact</th>                                            
                                             <th>Email</th>
                                             <th>User Type</th>
@@ -231,6 +236,36 @@
                 }
             }
         });
+        //--------- Load Issue Types  -------------------------------------
+        //const DataAry = [];
+        DataAry[0] = "funGetFilteredData";        // Function Name    
+        DataAry[1] = "IssueType";
+        DataAry[2] = "tblwo_issuetype";
+        DataAry[3] = "0";
+        if(intDebugEnable === 1)    alert("Location : 200 " + DataAry);      
+        $.post('comFunctions.php', { userpara: DataAry }, function(json_data2) 
+        {
+            if(intDebugEnable === 1) alert("Location : 210 " + json_data2);
+            var res = $.parseJSON(json_data2);  
+            if(res.Status_Ary[0] === "true")
+            {
+                AryDepartment = res.Data_Ary;
+                if(intDebugEnable === 1) alert("Location : 220 " + AryDepartment); 
+                //------------ Remove All Items in "AryDepartment" -----------------------------------
+                var options4 = document.querySelectorAll('#id_issuetype option');
+                options4.forEach(o => o.remove());
+                //------------ Fill New Items -------------------------------------
+                var sel_UserType = document.getElementById("id_issuetype");
+                for(var i = 0; i < AryDepartment.length; i++)
+                {
+                    var opt4 = AryDepartment[i];
+                    var el4 = document.createElement("option");
+                    el4.textContent = opt4;
+                    el4.value = opt4;
+                    sel_UserType.appendChild(el4);
+                }
+            }
+        });
         //------------ Load Users --------------------------------------
         //const DataAry = []; 
         DataAry[0] = "funGetUserTable";        // Table Name
@@ -315,11 +350,11 @@
                 document.getElementById("id_username").value    = cells[3].innerText;
                 document.getElementById("id_password").value    = cells[4].innerText;
                 document.getElementById("id_department").value  = cells[5].innerText;
-                
-                document.getElementById("id_contact").value     = cells[6].innerText;
-                document.getElementById("id_email").value       = cells[7].innerText;
-                document.getElementById("id_usertype").value    = cells[8].innerText;
-                document.getElementById("id_availability").value  = cells[9].innerText;
+                document.getElementById("id_issuetype").value   = cells[6].innerText;
+                document.getElementById("id_contact").value     = cells[7].innerText;
+                document.getElementById("id_email").value       = cells[8].innerText;
+                document.getElementById("id_usertype").value    = cells[9].innerText;
+                document.getElementById("id_availability").value  = cells[10].innerText;
             }
         }
         // Scroll the webpage to the top
@@ -335,10 +370,11 @@
         DataAry[4] = document.getElementById("id_username").value;
         DataAry[5] = document.getElementById("id_password").value; 
         DataAry[6] = document.getElementById("id_department").value;
-        DataAry[7] = document.getElementById("id_contact").value; 
-        DataAry[8] = document.getElementById("id_email").value; 
-        DataAry[9] = document.getElementById("id_usertype").value;
-        DataAry[10] = document.getElementById("id_availability").value;        
+        DataAry[7] = document.getElementById("id_issuetype").value;
+        DataAry[8] = document.getElementById("id_contact").value; 
+        DataAry[9] = document.getElementById("id_email").value; 
+        DataAry[10] = document.getElementById("id_usertype").value;
+        DataAry[11] = document.getElementById("id_availability").value;        
         //alert(DataAry);
         if(DataAry[1] !== "")
         {
@@ -374,12 +410,13 @@
         DataAry[4] = document.getElementById("id_username").value;
         DataAry[5] = document.getElementById("id_password").value; 
         DataAry[6] = document.getElementById("id_department").value;
-        DataAry[7] = document.getElementById("id_contact").value; 
-        DataAry[8] = document.getElementById("id_email").value; 
-        DataAry[9] = document.getElementById("id_usertype").value;
-        DataAry[10] = document.getElementById("id_availability").value;        
+        DataAry[7] = document.getElementById("id_issuetype").value;
+        DataAry[8] = document.getElementById("id_contact").value; 
+        DataAry[9] = document.getElementById("id_email").value; 
+        DataAry[10] = document.getElementById("id_usertype").value;
+        DataAry[11] = document.getElementById("id_availability").value;        
         //alert(DataAry);   
-        if((DataAry[2]==="")||(DataAry[3]==="")||(DataAry[4]==="")||(DataAry[5]==="")||(DataAry[7]==="")||(DataAry[8]===""))
+        if((DataAry[2]==="")||(DataAry[3]==="")||(DataAry[4]==="")||(DataAry[5]==="")||(DataAry[8]==="")||(DataAry[9]===""))
         {
             Swal.fire({title: 'Error.!',text: 'Please fill the data',icon: 'error',confirmButtonText: 'OK'});
 
@@ -419,6 +456,7 @@
         document.getElementById("id_username").value    = "";
         document.getElementById("id_password").value    = ""; 
         document.getElementById("id_department").value  = "";
+        document.getElementById("id_issuetype").value   = "";
         document.getElementById("id_contact").value     = ""; 
         document.getElementById("id_email").value       = ""; 
         document.getElementById("id_usertype").value    = "";

@@ -252,23 +252,43 @@
         DataAry[0] = "funDeleteUser";        // Table Name
         DataAry[1] = userId;   // UserID     
         //alert(DataAry);
-        $.post('userManage.php', { userpara: DataAry }, function(json_data2) 
+        
+        Swal.fire(
         {
-            //alert(json_data2);           
-            var res = $.parseJSON(json_data2);    
-            if(res.Status_Ary[0] === "true")
+            title: 'Delete User',
+            text: 'Are you sure you want to proceed?',
+            //icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'OK'
+        }).then((result) => 
+        {
+            if (result.isConfirmed) 
             {
-                Swal.fire({title: 'Success.!',text: 'Selected Employee deleted',icon: 'success',confirmButtonText: 'OK'});
+                $.post('userManage.php', { userpara: DataAry }, function(json_data2) 
+                {
+                    //alert(json_data2);           
+                    var res = $.parseJSON(json_data2);    
+                    if(res.Status_Ary[0] === "true")
+                    {
+                        Swal.fire({title: 'Success.!',text: 'Selected Employee deleted',icon: 'success',confirmButtonText: 'OK'});
+                    }
+                    else
+                    {
+                        Swal.fire({title: 'Error.!',text: 'Data Deleting Error',icon: 'error',confirmButtonText: 'OK'});
+                    }
+                    //alert(res.Status_Ary[0]);            
+                    //document.getElementById("id_tableusers").innerHTML = res.Data_Ary[0];
+                    funLoadUsers();
+                });
+
             }
             else
             {
-                Swal.fire({title: 'Error.!',text: 'Data Deleting Error',icon: 'error',confirmButtonText: 'OK'});
+                //alert("user click no");
             }
-            //alert(res.Status_Ary[0]);            
-            //document.getElementById("id_tableusers").innerHTML = res.Data_Ary[0];
-            funLoadUsers();
         });
-        
     }
     //-------------- Click Edit -------------------------------
     function editUser(userId) 

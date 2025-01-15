@@ -4,8 +4,7 @@
     $username = "root";
     $password = "";
     $database = "mms1810a";
-   
-    
+       
     //$servername = "perahara.lk";
     //$username = "kelum";
     //$password = "sKy@1234";
