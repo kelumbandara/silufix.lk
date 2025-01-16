@@ -28,12 +28,12 @@
                                     <td style="width:65%;" id="id_ModWoDetails_WoDate">-</td>   
                                 </tr> 
                                 <tr>
-                                    <td style="width:33%;">Problem</td>
+                                    <td style="width:33%;">Category</td>
                                     <td style="width:2%;">:</td>   
                                     <td style="width:65%;"> <div class="fixed-height-label overflow-auto" style="height: 30px; max-height: 30px;" id="id_ModWoDetails_WoProblem" readonly></div> </td>   
                                 </tr> 
                                 <tr>
-                                    <td style="width:33%;">Machine</td>
+                                    <td style="width:33%;">Site</td>
                                     <td style="width:2%;">:</td>   
                                     <td style="width:65%;"> <div class="fixed-height-label overflow-auto" style="height: 30px; max-height: 30px;" id="id_ModWoDetails_Machine" readonly></div> </td>   
                                 </tr> 
@@ -44,7 +44,6 @@
                         <div class="form-group">
                            <label><strong>Chat History</strong></label>
                             <div class="fixed-height-label overflow-auto" style="height: 100px; max-height: 140px;" id="id_ModWoDetails_ChatHistory" readonly>                              
-                            
                             </div> 
                         </div>
                     </div>

@@ -31,48 +31,38 @@
                 </div>                 
                 <div class="border-top my-1"></div>  
                 <div class="row p-1">
-                    <div class="col-md-12">                   
+                    <div class="col-md-6">                   
                         <label style="font-weight: bolder;" >Fault Type</label>    
                         <select class="form-control select2" onchange="funModWoClose_FilterFaultType()" id="id_ModWoClose_SelFaultType" style="width: 100%; background-color: blue">
                             <option selected="none"></option>                            
                         </select>
                     </div>
-                </div>                 
-                <div class="row p-1">                    
                     <div class="col-md-6">                   
-                        <label style="font-weight: bolder">Fault Level 1</label>    
+                        <label style="font-weight: bolder">Correction Action</label>    
                         <select class="form-control select2" onchange="funModWoClose_FilterFaultLevel1()" id="id_ModWoClose_SelFaultLevel1" style="width: 100%;">
                             <option selected="none"></option>                            
                         </select>
                     </div>
-                    <div class="col-md-6">                      
-                         <label style="font-weight: bolder">Fault Level 2</label>    
+                </div>                 
+                <div class="row p-1">                    
+                    <div class="col-md-12">
+                        <label style="font-weight: bolder">Note</label> 
+                        <input type="text" id="id_ModWoClose_inpNote" class="form-control" name="Note" placeholder="Note"> 
+                    </div>                     
+                </div> 
+                <div class="row p-1">
+                    <div class="col-md-12">                      
+                         <label style="font-weight: bolder">Used Material</label>    
                         <select class="form-control select2" onchange="funModWoClose_FilterFaultLevel2()" id="id_ModWoClose_SelFaultLevel2" style="width: 100%; background-color: blue">
                             <option selected="none"></option>                            
                         </select>               
-                    </div>
-                </div> 
-                <div class="row p-1">
-                    <div class="col-md-6">                   
-                        <label style="font-weight: bolder">Fault Level 3</label>    
-                        <select class="form-control select2" onchange="funModWoClose_FilterFaultLevel3()" id="id_ModWoClose_SelFaultLevel3" style="width: 100%; background-color: blue">
-                            <option selected="none"></option>                            
-                        </select>
-                    </div>
-                    <div class="col-md-6">                      
-                         <label style="font-weight: bolder">Fault Level 4</label>    
-                        <select class="form-control select2" onchange="funModWoClose_FilterFaultLevel4()" id="id_ModWoClose_SelFaultLevel4" style="width: 100%; background-color: blue">
-                            <option selected="none"></option>                            
-                        </select>               
-                    </div>
+                    </div>                    
                 </div> 
                 <div class="row p-1">   
-                    <div class="col-md-6">
-                        <input type="datetime-local" id="id_ModWoClose_dtmDateTime" class="form-control" name="startDate" required/>                           
-                    </div>
-                    <div class="col-md-6">
-                        <input type="text" id="id_ModWoClose_inpNote" class="form-control" name="Note" placeholder="Note"> 
-                    </div>                    
+                    <div class="col-md-12">
+                        <label style="font-weight: bolder">After Correction</label> 
+                        <input type="text" id="id_ModWoClose_inpNote" class="form-control" name="Note" placeholder="Attach Images"> 
+                    </div>                                        
                 </div>      
             </div>
             <div class="modal-footer bg-light">

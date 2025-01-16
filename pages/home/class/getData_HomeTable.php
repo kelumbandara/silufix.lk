@@ -52,7 +52,7 @@
                          
                         e.FaultType, 
                         e.CreatedUser,
-                        e.WoDescription, 
+                        e.IssueDescriptionMain, 
                         e.WoStatus, 
                         e.VerifiedUser, 
                         e.WoReOpen,
@@ -86,10 +86,10 @@
                     $ReturnData_ary[$i][3] = $row['CreatedDateTime']; 
                     $ReturnData_ary[$i][4] = $row['WorkOrderCategory']; 
                     $ReturnData_ary[$i][5] = $row['WorkOrderSubCategory'];                    
-                    $ReturnData_ary[$i][6] = $row['WoDescription']; 
+                    $ReturnData_ary[$i][6] = $row['IssueDescriptionMain']; 
                     $ReturnData_ary[$i][7] = $row['FaultType'];  
                     $ReturnData_ary[$i][8] = $row['CreatedUser'];  
-                    $ReturnData_ary[$i][9] = $row['WoDescription'];                    
+                    $ReturnData_ary[$i][9] = $row['IssueDescriptionMain'];                    
                     $ReturnData_ary[$i][10] = $row['WoStatus'];  
                     $ReturnData_ary[$i][11] = $row['VerifiedUser'];  
                     $ReturnData_ary[$i][12] = $row['WoReOpen']; 

@@ -343,7 +343,7 @@ function funModRedTagCre_SelIssueDescriptionFilter()
 //-------------- Create a Redtag Function --------------------------------------------------
 function funModRedTagCre_Update()
 {        
-    let intDebugEnable = 1;  
+    let intDebugEnable = 0;  
     if(intDebugEnable === 1)    alert("funModRedTagCre_Update");
     const now = new Date();
     const formattedDateTime = now.getFullYear() + '-' +

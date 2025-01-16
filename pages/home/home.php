@@ -246,7 +246,7 @@
                                         <th>Department</th>    
                                         <th>By</th>
                                         <th>Category</th>
-                                        <th>Description</th>                                                  
+                                        <th>Issue Description</th>                                                  
                                         <th>Status</th>
                                         <th><center>ReOpen</center></th>
                                     </tr>
@@ -781,7 +781,7 @@
         DataAry[2] = "WoDepartment";
         DataAry[3] = JS_SessionArry[0].CurrentUserDepartment;       //"pneumatic";  
         DataAry[4] = document.getElementById("id_funHome_SelLast7DayFilter").value;
-        //alert("Current User Dep :" + DataAry[3]);
+        
         document.getElementById("id_funHome_SelDepartmentFilter").value = DataAry[3];
         if(DataAry[3] === "Engineering")
         {
