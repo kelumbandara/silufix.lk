@@ -22,18 +22,18 @@
                     </div>                    
                 </div> 
                 
-                <div class="row p-1">                    
-                    <div class="col-md-12">                   
-                        <label style="font-weight: bolder">Building</label>    
-                        <select class="form-control select2" onchange="funModRedTagCre_SelBuildingFilter()" id="id_ModRedTagCre_SelBuilding" style="width: 100%;">
-                            <option selected="none"></option>                            
-                        </select>
-                    </div>
+                <div class="row p-1">                 
                     <div class="col-md-12">                      
                          <label style="font-weight: bolder">Location</label>    
                         <select class="form-control select2"  onchange="funModRedTagCre_SelLocationFilter()" id="id_ModRedTagCre_Location" style="width: 100%; background-color: blue">
                             <option selected="none"></option>                            
                         </select>               
+                    </div>
+                    <div class="col-md-12">                   
+                        <label style="font-weight: bolder">Building</label>    
+                        <select class="form-control select2" onchange="funModRedTagCre_SelBuildingFilter()" id="id_ModRedTagCre_SelBuilding" style="width: 100%;">
+                            <option selected="none"></option>                            
+                        </select>
                     </div>
                     <div class="col-md-12">                      
                          <label style="font-weight: bolder">Issuer Type</label>    

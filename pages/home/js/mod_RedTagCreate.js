@@ -15,59 +15,54 @@ function funModRedTagCre_Cancel()
 }
 function funModRedTagCreateClicked()
 {        
-    let intDebugEnable = 0  
+    let intDebugEnable = 1;  
     if(intDebugEnable === 1)    alert("funModRedTagCreateClicked");
-
-
         
     document.getElementById('id_ModRedTagCre_Update').disabled = false; 
-    //---------- Open Model_Plan Maintenance -------------------------------
+    //---------- Open Model_Create Redtag  -------------------------------
     var varmodbox = document.getElementById("id_ModRedTagCre");
     varmodbox.style.display = "block";
     document.getElementById("id_ModBrkDownCre_lblUserDep").innerHTML = "User's Department : " + JS_SessionArry[0].CurrentUserDepartment;
     const DataAry = []; 
     //alert("Select Site Category filter value");  
-
     DataAry[0] = "funGetFilteredData";        // Function Name    
-    DataAry[1] = "SiteName";
+    DataAry[1] = "Site";
     DataAry[2] = "tblwo_errorlevel_redtag";
     DataAry[3] = "0";
     
     //alert(DataAry);
     $.post('class/comFunctions.php', { userpara: DataAry }, function(json_data2) 
-{
-    // Parse the received JSON data
-    var res = $.parseJSON(json_data2);                           
-    var ArySite_new = res.Data_Ary; 
-
-    // Remove all existing options in the select box
-    var options3 = document.querySelectorAll('#id_ModRedTagCre_SelSite option');
-    options3.forEach(o => o.remove());
-
-    // Reference to the select box
-    var sel_shoporderno = document.getElementById("id_ModRedTagCre_SelSite");
-
-    // Add the default option
-    var defaultOption = document.createElement("option");
-    defaultOption.textContent = "Select data";
-    defaultOption.value ="Select data"; // You can leave the value empty or set it as per your requirement
-    //defaultOption.disabled = true; // Optional: To prevent selecting this as a valid value
-    //defaultOption.selected = true; // Optional: To make it the selected option by default
-    sel_shoporderno.appendChild(defaultOption);
-
-    // Fill the select box with new items
-    for (var i = 0; i < ArySite_new.length; i++) 
     {
-        var opt3 = ArySite_new[i];
-        var el3 = document.createElement("option");
-        el3.textContent = opt3;
-        el3.value = opt3;
-        sel_shoporderno.appendChild(el3);
-    }
-});
+        // Parse the received JSON data
+        var res = $.parseJSON(json_data2);                           
+        var ArySite_new = res.Data_Ary; 
 
-funModRedTagCre_SelSiteFilter();
+        // Remove all existing options in the select box
+        var options3 = document.querySelectorAll('#id_ModRedTagCre_SelSite option');
+        options3.forEach(o => o.remove());
 
+        // Reference to the select box
+        var sel_shoporderno = document.getElementById("id_ModRedTagCre_SelSite");
+
+        // Add the default option
+        var defaultOption = document.createElement("option");
+        defaultOption.textContent = "Select data";
+        defaultOption.value ="Select data"; // You can leave the value empty or set it as per your requirement
+        //defaultOption.disabled = true; // Optional: To prevent selecting this as a valid value
+        //defaultOption.selected = true; // Optional: To make it the selected option by default
+        sel_shoporderno.appendChild(defaultOption);
+
+        // Fill the select box with new items
+        for (var i = 0; i < ArySite_new.length; i++) 
+        {
+            var opt3 = ArySite_new[i];
+            var el3 = document.createElement("option");
+            el3.textContent = opt3;
+            el3.value = opt3;
+            sel_shoporderno.appendChild(el3);
+        }
+    });
+    funModRedTagCre_SelSiteFilter();
      
 }
 
