@@ -258,15 +258,16 @@
                     </div>
                     <div class="border-top my-1"></div>
                     <div class="row"> 
-                        <div class="col-lg-7 mt-1">
-                            <button type="button" class="btn btn-primary" onclick="funModCreateBreakDownClicked()" style="width:32.5%;" <?php echo (in_array('10019', $roll_areas) ? '' : 'disabled'); ?>><i class="fas fa-exclamation-triangle"></i> Break Down</button>
-                            <button type="button" class="btn btn-primary" onclick="funModelPlannedMaintenanceClicked()" style="width:32.5%;" <?php echo (in_array('10020', $roll_areas) ? '' : 'disabled'); ?>><i class="far fa-bell"></i> Planned Maintenance</button>
-                            <button type="button" class="btn btn-primary" onclick="funModRedTagCreateClicked()" style="width:32.5%;" <?php echo (in_array('10021', $roll_areas) ? '' : 'disabled'); ?>><i class="fas fa-bullhorn"></i> Red Tag</button>
+                        <div class="col-lg-4 mt-1">
+                            <button type="button" class="btn btn-primary" onclick="funModCreateBreakDownClicked()" style="width:100%;" <?php echo (in_array('10019', $roll_areas) ? '' : 'disabled'); ?>><i class="fas fa-exclamation-triangle"></i> Break Down</button>
+                                                  </div>
+                        <div class="col-lg-4 mt-1">
+                             <button type="button" class="btn btn-primary" onclick="funModRedTagCreateClicked()" style="width:100%;" <?php echo (in_array('10021', $roll_areas) ? '' : 'disabled'); ?>><i class="fas fa-bullhorn"></i> Red Tag</button>
                     
                         </div>
-                        <div class="col-lg-5 mt-1">
-                            <button type="button" class="btn btn-primary" onclick="funModBuildMntCreateClicked()" style="width:48%;" <?php echo (in_array('10022', $roll_areas) ? '' : 'disabled'); ?>><i class="fas fa-tools"></i> Building Maintenance</button>
-                            <button type="button" class="btn btn-primary" onclick="funModOtherProjectCreateClicked()" style="width:48%;" <?php echo (in_array('10023', $roll_areas) ? '' : 'disabled'); ?>><i class="fas fa-recycle"></i> Other</button>
+                        <div class="col-lg-4 mt-1">
+                            <button type="button" class="btn btn-primary" onclick="funModBuildMntCreateClicked()" style="width:100%;" <?php echo (in_array('10022', $roll_areas) ? '' : 'disabled'); ?>><i class="fas fa-tools"></i> Services</button>
+                            
                         </div>                        
                     </div>
                     
