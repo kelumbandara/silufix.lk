@@ -23,7 +23,7 @@
     {        
         //-------------- Machine Category Disinct Values ----------------------- 
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $stmt = $conn->prepare("SELECT DISTINCT FaultType FROM tblwo_errorlevel_breakdown");
+        $stmt = $conn->prepare("SELECT DISTINCT FaultType FROM tblwo_closeerrors_redtag");
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_ASSOC);        
         $result = $stmt->fetchAll();        

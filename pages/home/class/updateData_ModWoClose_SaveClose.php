@@ -10,16 +10,16 @@
     date_default_timezone_set('Asia/Kolkata');
     $strServerDateTime = date("Y-m-d H:i:s");    
     //----------- Declare Variables -----------------------  
-    $WorkOrderNo    = $num[0]; 
-    $FaultType      = $num[1]; 
-    $FaultLevel1    = $num[2]; 
-    $FaultLevel2    = $num[3]; 
-    $FaultLevel3    = $num[4]; 
-    $FaultLevel4    = $num[5];         
-    $CloseDateTime  = $num[6];
-    $ClosedUser     = $num[7];
+    $WorkOrderNo        = $num[0]; 
+    $FaultType          = $num[1]; 
+    $CorrectionAction   = $num[2]; 
+    $Note               = $num[3]; 
+    $UsedMaterial       = $num[4]; 
+        
+    $CloseDateTime      = strServerDateTime;
+    $ClosedUser         = $num[5];
     //$Note           = $num[7];
-    
+       
     $RespondUser      = $_SESSION["user_name"];   
     //$WorkOrderStatusChange  = "Respond";
     $WorkOrderStatusChange  = $num[3];

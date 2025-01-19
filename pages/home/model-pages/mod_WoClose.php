@@ -21,7 +21,7 @@
                                     <td style="width:75%;" id="id_ModWoClose_WoNo">-</td>            
                                 </tr>
                                 <tr>
-                                    <td style="width:20%;">Machine</td>
+                                    <td style="width:20%;">Site</td>
                                     <td style="width:5%;">:</td>   
                                     <td style="width:75%;" id="id_ModWoClose_Machine">-</td>   
                                 </tr> 
@@ -33,13 +33,13 @@
                 <div class="row p-1">
                     <div class="col-md-6">                   
                         <label style="font-weight: bolder;" >Fault Type</label>    
-                        <select class="form-control select2" onchange="funModWoClose_FilterFaultType()" id="id_ModWoClose_SelFaultType" style="width: 100%; background-color: blue">
+                        <select class="form-control select2" onchange="funModWoClose_CorrectionAction()" id="id_ModWoClose_FaultType" style="width: 100%; background-color: blue">
                             <option selected="none"></option>                            
                         </select>
                     </div>
                     <div class="col-md-6">                   
                         <label style="font-weight: bolder">Correction Action</label>    
-                        <select class="form-control select2" onchange="funModWoClose_FilterFaultLevel1()" id="id_ModWoClose_SelFaultLevel1" style="width: 100%;">
+                        <select class="form-control select2" onchange="funModWoClose_UsedMaterial()" id="id_ModWoClose_CorrectionAction" style="width: 100%;">
                             <option selected="none"></option>                            
                         </select>
                     </div>
@@ -47,13 +47,13 @@
                 <div class="row p-1">                    
                     <div class="col-md-12">
                         <label style="font-weight: bolder">Note</label> 
-                        <input type="text" id="id_ModWoClose_inpNote" class="form-control" name="Note" placeholder="Note"> 
+                        <input type="text" id="id_ModWoClose_Note" class="form-control" name="Note" placeholder="Note"> 
                     </div>                     
                 </div> 
                 <div class="row p-1">
                     <div class="col-md-12">                      
                          <label style="font-weight: bolder">Used Material</label>    
-                        <select class="form-control select2" onchange="funModWoClose_FilterFaultLevel2()" id="id_ModWoClose_SelFaultLevel2" style="width: 100%; background-color: blue">
+                        <select class="form-control select2" onchange="funModWoClose_FilterFaultLevel2()" id="id_ModWoClose_UsedMaterial" multiple="multiple" style="width: 100%; background-color: blue">
                             <option selected="none"></option>                            
                         </select>               
                     </div>                    
@@ -61,7 +61,7 @@
                 <div class="row p-1">   
                     <div class="col-md-12">
                         <label style="font-weight: bolder">After Correction</label> 
-                        <input type="text" id="id_ModWoClose_inpNote" class="form-control" name="Note" placeholder="Attach Images"> 
+                        <input type="text" id="id_ModWoClose_Attachment" class="form-control" name="Note" placeholder="Attach Images"> 
                     </div>                                        
                 </div>      
             </div>
