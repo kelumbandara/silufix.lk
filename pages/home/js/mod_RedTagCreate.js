@@ -27,7 +27,7 @@ function funModRedTagCreateClicked()
     //alert("Select Site Category filter value");  
     DataAry[0] = "funGetFilteredData";        // Function Name    
     DataAry[1] = "Site";
-    DataAry[2] = "tblwo_errorlevel_redtag";
+    DataAry[2] = "tblwo_masterdata_redtag";
     DataAry[3] = "0";
     
     //alert(DataAry);
@@ -75,7 +75,7 @@ function funModRedTagCre_SelLocationFilter()
     const DataAry = []; 
     DataAry[0] = "funGetFilteredData";        // Function Name    
     DataAry[1] = "Location";
-    DataAry[2] = "tblwo_errorlevel_redtag";
+    DataAry[2] = "tblwo_masterdata_redtag";
     DataAry[3] = "1";
     DataAry[4] = "Site";
     DataAry[5] = document.getElementById("id_ModRedTagCre_Site").value;       
@@ -144,7 +144,7 @@ function funModRedTagCre_SelBuildingFilter()
      const DataAry = []; 
      DataAry[0] = "funGetFilteredData";        // Function Name    
      DataAry[1] = "Building";
-     DataAry[2] = "tblwo_errorlevel_redtag";
+     DataAry[2] = "tblwo_masterdata_redtag";
      DataAry[3] ="2";
      DataAry[4] = "Site";
      DataAry[5] = document.getElementById("id_ModRedTagCre_Site").value;
@@ -209,7 +209,7 @@ function funModRedTagCre_SelIssueTypeFilter()
      const DataAry = []; 
      DataAry[0] = "funGetFilteredData";        // Function Name    
      DataAry[1] = "IssueType";
-     DataAry[2] = "tblwo_errorlevel_redtag";
+     DataAry[2] = "tblwo_masterdata_redtag";
      DataAry[3] = "3";
      DataAry[4] = "Site";
      DataAry[5] = document.getElementById("id_ModRedTagCre_Site").value;
@@ -279,7 +279,7 @@ function funModRedTagCre_SelIssueDescriptionFilter()
      const DataAry = []; 
      DataAry[0] = "funGetFilteredData";        // Function Name    
      DataAry[1] = "IssueDescriptionMain";
-     DataAry[2] = "tblwo_errorlevel_redtag";
+     DataAry[2] = "tblwo_masterdata_redtag";
      DataAry[3] = "4";
      DataAry[4] = "Site";
      DataAry[5] = document.getElementById("id_ModRedTagCre_Site").value;
@@ -343,7 +343,7 @@ function funModRedTagCre_SelIssueDescriptionFilter()
 //-------------- Create a Redtag Function --------------------------------------------------
 function funModRedTagCre_Update()
 {        
-    let intDebugEnable = 0;  
+    let intDebugEnable = 1;  
     if(intDebugEnable === 1)    alert("funModRedTagCre_Update");
     const now = new Date();
     const formattedDateTime = now.getFullYear() + '-' +
@@ -371,7 +371,7 @@ function funModRedTagCre_Update()
     DataAry[11] = ""; //Issue_Description2
     DataAry[12] = formattedDateTime;
     DataAry[13] = JS_SessionArry[0].CurrentUserDepartment;
-    DataAry[14] = JS_SessionArry[0].CurrentUserName;
+    DataAry[14] = JS_SessionArry[0].CurrentUserEPF;
     DataAry[15] = formattedDateTime; //PlannedDateTime
     DataAry[16] = formattedDateTime; //StartedDateTime
     DataAry[17] = formattedDateTime; //CloseDateTime
@@ -392,12 +392,10 @@ function funModRedTagCre_Update()
         Swal.fire({title: 'Error.!',text: 'Please select the data',icon: 'error',confirmButtonText: 'OK'});
     }
     else
-    {	             
-            //alert(DataAry);
-            //alert("Select ok");
+    {       
             $.post('class/insertData_WoBrakdown.php', { userpara: DataAry }, function(json_data2) 
             {
-                //alert(json_data2);           
+                if(intDebugEnable === 1)    alert("json_data2 : " + json_data2);     
                 var res = $.parseJSON(json_data2);
                 //alert(res.Status_Ary[0]);
                 if(res.Status_Ary[0] === "true")
@@ -476,7 +474,7 @@ function funModRedTagCre_SelSiteFilter()
     const DataAry = []; 
     DataAry[0] = "funGetFilteredData";        // Function Name    
     DataAry[1] = "Building";
-    DataAry[2] = "tblwo_errorlevel_redtag";
+    DataAry[2] = "tblwo_masterdata_redtag";
     DataAry[3] = "1";
     DataAry[4] = "SiteName";
     DataAry[5] = document.getElementById("id_ModRedTagCre_Site").value;       

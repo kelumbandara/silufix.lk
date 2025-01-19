@@ -40,7 +40,7 @@
    $AllocatedUser       = ''; // Placeholder value
    $StartedDateTime     = $num[16];
    $StartedUser         = ''; // Placeholder value
-   $CloseDateTime       = $num[17];
+   $ClosedDateTime       = $num[17];
    $ClosedUser          = ''; // Placeholder value
    $FaultType           = ''; // Placeholder value
    $UsedSpairParts      = ''; // Placeholder value
@@ -104,7 +104,7 @@
             { 
                 echo("hi");
                 // WoStatus is not "New" or "Inprogress", proceed with insertion
-                $stmt = $conn->prepare("INSERT INTO tblwo_event(ServerDateTime, FactoryCode, Unit, RelatedDepartment, WorkOrderNo, WorkOrderCategory, WorkOrderSubCategory, WorkOrderSubCategory2, Site, Building, IssueType, IssueDescription1, Issue_Description2, Note, CreatedDateTime, CreatedDepartment, CreatedUser, PlannedDateTime, AllocatedUser, StartedDateTime, StartedUser, CloseDateTime, ClosedUser, FaultType, UsedSpairParts, Remark, VerifiedDateTime, VerifiedUser, WoDescription, WoEventLog, Shift, WoStatus, AlertSentState, Attachment, State) 
+                $stmt = $conn->prepare("INSERT INTO tblwo_event(ServerDateTime, FactoryCode, Unit, RelatedDepartment, WorkOrderNo, WorkOrderCategory, WorkOrderSubCategory, WorkOrderSubCategory2, Site, Building, IssueType, IssueDescription1, Issue_Description2, Note, CreatedDateTime, CreatedDepartment, CreatedUser, PlannedDateTime, AllocatedUser, StartedDateTime, StartedUser, ClosedDateTime, ClosedUser, FaultType, UsedSpairParts, Remark, VerifiedDateTime, VerifiedUser, WoDescription, WoEventLog, Shift, WoStatus, AlertSentState, Attachment, State) 
                         VALUES (:svrdt, :faccod, :unit, :reldep, :wono, :wocat, :wosubcat, :wosubcat2, :site, :bldg, :issuetype, :issuedesc1, :issuedesc2, :note, :credt, :credep, :creusr, :plndt, :alocusr, :stddt, :stdusr, :clsdt, :clsusr, :fltType, :spairparts, :remark, :veridt, :verusr, :wodescrip, :woevntlog, :shft, :wostats, :altsntst, :attach, :stat)");
                         // Bind parameters
                     $stmt->bindParam(':svrdt', $strServerDateTime);
@@ -128,7 +128,7 @@
                     $stmt->bindParam(':alocusr', $AllocatedUser);
                     $stmt->bindParam(':stddt', $StartedDateTime);
                     $stmt->bindParam(':stdusr', $StartedUser);
-                    $stmt->bindParam(':clsdt', $CloseDateTime);
+                    $stmt->bindParam(':clsdt', $ClosedDateTime);
                     $stmt->bindParam(':clsusr', $ClosedUser);
                     $stmt->bindParam(':fltType', $FaultType);
                     $stmt->bindParam(':spairparts', $UsedSpairParts);
@@ -160,7 +160,7 @@
         }
         else
         {
-            $stmt = $conn->prepare("INSERT INTO tblwo_event(ServerDateTime, FactoryCode, Unit, RelatedDepartment, WorkOrderNo, WorkOrderCategory, WorkOrderSubCategory, WorkOrderSubCategory2, Site, Location, Building, IssueType, IssueDescriptionMain, IssueDescriptionSub, Note, CreatedDateTime, CreatedDepartment, CreatedUser, PlannedDateTime, AllocatedUser, StartedDateTime, StartedUser, CloseDateTime, ClosedUser, FaultType, UsedSpairParts, Remark, VerifiedDateTime, VerifiedUser, WoDescription, WoEventLog, Shift, WoStatus, AlertSentState, Attachment, State) 
+            $stmt = $conn->prepare("INSERT INTO tblwo_event(ServerDateTime, FactoryCode, Unit, RelatedDepartment, WorkOrderNo, WorkOrderCategory, WorkOrderSubCategory, WorkOrderSubCategory2, Site, Location, Building, IssueType, IssueDescriptionMain, IssueDescriptionSub, Note, CreatedDateTime, CreatedDepartment, CreatedUser, PlannedDateTime, AllocatedUser, StartedDateTime, StartedUser, ClosedDateTime, ClosedUser, FaultType, UsedSpairParts, Remark, VerifiedDateTime, VerifiedUser, WoDescription, WoEventLog, Shift, WoStatus, AlertSentState, Attachment, State) 
                         VALUES (:svrdt, :faccod, :unit, :reldep, :wono, :wocat, :wosubcat, :wosubcat2, :site1, :location, :bldg, :issuetype, :issuedesc1, :issuedesc2, :note, :credt, :credep, :creusr, :plndt, :alocusr, :stddt, :stdusr, :clsdt, :clsusr, :fltType, :spairparts, :remark, :veridt, :verusr, :wodescrip, :woevntlog, :shft, :wostats, :altsntst, :attach, :stat)");
                         // Bind parameters
             $stmt->bindParam(':svrdt', $strServerDateTime);
@@ -185,7 +185,7 @@
             $stmt->bindParam(':alocusr', $AllocatedUser);
             $stmt->bindParam(':stddt', $StartedDateTime);
             $stmt->bindParam(':stdusr', $StartedUser);
-            $stmt->bindParam(':clsdt', $CloseDateTime);
+            $stmt->bindParam(':clsdt', $ClosedDateTime);
             $stmt->bindParam(':clsusr', $ClosedUser);
             $stmt->bindParam(':fltType', $FaultType);
             $stmt->bindParam(':spairparts', $UsedSpairParts);

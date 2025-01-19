@@ -95,7 +95,7 @@
         }
         //--------------- View Report function ------------------------------------------
         function funCheckLogin() 
-	{
+	    {
             var vbl_UserName = document.getElementById("id_UserName").value;
             var vbl_Password = document.getElementById("id_Password").value;            
             //alert(vbl_UserName);

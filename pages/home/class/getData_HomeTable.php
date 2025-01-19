@@ -31,155 +31,125 @@
     //----------------- Function : Get Checking Details ------------------------------
     if($strFuncType === "funGetFilteredData")      //-------------- funGetCheckInDetails_byWoEpf -----------
     {
-        $strNoOfFilters     = $num[1];    
+        $CurrentUserEPF         = $num[1]; 
+        $CurrentUserDepartment  = $num[2]; 
+        $CurrentUserType        = $num[3]; 
+        $CurrentIssueType       = $num[4];        
         //$strNoOfFilters = "0";
         try 
-        {    
-            if($strNoOfFilters == "0")
-            {       
-                $strLast7DaysFilterValue     = $num[4];
-                
-                //SELECT column_name(s) FROM table_name WHERE condition GROUP BY column_name(s) ORDER BY column_name(s);
-                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  
-              
-                $query = "
+        { 
+            //SELECT column_name(s) FROM table_name WHERE condition GROUP BY column_name(s) ORDER BY column_name(s);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  
+            
+            $query = "
                     SELECT DISTINCT
-                        e.ID, e.WorkOrderNo, 
-                        e.CreatedDepartment, 
-                        e.CreatedDateTime, 
-                        e.WorkOrderCategory,
-                        e.WorkOrderSubCategory, 
-                         
-                        e.FaultType, 
-                        e.CreatedUser,
-                        e.IssueDescriptionMain, 
-                        e.WoStatus, 
-                        e.VerifiedUser, 
-                        e.WoReOpen,
-                        CASE WHEN c.WorkOrderNo IS NOT NULL THEN 1 ELSE 0 END AS AlertSentState
+                        tblwo_event.ID, 
+                        tblwo_event.WorkOrderNo, 
+                        tblwo_event.CreatedDepartment, 
+                        tblwo_event.CreatedDateTime, 
+                        tblwo_event.WorkOrderCategory, 
+                        tblwo_event.WorkOrderSubCategory, 
+                        tblusers_account.EmpName AS CreatedEmpName, 
+                        tblwo_event.IssueDescriptionMain, 
+                        tblwo_event.Site, 
+                        tblwo_event.WoStatus, 
+                        tblwo_event.VerifiedUser, 
+                        tblwo_event.WoReOpen
                     FROM 
-                        tblwo_event e
+                        tblwo_event
                     LEFT JOIN 
-                        tblwo_chathistory c ON e.WorkOrderNo = c.WorkOrderNo
+                        tblusers_account
+                    ON 
+                        tblwo_event.CreatedUser = tblusers_account.EPF
                     WHERE 
-                        e.State < :stat                       
+                        tblwo_event.State < :stat                
+                    ";    
+            if($CurrentUserDepartment != "PMD") // Only show own workorders
+            {  
+                $query .= " AND tblwo_event.CreatedUser = :creusr"; 
+                $stmt = $conn->prepare($query);
+                $stmt->bindParam(':stat', $intWoState); 
+                $stmt->bindParam(':creusr', $CurrentUserEPF);
+            }
+            else if($CurrentUserDepartment == "PMD")
+            {
+                if(($CurrentUserType == "Manager")||($CurrentUserType == "Executive")||($CurrentUserType == "Supper Admin")||($CurrentUserType == "admin"))   // Show all workorders
+                {
+                    //$query .= " AND tblwo_event.CreatedUser = :creusr"; 
+                    $stmt = $conn->prepare($query);
+                    $stmt->bindParam(':stat', $intWoState); 
+                }
+                else if($CurrentUserType == "Assistance")   // Filter by Issue Type
+                {
+                    $query .= " AND tblwo_event.IssueType = :isutp"; 
+                    $stmt = $conn->prepare($query);
+                    $stmt->bindParam(':stat', $intWoState); 
+                    $stmt->bindParam(':isutp', $CurrentIssueType);
+                }
+                else if($CurrentUserType == "TeamMember")   // Filter by Allocated Table 
+                {
+                    $query .= "
+                            AND tblwo_event.IssueType = :isutp 
+                            AND EXISTS (
+                                SELECT 1 
+                                FROM 
+                                    tblwo_allocatedusers 
+                                WHERE 
+                                    tblwo_allocatedusers.AllocatedUser = :creusr 
+                                    AND tblwo_allocatedusers.Status = 'Active'
+                            )
                         ";
 
-                // Add the date filter if $strLast7DaysFilterValue is "Last7Days"
-                if ($strLast7DaysFilterValue === "Last7Days") 
-                {
-                    $query .= " AND e.CreatedDateTime >= NOW() - INTERVAL 6 DAY";
-                }
-                
-                $stmt = $conn->prepare($query);
-                $stmt->bindParam(':stat', $intWoState); 
-                //$stmt->bindParam(':stat', $intWoState);
-                $stmt->execute();
-                // set the resulting array to associative
-                $stmt->setFetchMode(PDO::FETCH_ASSOC);        
-                $result = $stmt->fetchAll();        
-                foreach($result as $row)
-                {           
-                    $ReturnData_ary[$i][0] = $row['ID'];
-                    $ReturnData_ary[$i][1] = $row['WorkOrderNo'];                     
-                    $ReturnData_ary[$i][2] = $row['CreatedDepartment'];  
-                    $ReturnData_ary[$i][3] = $row['CreatedDateTime']; 
-                    $ReturnData_ary[$i][4] = $row['WorkOrderCategory']; 
-                    $ReturnData_ary[$i][5] = $row['WorkOrderSubCategory'];                    
-                    $ReturnData_ary[$i][6] = $row['IssueDescriptionMain']; 
-                    $ReturnData_ary[$i][7] = $row['FaultType'];  
-                    $ReturnData_ary[$i][8] = $row['CreatedUser'];  
-                    $ReturnData_ary[$i][9] = $row['IssueDescriptionMain'];                    
-                    $ReturnData_ary[$i][10] = $row['WoStatus'];  
-                    $ReturnData_ary[$i][11] = $row['VerifiedUser'];  
-                    $ReturnData_ary[$i][12] = $row['WoReOpen']; 
-                    $ReturnData_ary[$i][13] = $row['AlertSentState']; 
-                    $i++;
-                    //echo $i;
-                }    
-                if($i === 0)    // No Data
-                {
-                    $Status_ary[0] = "false";
-                    $Status_ary[1] = "Data not found"; 
+                        $stmt = $conn->prepare($query);
+                        $stmt->bindParam(':stat', $intWoState); 
+                        $stmt->bindParam(':isutp', $CurrentIssueType);
+                        $stmt->bindParam(':creusr', $CurrentUserEPF); 
+
                 }
                 else
                 {
-                    $Status_ary[0] = "true";
-                    $Status_ary[1] = "Data Available"; 
-                }  
-            }
-            else if($strNoOfFilters == "1")
+                    $query .= " AND tblwo_event.CreatedUser = :creusr"; 
+                    $stmt = $conn->prepare($query);
+                    $stmt->bindParam(':stat', $intWoState); 
+                    $stmt->bindParam(':creusr', $CurrentUserEPF);
+                }
+            }                 
+            //$stmt = $conn->prepare($query);
+            //$stmt->bindParam(':stat', $intWoState); 
+            //$stmt->bindParam(':creusr', $CurrentUserEPF);
+            $stmt->execute();
+            // set the resulting array to associative
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);        
+            $result = $stmt->fetchAll();        
+            foreach($result as $row)
+            {           
+                $ReturnData_ary[$i][0] = $row['ID'];
+                $ReturnData_ary[$i][1] = $row['WorkOrderNo'];                     
+                $ReturnData_ary[$i][2] = $row['CreatedDepartment'];  
+                $ReturnData_ary[$i][3] = $row['CreatedDateTime']; 
+                $ReturnData_ary[$i][4] = $row['WorkOrderCategory']; 
+                $ReturnData_ary[$i][5] = $row['WorkOrderSubCategory'];                    
+                $ReturnData_ary[$i][6] = $row['IssueDescriptionMain']; 
+                $ReturnData_ary[$i][7] = $row['Site'];  
+                $ReturnData_ary[$i][8] = $row['CreatedEmpName'];  
+                $ReturnData_ary[$i][9] = $row['IssueDescriptionMain'];                    
+                $ReturnData_ary[$i][10] = $row['WoStatus'];  
+                $ReturnData_ary[$i][11] = $row['VerifiedUser'];  
+                $ReturnData_ary[$i][12] = $row['WoReOpen'];              
+                $i++;
+                //echo $i;
+            }    
+            if($i === 0)    // No Data
             {
-                $strFilterName1      = $num[2];  // WoDepartment
-                $strFilterValue1     = $num[3];  // Engineering   
-                $strLast7DaysFilterValue     = $num[4];
-                //SELECT column_name(s) FROM table_name WHERE condition GROUP BY column_name(s) ORDER BY column_name(s);
-                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  
-                               
-                $query = "
-                    SELECT DISTINCT
-                        e.ID, e.WorkOrderNo, 
-                        e.CreatedDepartment, 
-                        e.CreatedDateTime, 
-                        e.WorkOrderCategory,
-                        e.WorkOrderSubCategory, 
-                         
-                        e.FaultType, 
-                        e.CreatedUser,
-                        e.WoDescription, 
-                        e.WoStatus, 
-                        e.VerifiedUser, 
-                        e.WoReOpen,
-                        CASE WHEN c.WorkOrderNo IS NOT NULL THEN 1 ELSE 0 END AS AlertSentState
-                    FROM 
-                        tblwo_event e
-                    LEFT JOIN 
-                        tblwo_chathistory c ON e.WorkOrderNo = c.WorkOrderNo
-                    WHERE 
-                        e.State < :stat AND $strFilterName1=:fvalue1
-                        ";                
-                // Add the date filter if $strLast7DaysFilterValue is "Last7Days"
-                if ($strLast7DaysFilterValue === "Last7Days") 
-                {
-                    $query .= " AND e.CreatedDateTime >= NOW() - INTERVAL 6 DAY";
-                }
-                $stmt = $conn->prepare($query);
-                $stmt->bindParam(':stat', $intWoState); 
-                $stmt->bindParam(':fvalue1', $strFilterValue1);
-                $stmt->execute();
-                // set the resulting array to associative
-                $stmt->setFetchMode(PDO::FETCH_ASSOC);        
-                $result = $stmt->fetchAll();        
-                foreach($result as $row)
-                {           
-                    $ReturnData_ary[$i][0] = $row['ID'];
-                    $ReturnData_ary[$i][1] = $row['WorkOrderNo'];                     
-                    $ReturnData_ary[$i][2] = $row['CreatedDepartment'];  
-                    $ReturnData_ary[$i][3] = $row['CreatedDateTime']; 
-                    $ReturnData_ary[$i][4] = $row['WorkOrderCategory']; 
-                    $ReturnData_ary[$i][5] = $row['WorkOrderSubCategory'];                    
-                    $ReturnData_ary[$i][6] = $row['WoDescription']; 
-                    $ReturnData_ary[$i][7] = $row['FaultType'];  
-                    $ReturnData_ary[$i][8] = $row['CreatedUser'];  
-                    $ReturnData_ary[$i][9] = $row['WoDescription'];                    
-                    $ReturnData_ary[$i][10] = $row['WoStatus'];  
-                    $ReturnData_ary[$i][11] = $row['VerifiedUser'];  
-                    $ReturnData_ary[$i][12] = $row['WoReOpen']; 
-                    $ReturnData_ary[$i][13] = $row['AlertSentState']; 
-                    $i++;
-                    //echo $i;
-                }
-                if($i === 0)    // No Data
-                {
-                    $Status_ary[0] = "false";
-                    $Status_ary[1] = "Data not found"; 
-                }
-                else
-                {
-                    $Status_ary[0] = "true";
-                    $Status_ary[1] = "Data Available"; 
-                } 
+                $Status_ary[0] = "false";
+                $Status_ary[1] = "Data not found"; 
             }
+            else
+            {
+                $Status_ary[0] = "true";
+                $Status_ary[1] = "Data Available"; 
+            }  
+            
             
             //echo $strSummaryAry;
         } 

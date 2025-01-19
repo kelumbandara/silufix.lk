@@ -210,7 +210,7 @@
         //const DataAry = [];
         DataAry[0] = "funGetFilteredData";        // Function Name    
         DataAry[1] = "Department";
-        DataAry[2] = "tblwo_errorlevel_breakdown";
+        DataAry[2] = "tblwo_departments";
         DataAry[3] = "0";
         if(intDebugEnable === 1)    alert("Location : 200 " + DataAry);      
         $.post('comFunctions.php', { userpara: DataAry }, function(json_data2) 
@@ -256,9 +256,18 @@
                 options4.forEach(o => o.remove());
                 //------------ Fill New Items -------------------------------------
                 var sel_UserType = document.getElementById("id_issuetype");
+
+                //------------ Fill New Items -------------------------------------
+                // Add "All" as the first option
+                var allOption = document.createElement("option");
+                allOption.textContent = "All";
+                allOption.value = "All";
+                sel_UserType.appendChild(allOption);
+
                 for(var i = 0; i < AryDepartment.length; i++)
                 {
                     var opt4 = AryDepartment[i];
+                    opt4 = AryDepartment[i];
                     var el4 = document.createElement("option");
                     el4.textContent = opt4;
                     el4.value = opt4;
