@@ -123,7 +123,10 @@
         $strUserName    = $num[4];
         $strPassword    = $num[5];
         $strDepartment  = $num[6];
-        $strIssueType   = $num[7];
+        //$strIssueType   = $num[7];
+        // Convert array to a comma-separated string
+        $strIssueType = implode(",", $num[7]);
+
         $strContact     = $num[8];
         $strEmail       = $num[9];
         $strUserType    = $num[10];
@@ -185,7 +188,10 @@
         $strUserName    = $num[4];
         $strPassword    = $num[5];
         $strDepartment  = $num[6];
-        $strIssueType   = $num[7];
+        //$strIssueType   = $num[7];
+         // Convert array to a comma-separated string
+        $strIssueType = implode(",", $num[7]);
+
         $strContact     = $num[8];
         $strEmail       = $num[9];
         $strUserType    = $num[10];

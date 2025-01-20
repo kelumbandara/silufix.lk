@@ -72,11 +72,13 @@
                                         </select>
                                     </div>  
                                 </div>
+                                
                                 <div class="form-row"> 
+                                    
                                     <div class="form-group col-md-3">
                                         <label>Issue Type</label>                                        
-                                        <select class="form-control" id="id_issuetype" required>                                                                                       
-                                        </select>
+                                        <select class="form-control" multiple id="id_issuetype" required>                                                                                       
+                                        </select>                                       
                                     </div>                                     
                                     <div class="form-group col-md-2">
                                         <label>Contact</label>
@@ -169,12 +171,18 @@
     $(document).ready(function () 
     {
         // Load user data on page load
+        $('#id_issuetype').select2(
+        {
+            placeholder: "Select issue types",
+            allowClear: true
+        });
         funLoadUsers();        
     });
     //-------------- Load Users -------------------------------
     function funLoadUsers() 
     {        
         let intDebugEnable = 0;
+        //if(intDebugEnable === 1)    alert("funLoadUsers : 100 " + DataAry);
         //alert("Load Users");    
         //--------- Load User Type to Array -------------------------------------
         const DataAry = [];
@@ -291,6 +299,8 @@
     //-------------- Click Delete -------------------------------
     function deleteUser(userId) 
     {        
+        let intDebugEnable = 0;
+        if(intDebugEnable === 1)    alert("deleteUser");
         //alert("Delete Users ID=" + userId);
         const DataAry = []; 
         DataAry[0] = "funDeleteUser";        // Table Name
@@ -337,7 +347,8 @@
     //-------------- Click Edit -------------------------------
     function editUser(userId) 
     {        
-        //alert("Load Users ID=" + userId);
+        let intDebugEnable = 0;
+        if(intDebugEnable === 1)    alert("editUser");
         //readSelectedRow(userId);
         //document.getElementById("id_tableusers").innerHTML = res.Data_Ary[0];   
         var strUserId = userId.toString();        
@@ -359,7 +370,28 @@
                 document.getElementById("id_username").value    = cells[3].innerText;
                 document.getElementById("id_password").value    = cells[4].innerText;
                 document.getElementById("id_department").value  = cells[5].innerText;
-                document.getElementById("id_issuetype").value   = cells[6].innerText;
+                //document.getElementById("id_issuetype").value   = cells[6].innerText;
+
+                // Assuming cells[6].innerText contains a comma-separated string
+                let selectedValues = cells[6].innerText.split(',');
+                if(intDebugEnable === 1)    alert("selectedValues :" + selectedValues);
+                // Get the multi-select element
+                let selectElement = document.getElementById("id_issuetype");
+                // Loop through all options and set the selected ones
+                for (let option of selectElement.options) 
+                {
+                    if (selectedValues.includes(option.value)) 
+                    {
+                        option.selected = true; // Mark as selected
+                    } 
+                    else 
+                    {
+                        option.selected = false; // Mark as unselected
+                    }
+                }
+                // If you are using Select2, you may need to trigger an update
+                $('#id_issuetype').trigger('change');
+
                 document.getElementById("id_contact").value     = cells[7].innerText;
                 document.getElementById("id_email").value       = cells[8].innerText;
                 document.getElementById("id_usertype").value    = cells[9].innerText;
@@ -371,6 +403,20 @@
     }
     function funUpdateUser() 
     {         
+        let intDebugEnable = 0;
+        if(intDebugEnable === 1)    alert("funUpdateUser");
+
+        const selectElement = document.getElementById("id_issuetype");
+        const selectedValues = [];
+        for (const option of selectElement.options) 
+        {
+            if (option.selected) 
+            {
+                selectedValues.push(option.value); // Get the value of the selected option
+            }            
+        }
+        if(intDebugEnable === 1)    alert("selectedValues :" + selectedValues);
+
         const DataAry = []; 
         DataAry[0] = "funUpdateUser";        // Table Name
         DataAry[1] = document.getElementById("id_id").value;
@@ -379,17 +425,19 @@
         DataAry[4] = document.getElementById("id_username").value;
         DataAry[5] = document.getElementById("id_password").value; 
         DataAry[6] = document.getElementById("id_department").value;
-        DataAry[7] = document.getElementById("id_issuetype").value;
+        //DataAry[7] = document.getElementById("id_issuetype").value;
+        DataAry[7] = selectedValues;
         DataAry[8] = document.getElementById("id_contact").value; 
         DataAry[9] = document.getElementById("id_email").value; 
         DataAry[10] = document.getElementById("id_usertype").value;
-        DataAry[11] = document.getElementById("id_availability").value;        
-        //alert(DataAry);
+        DataAry[11] = document.getElementById("id_availability").value;  
+
+        if(intDebugEnable === 1)    alert("DataAry : " + DataAry);
         if(DataAry[1] !== "")
         {
             $.post('userManage.php', { userpara: DataAry }, function(json_data2) 
             {
-                //alert(json_data2);           
+                if(intDebugEnable === 1)    alert("json_data2 : " + DataAry);        
                 var res = $.parseJSON(json_data2);  
                 if(res.Status_Ary[0] === "true")
                 {
@@ -410,7 +458,9 @@
     }
     function funNewUser() 
     {    
-        //alert("New User");
+        let intDebugEnable = 0;
+        if(intDebugEnable === 1)    alert("funNewUser");
+
         const DataAry = []; 
         DataAry[0] = "funNewUser";        // Table Name
         DataAry[1] = document.getElementById("id_id").value;
@@ -419,12 +469,24 @@
         DataAry[4] = document.getElementById("id_username").value;
         DataAry[5] = document.getElementById("id_password").value; 
         DataAry[6] = document.getElementById("id_department").value;
-        DataAry[7] = document.getElementById("id_issuetype").value;
+        //DataAry[7] = document.getElementById("id_issuetype").value;
+        const selectElement = document.getElementById("id_issuetype");
+        const selectedValues = [];
+        for (const option of selectElement.options) 
+        {
+            if (option.selected) 
+            {
+                selectedValues.push(option.value); // Get the value of the selected option
+            }            
+        }
+        DataAry[7] = selectedValues;
         DataAry[8] = document.getElementById("id_contact").value; 
         DataAry[9] = document.getElementById("id_email").value; 
         DataAry[10] = document.getElementById("id_usertype").value;
-        DataAry[11] = document.getElementById("id_availability").value;        
-        //alert(DataAry);   
+        DataAry[11] = document.getElementById("id_availability").value; 
+
+        if(intDebugEnable === 1)    alert("DataAry :" + DataAry);  
+
         if((DataAry[2]==="")||(DataAry[3]==="")||(DataAry[4]==="")||(DataAry[5]==="")||(DataAry[8]==="")||(DataAry[9]===""))
         {
             Swal.fire({title: 'Error.!',text: 'Please fill the data',icon: 'error',confirmButtonText: 'OK'});
@@ -436,7 +498,7 @@
             {
                 $.post('userManage.php', { userpara: DataAry }, function(json_data2) 
                 {
-                    //alert(json_data2);           
+                    if(intDebugEnable === 1)    alert("json_data2 :" + json_data2);          
                     var res = $.parseJSON(json_data2);  
                     if(res.Status_Ary[0] === "true")
                     {
@@ -465,7 +527,10 @@
         document.getElementById("id_username").value    = "";
         document.getElementById("id_password").value    = ""; 
         document.getElementById("id_department").value  = "";
-        document.getElementById("id_issuetype").value   = "";
+        //document.getElementById("id_issuetype").value   = "";
+        // Clear all selected values in Select2
+        $('#id_issuetype').val(null).trigger('change');
+
         document.getElementById("id_contact").value     = ""; 
         document.getElementById("id_email").value       = ""; 
         document.getElementById("id_usertype").value    = "";
