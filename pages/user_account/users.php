@@ -44,8 +44,6 @@
                     <div class="border-top my-2"></div>
                     <div class="row mt-4">                        
                         <div class="col-lg-12">
-                           <!-- Add User Form -->
-                            <h4>Add New User</h4>
                             <form id="addUserForm">
                                 <div class="form-row">
                                     <div class="form-group col-md-1">
@@ -75,7 +73,7 @@
                                     </div>  
                                 </div>
                                 <div class="form-row"> 
-                                    <div class="form-group col-md-2">
+                                    <div class="form-group col-md-3">
                                         <label>Issue Type</label>                                        
                                         <select class="form-control" id="id_issuetype" required>                                                                                       
                                         </select>
@@ -88,18 +86,20 @@
                                         <label>Email</label>
                                         <input type="text" class="form-control" id="id_email" required>
                                     </div>                         
-                                    <div class="form-group col-md-1">
+                                    <div class="form-group col-md-2">
                                         <label>User Type</label>                                        
                                         <select class="form-control" id="id_usertype" required>                                           
                                         </select>
                                     </div> 
-                                    <div class="form-group col-md-1">
+                                    <div class="form-group col-md-2">
                                         <label>Availability</label>
                                         <select class="form-control" id="id_availability" required>
                                             <option value="Yes">Yes</option>
                                             <option value="No">No</option>
                                         </select>
-                                    </div>                                    
+                                    </div>
+                                </div>
+                                <div class="form-row">
                                     <div class="form-group col-md-1">
                                        <button type="button" class=" form-control btn btn-primary mt-4" onclick="funUpdateUser()">Update</button>
                                     </div>

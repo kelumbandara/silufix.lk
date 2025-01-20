@@ -50,6 +50,7 @@
                         tblwo_event.WorkOrderCategory, 
                         tblwo_event.WorkOrderSubCategory, 
                         tblusers_account.EmpName AS CreatedEmpName, 
+                        tblwo_event.IssueType, 
                         tblwo_event.IssueDescriptionMain, 
                         tblwo_event.Site, 
                         tblwo_event.WoStatus, 
@@ -129,7 +130,7 @@
                 $ReturnData_ary[$i][3] = $row['CreatedDateTime']; 
                 $ReturnData_ary[$i][4] = $row['WorkOrderCategory']; 
                 $ReturnData_ary[$i][5] = $row['WorkOrderSubCategory'];                    
-                $ReturnData_ary[$i][6] = $row['IssueDescriptionMain']; 
+                $ReturnData_ary[$i][6] = $row['IssueType']; 
                 $ReturnData_ary[$i][7] = $row['Site'];  
                 $ReturnData_ary[$i][8] = $row['CreatedEmpName'];  
                 $ReturnData_ary[$i][9] = $row['IssueDescriptionMain'];                    

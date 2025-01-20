@@ -216,6 +216,7 @@
                                         <th>Department</th>    
                                         <th>By</th>
                                         <th>Category</th>
+                                        <th>Issue Type</th>
                                         <th>Issue Description</th>                                                  
                                         <th>Status</th>
                                         <th><center>ReOpen</center></th>
@@ -347,7 +348,7 @@
 
     $(function () 
     {     
-        alert("Home page started..");   
+        //alert("Home page started..");   
         //Date and time picker
         //$('#ModOtherProjectCre_dtmDateTime').datetimepicker({
         //    format: 'YYYY-MM-DD HH:mm:ss',
@@ -382,14 +383,15 @@
         $("#example1").DataTable({
             "columnDefs": [
                 { "width": "2%", "targets": 0 }, // No
-                { "width": "9%", "targets": 1 }, // WO
-                { "width": "10%", "targets": 2 }, // Time
+                { "width": "8%", "targets": 1 }, // WO
+                { "width": "9%", "targets": 2 }, // Time
                 { "width": "10%", "targets": 3 }, // Department
                 { "width": "12%", "targets": 4 }, // By 
                 { "width": "10%", "targets": 5 }, // Category
-                { "width": "33%", "targets": 6 }, // Description (set width to 20%)
-                { "width": "7%", "targets": 7 }, // Status               
-                { "width": "7%", "targets": 8 }   // ReOpen
+                { "width": "9%", "targets": 6 }, // Issue Type
+                { "width": "36%", "targets": 7 }, // Issue Description 
+                { "width": "7%", "targets": 8 }, // Status               
+                { "width": "7%", "targets": 9 }   // ReOpen
             ],
             "paging": false,
             "responsive": true, 
@@ -475,7 +477,7 @@
             if(roll_other_ary.includes("9001311"))
             {
                 //alert("Location : 9001311"); 
-                funRefresh_DowntimeDashboard();
+                //funRefresh_DowntimeDashboard();
             }
             if(roll_other_ary.includes("9001312"))
             {
@@ -704,7 +706,7 @@
     //-------------------- Refresh Home Table -------------------
     function funRefresh_WoTable() 
     {
-        let intDebugEnable = 1;        
+        let intDebugEnable = 0;        
         if(intDebugEnable === 1)    alert("funRefresh_WoTable");
         
         //alert("Refresh page..");      
@@ -780,7 +782,8 @@
                         res.Data_Ary[i][2],  
                         res.Data_Ary[i][8],//user
                         res.Data_Ary[i][4], //
-                        res.Data_Ary[i][6], 
+                        res.Data_Ary[i][6],
+                        res.Data_Ary[i][9], 
                         res.Data_Ary[i][10],
                         res.Data_Ary[i][12]
                     ]).draw(false);
@@ -808,7 +811,7 @@
     //----------- fun Refresh All Areas ---------------------------------
     function funRefresh_HomePage()
     {
-        funRefresh_DowntimeDashboard();
+        //funRefresh_DowntimeDashboard();
         funRefresh_MechanicDashboard();        
         funRefresh_Last30DaySummary();
         funRefresh_TodaySummary();
@@ -883,6 +886,7 @@
         var options = {useSSL: true, timeout: 3,onSuccess: onMqttConnect};  		 
         mqtt.connect(options); //connect
     }
+    /*
     //--------------------- Downtime Dashboard (100-11) ----------------------   
     function funRefresh_DowntimeDashboard()
     {
@@ -971,7 +975,7 @@
             });
         }
     }
-
+    */
     /*
     function funHome_SelDepartmentFilter()
     {

@@ -6,7 +6,8 @@
     
     $strWoNumber = $num[0];  
     //$strWoNumber = "WO_00000104";    
-   
+    $strIssueType = $num[1]; 
+
     //----------- Set TimeZone ----------------------------
     date_default_timezone_set('Asia/Kolkata');
     $strStopDateTime = date("Y-m-d H:i:s");
@@ -21,8 +22,19 @@
     
     //$McCategory_Ary[0]  = "Select data";     
     //-------------- Read All Mechanics from Users List ----------------------- 
+    $query = "
+        SELECT 
+            EPF,EmpName,Contact 
+        FROM 
+            tblusers_account 
+        WHERE 
+            IssueType = :issutp
+            AND UserType = 'TeamMember'
+        ";
+
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $stmt = $conn->prepare("SELECT EPF,EmpName,Contact FROM tblusers_account WHERE UserType = 'mc'");
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(':issutp', $strIssueType);
     $stmt->execute();
     $stmt->setFetchMode(PDO::FETCH_ASSOC);        
     $result = $stmt->fetchAll();        

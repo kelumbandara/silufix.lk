@@ -23,14 +23,16 @@
     
     $WorkOrderNo_ary        = array(); 
     $CreatedDateTime_ary    = array();
-    
-    $FaultType_ary              = array();
-    $WorkOrderCategory_ary      = array();
-    $WorkOrderSubCategory_ary   = array();
-    
+
+    $FaultType_ary          = array();
+    $WorkOrderCategory_ary  = array();
+    $Site_ary               = array();
+    $Location_ary           = array();
+    $Building_ary           = array();
+
     $WoDescription_ary      = array();
     $WoDepartment_ary       = array();    
-    $MachineNo_ary          = array(); 
+    //$MachineNo_ary          = array(); 
     $AllocatedUser_ary      = array();         
     $WoEventLog_ary         = array();
 
@@ -40,7 +42,7 @@
     
     //-------------- Machine Category Disinct Values ----------------------- 
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $stmt = $conn->prepare("SELECT WorkOrderNo,CreatedDateTime,FaultType,WorkOrderCategory,WorkOrderSubCategory,WoDescription,CreatedDepartment,Site,AllocatedUser,WoEventLog FROM tblwo_event WHERE WorkOrderNo =:wono");
+    $stmt = $conn->prepare("SELECT WorkOrderNo,CreatedDateTime,FaultType,WorkOrderCategory,Site,Location,Building,WoDescription,CreatedDepartment,AllocatedUser,WoEventLog FROM tblwo_event WHERE WorkOrderNo =:wono");
     $stmt->bindParam(':wono', $strWoNumber);
     $stmt->execute();
     $stmt->setFetchMode(PDO::FETCH_ASSOC);        
@@ -49,12 +51,13 @@
     {           
         $WorkOrderNo_ary[$i]      = $row['WorkOrderNo'];
         $CreatedDateTime_ary[$i]  = $row['CreatedDateTime'];          
-        $FaultType_ary[$i]              = $row['FaultType'];
-        $WorkOrderCategory_ary[$i]      = $row['WorkOrderCategory'];
-        $WorkOrderSubCategory_ary[$i]   = $row['WorkOrderSubCategory']; 
+        $FaultType_ary[$i]          = $row['FaultType'];
+        $WorkOrderCategory_ary[$i]  = $row['WorkOrderCategory'];
+        $Site_ary[$i]               = $row['Site']; 
+        $Location_ary[$i]           = $row['Location']; 
+        $Building_ary[$i]           = $row['Building']; 
         $WoDescription_ary[$i]    = $row['WoDescription'];      
         $WoDepartment_ary[$i]     = $row['CreatedDepartment'];
-        $MachineNo_ary[$i]        = $row['Site'];
         $AllocatedUser_ary[$i]    = $row['AllocatedUser'];        
         $WoEventLog_ary[$i]       = explode(',', $row['WoEventLog']);   //$row['WoEventLog'];        
         $i++;
@@ -64,10 +67,11 @@
     $data_ary['CreatedDateTime_Ary']    = $CreatedDateTime_ary;      
     $data_ary['FaultType_Ary']              = $FaultType_ary;
     $data_ary['WorkOrderCategory_Ary']      = $WorkOrderCategory_ary;
-    $data_ary['WorkOrderSubCategory_Ary']   = $WorkOrderSubCategory_ary;
+    $data_ary['Site_Ary']           = $Site_ary;
+    $data_ary['Location_Ary']       = $Location_ary;
+    $data_ary['Building_Ary']       = $Building_ary;
     $data_ary['WoDescription_Ary']  = $WoDescription_ary; 
     $data_ary['WoDepartment_Ary']   = $WoDepartment_ary;    
-    $data_ary['MachineNo_Ary']      = $MachineNo_ary;  
     $data_ary['AllocatedUser_Ary']  = $AllocatedUser_ary;  
     $data_ary['WoEventLog_Ary']     = $WoEventLog_ary; 
       
