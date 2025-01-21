@@ -81,31 +81,54 @@
                     $stmt->bindParam(':stat', $intWoState); 
                 }
                 else if($CurrentUserType == "Assistance")   // Filter by Issue Type
-                {
-                    $query .= " AND tblwo_event.IssueType = :isutp"; 
+                {                    
+                    // Convert the comma-separated string to an array
+                    $issueTypesArray = explode(',', $CurrentIssueType); 
+                    // Generate named placeholders for the IN clause
+                    $placeholders = [];
+                    foreach ($issueTypesArray as $index => $issueType) 
+                    {
+                        $placeholders[] = ":issueType" . $index;
+                    }
+                    // Update the query to use named placeholders
+                    $query .= " AND tblwo_event.IssueType IN (" . implode(',', $placeholders) . ")";
+                    // Prepare the statement
                     $stmt = $conn->prepare($query);
-                    $stmt->bindParam(':stat', $intWoState); 
-                    $stmt->bindParam(':isutp', $CurrentIssueType);
+                    // Bind the state parameter
+                    $stmt->bindParam(':stat', $intWoState);
+                    // Bind the issue types dynamically
+                    foreach ($issueTypesArray as $index => $issueType) {
+                        $stmt->bindValue(":issueType" . $index, $issueType);
+                    }                
                 }
                 else if($CurrentUserType == "TeamMember")   // Filter by Allocated Table 
                 {
+                    
                     $query .= "
-                            AND tblwo_event.IssueType = :isutp 
-                            AND EXISTS (
+                    
+                            AND EXISTS 
+                            (
                                 SELECT 1 
                                 FROM 
                                     tblwo_allocatedusers 
                                 WHERE 
-                                    tblwo_allocatedusers.AllocatedUser = :creusr 
+                                    tblwo_allocatedusers.WorkOrderNo = tblwo_event.WorkOrderNo
+                                    AND tblwo_allocatedusers.AllocatedUser = :alwusr 
                                     AND tblwo_allocatedusers.Status = 'Active'
                             )
                         ";
 
                         $stmt = $conn->prepare($query);
                         $stmt->bindParam(':stat', $intWoState); 
-                        $stmt->bindParam(':isutp', $CurrentIssueType);
-                        $stmt->bindParam(':creusr', $CurrentUserEPF); 
-
+                        //$stmt->bindParam(':isutp', $CurrentIssueType);
+                        $stmt->bindParam(':alwusr', $CurrentUserEPF); 
+                    
+                    /*
+                    $query .= " AND tblwo_event.CreatedUser = :creusr"; 
+                    $stmt = $conn->prepare($query);
+                    $stmt->bindParam(':stat', $intWoState); 
+                    $stmt->bindParam(':creusr', $CurrentUserEPF);
+                    */
                 }
                 else
                 {

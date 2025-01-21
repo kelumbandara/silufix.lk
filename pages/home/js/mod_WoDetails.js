@@ -28,7 +28,7 @@ function funMoWoDetails_Close()
 //--------------- Function Click Create Breakdown ----------------------------
 function funWoTableRowClicked()
 {        
-    let intDebugEnable = 0;        
+    let intDebugEnable = 1;        
     if(intDebugEnable === 1)    alert("funWoTableRowClicked");
     
     if(!roll_areas_ary.includes('1001811'))
@@ -53,7 +53,7 @@ function funWoTableRowClicked()
         var strWorkOrderNumber      = mydata[0][1];
         var strWorkOrderDepartment  = mydata[0][3];
         var strWorkOrderCategory    = mydata[0][5];
-        var strWorkOrderStatus      = mydata[0][7];
+        var strWorkOrderStatus      = mydata[0][8];
         //var strWorkOrderVerify      = mydata[0][8];
         JS_SessionArry[0].WorkOrderNo           = strWorkOrderNumber;
         JS_SessionArry[0].WorkOrderDepartment   = strWorkOrderDepartment;

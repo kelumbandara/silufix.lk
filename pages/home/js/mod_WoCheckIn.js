@@ -97,7 +97,7 @@ function funModWoCheckIn_CheckIn()
 //--------------- Function Click Create Breakdown ----------------------------
 function funModWoDetails_CheckIn()
 {        
-    let intDebugEnable = 0;
+    let intDebugEnable = 1;
     let strWorkOrderStatus = JS_SessionArry[0].WorkOrderStatus;
     
     if(intDebugEnable === 1)    alert("funModWoDetails_CheckIn");

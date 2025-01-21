@@ -717,6 +717,8 @@
         DataAry[3] = JS_SessionArry[0].CurrentUserType;   // Current UserType
         DataAry[4] = JS_SessionArry[0].CurrentIssueType;   // Current User IssueType  
      
+        if(intDebugEnable === 1)    alert("DataAry[4] : " + DataAry[4]);
+
         if(intDebugEnable === 1)    alert("DataAry : " + DataAry);
         //-------------- Update Home page WO Table ---------------------------------------------
         $.post('class/getData_HomeTable.php', { userpara: DataAry }, function(json_data2) 
