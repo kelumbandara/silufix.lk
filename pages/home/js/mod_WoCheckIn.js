@@ -29,7 +29,8 @@ function funModWoCheckIn_CheckIn()
         //alert(res.Status_Ary[0]);        
         if(res.Status_Ary[0] === "false")   // No data found, insert new record
         {
-            //alert("Insert New Raw...");            
+            //alert("Insert New Raw...");   
+            if(intDebugEnable === 1) alert("Insert New Raw..");            
             //----------- Update Event Log, When Already Allocated list Deactive -----------------------------            
             //const DataAry = [];             
             DataAry[0] = "funUpdateEventLog";
@@ -43,7 +44,7 @@ function funModWoCheckIn_CheckIn()
             if(intDebugEnable === 1) alert("DataAry :" + DataAry);  
             $.post('class/comFunctions.php', { userpara: DataAry }, function(json_data2) 
             {
-                //alert(json_data2); 
+                if(intDebugEnable === 1) alert("json_data2 :" + json_data2);
                 //var res = $.parseJSON(json_data2);
             });
             //--------Insert New Row ----------------                         
@@ -58,13 +59,16 @@ function funModWoCheckIn_CheckIn()
                 var res = $.parseJSON(json_data2); 
                 if(res.Status_Ary[0] === "true")
                 {   
+                    if(intDebugEnable === 1) alert("Modify Event State");
                     //-------------- Modify Wo Event State ----> Inprogress ----------------------                
                     DataAry[0] = "funWoStateChange";
                     DataAry[1] = JS_SessionArry[0].WorkOrderNo;        // Table Name
                     DataAry[2] = JS_SessionArry[0].CurrentUserEPF; 
                     //alert("Location : 140" +DataAry);
+                    if(intDebugEnable === 1) alert("DataAry :" + DataAry); 
                     $.post('class/updateData_WoCheckIn.php', { userpara: DataAry }, function(json_data2) 
                     {
+                        if(intDebugEnable === 1) alert("json_data2 :" + json_data2); 
                         //alert("Location : 150" +json_data2);           
                         //var res = $.parseJSON(json_data2);
                     });
@@ -97,7 +101,7 @@ function funModWoCheckIn_CheckIn()
 //--------------- Function Click Create Breakdown ----------------------------
 function funModWoDetails_CheckIn()
 {        
-    let intDebugEnable = 1;
+    let intDebugEnable = 0;
     let strWorkOrderStatus = JS_SessionArry[0].WorkOrderStatus;
     
     if(intDebugEnable === 1)    alert("funModWoDetails_CheckIn");

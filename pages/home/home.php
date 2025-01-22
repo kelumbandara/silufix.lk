@@ -259,8 +259,7 @@
     include './model-pages/mod_WoDetails.php'; 
     include './model-pages/mod_WoClose.php'; 
     include './model-pages/mod_WoAllocate.php'; 
-    include './model-pages/mod_WoCheckIn.php'; 
-    
+    include './model-pages/mod_WoCheckIn.php';     
     include './model-pages/mod_RedTagCreate.php';
     //include './model-pages/mod_CheckUser.php';
 
@@ -431,7 +430,7 @@
     function funCellCreated(row, data, index) 
     {     
         //alert("Test cell created");
-        var strCellStatus  = data[7];
+        var strCellStatus  = data[8];
         if (strCellStatus === "New")                {$(row).css('background-color', 'orange');}
         else if (strCellStatus === "Inprogress")    {$(row).css('background-color', 'lightblue');}
         else       {$(row).css('background-color', 'lightgreen');}                     
@@ -1395,54 +1394,9 @@
         // Return the formatted time
         return formattedHours + ':' + formattedMinutes;
     }
-    /*
-    //------------- Load Work Order Table Department Filter Data -------------------
-    function funLoad_WoTableFilterDepData() 
-    {
-        let intDebugEnable = 0;        
-        if(intDebugEnable === 1)    alert("funLoad_WoTableFilterDepData");
-                
-        const DataAry = [];         
-        //---------------- Load Departments --------------------------------------
-        DataAry[0] = "funGetFilteredData";        // Function Name    
-        DataAry[1] = "Department";
-        DataAry[2] = "tblusers_account";
-        DataAry[3] = "0";
-        if(intDebugEnable === 1)    alert("DataAry :" + DataAry);      
-        $.post('class/comFunctions.php', { userpara: DataAry }, function(json_data2) 
-        {
-            if(intDebugEnable === 1) alert("json_data2 : " + json_data2);
-            var res = $.parseJSON(json_data2);  
-            if(res.Status_Ary[0] === "true")
-            {
-                AryDepartment = res.Data_Ary;
-                if(intDebugEnable === 1) alert("AryDepartment : " + AryDepartment); 
-                //------------ Remove All Items in "AryUserType" -----------------------------------
-                var options5 = document.querySelectorAll('#id_funHome_SelDepartmentFilter option');
-                options5.forEach(o => o.remove());
-                                 
-                //------------ Fill New Items -------------------------------------
-                var sel_UserType = document.getElementById("id_funHome_SelDepartmentFilter");
-                var opt4 = "All";
-                var el4 = document.createElement("option");
-                el4.textContent = opt4;
-                el4.value = opt4;
-                sel_UserType.appendChild(el4);
-                for(var i = 0; i < AryDepartment.length; i++)
-                {
-                    var opt5 = AryDepartment[i];
-                    var el5 = document.createElement("option");
-                    el5.textContent = opt5;
-                    el5.value = opt5;
-                    sel_UserType.appendChild(el5);
-                }
-                //-------------- Set User Department in Filter ------------------
-                //document.getElementById("id_funHome_SelDepartmentFilter").value = JS_SessionArry[0].CurrentUserDepartment; 
-                funRefresh_WoTable();
-            }
-        });
-    }
-    */
+
+    
+    
 </script>
 </body>
 </html>

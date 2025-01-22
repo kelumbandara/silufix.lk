@@ -121,7 +121,6 @@
                             <button type="submit" class="btn btn-primary" onclick="funModWoDetails_WoVerify()" style="width: 32%" <?php echo (in_array('1001815', $roll_areas) ? '' : 'disabled'); ?>>Verify</button>
                             <button type="submit" class="btn btn-primary" onclick="funModWoDetails_WoReOpen()" style="width: 32%" <?php echo (in_array('1001816', $roll_areas) ? '' : 'disabled'); ?>>Re-Open</button>
                            
-                          
                         </div>
                     </div>
                 </div>

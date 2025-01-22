@@ -141,7 +141,7 @@ if (isset($_FILES['file']))
                     <!-- /.card-header -->                    
                     <div class="card card-default" >
                         <div class="card-header">
-                            <h2 class="card-title">Issue Type Update - Redtag</h2>
+                            <h2 class="card-title">Issue Type Update </h2>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                     <i class="fas fa-minus"></i>

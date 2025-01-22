@@ -1,3 +1,4 @@
+/*
 //------------- WO CLose : Change Fault Level4 Filter Value --------------------------------
 function funModWoClose_FilterFaultLevel4()
 {
@@ -14,20 +15,11 @@ function funMoWoClose_Close()
 //--------------- Save and Close Function ----------------------
 function funModWoClose_SaveClose()
 {
-    let intDebugEnable = 0;
+    let intDebugEnable = 1;
     
     if(intDebugEnable === 1)    alert("funModWoClose_SaveClose");
     
-   /* 
-    var selectedMaterials = [];
-    var selectElement = document.getElementById("id_ModWoClose_UsedMaterial");
-    // Loop through selected options and push values into the array
-    for (var option of selectElement.selectedOptions) 
-    {
-        alert(option.value);
-        selectedMaterials.push(option.value);
-    }
-    */
+  
     const DataAry = []; 
       
     DataAry[0] = JS_SessionArry[0].WorkOrderNo;
@@ -161,33 +153,101 @@ function funModWoClose_FilterFaultLevel3()
         }                  
     });
 }
+*/
 
 //--------------- Function Click Close Workorder ---------------------------
 function funModWoDetails_WoClose()
 {        
-    let intDebugEnable = 0;
-    let strWorkOrderStatus = JS_SessionArry[0].WorkOrderStatus;
+    let intDebugEnable = 0;    
     
     if(intDebugEnable === 1)    alert("funModWoDetails_WoClose");
+    let strWorkOrderStatus = JS_SessionArry[0].WorkOrderStatus;
+
     if(intDebugEnable === 1)    alert(strWorkOrderStatus);
     
     if((strWorkOrderStatus === "New")||(strWorkOrderStatus === "Inprogress"))
     {
-         if(roll_other_ary.includes('90011'))          // User Check Required....
+        Swal.fire({
+            title: 'Close Work Order',
+            text: 'Are you sure you want to proceed?',
+            //icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'OK'
+        }).then((result) => 
         {
-            JS_SessionArry[0].WorkOrderNo = document.getElementById("id_ModWoDetails_WoNo").innerHTML; 
-            JS_SessionArry[0].NextModelID = "id_MoWoClose"; 
-            JS_SessionArry[0].NextFunctionName = "funOpenMod_WoClose";
-            //alert("Next Function : " + JS_SessionArry[0].NextFunctionName);
-
-            //---------- Open Model for Check User -------------------------------------
-            var varmodbox = document.getElementById("id_ModCheckUser");
-            varmodbox.style.display = "block";        
-        }
-        else
-        {
-            funOpenMod_WoClose();
-        }
+            if (result.isConfirmed) 
+            {
+                if(intDebugEnable === 1)    alert("Closing Workorder...");
+                //executeFunction();
+                const DataAry = []; 
+      
+                DataAry[0] = JS_SessionArry[0].WorkOrderNo;
+                DataAry[1] = JS_SessionArry[0].CurrentUserEPF;
+                DataAry[2] = JS_SessionArry[0].WorkOrderCategory;
+                //DataAry[2] = "NA"   document.getElementById("id_ModWoClose_CorrectionAction").value;
+                //DataAry[3] = "NA"   document.getElementById("id_ModWoClose_Note").value;
+                //DataAry[4] = "NA"   document.getElementById("id_ModWoClose_UsedMaterial").value;
+                //DataAry[4] = selectedMaterials;
+                //DataAry[5] = JS_SessionArry[0].CurrentUserEPF; 
+                //DataAry[7] = document.getElementById("id_ModWoClose_inpNote").value;    
+                if(intDebugEnable === 1)    alert("DataAry : " + DataAry);
+             
+                $.post('class/updateData_ModWoClose_SaveClose.php', { userpara: DataAry }, function(json_data2) 
+                {
+                    if(intDebugEnable === 1)    alert("json_data2 : " + json_data2); 
+               
+                    var res = $.parseJSON(json_data2);       
+                    if(res.Status_Ary[0] === "true")
+                    {
+                        //----------- Update Event Log, When Already Allocated list Deactive -----------------------------            
+                        //const DataAry = [];             
+                        DataAry[0] = "funUpdateEventLog";
+                        DataAry[1] = JS_SessionArry[0].WorkOrderNo;
+                        DataAry[2] = JS_SessionArry[0].CurrentUserName;
+                        DataAry[3] = JS_SessionArry[0].CurrentUserContact;
+                        DataAry[4] = ",WO Closed (" +  document.getElementById("id_ModWoClose_inpNote").value + ") - On";
+                        //Work Order Placed - On 2024-02-02T17:38 By Kelum Bandara(0772628859)
+                        //----------- Update Event Log --------------------------------------------------  
+                        $.post('class/comFunctions.php', { userpara: DataAry }, function(json_data2) 
+                        {            
+                            //var res = $.parseJSON(json_data2);            
+                            //-------------- CheckOut All CheckIn Users --------------------------------
+                            DataAry[0] = "funCheckOutAllUsers";
+                            DataAry[1] = JS_SessionArry[0].WorkOrderNo;
+                            if(intDebugEnable === 1)    alert("DataAry : " + DataAry); 
+                            $.post('class/updateData_WoCheckIn.php', { userpara: DataAry }, function(json_data2) 
+                            {
+                                if(intDebugEnable === 1)    alert("json_data2 : " + json_data2);          
+                                //var res = $.parseJSON(json_data2);
+                                //------------- Refresh Work Order Details ---------------------------------
+                                //alert("Location : 651 "+ JS_SessionArry[0].WorkOrderNo);
+                                let strReturn = funWoDetailsRefresh(JS_SessionArry[0].WorkOrderNo);
+                                //funRefreshClicked(); 
+                                //alert("Location : 660 "+strReturn); 
+                                funRefresh_HomePage();  
+                                //alert("Location : 670 "+strReturn); 
+                                var varmodbox = document.getElementById("id_MoWoClose");
+                                varmodbox.style.display = "none";  
+                            });  
+                        });
+                    }
+                    else
+                    {
+                        // success, error, warning, info, question
+                        Swal.fire({title: 'Alert..!',text: res.Status_Ary[1],icon: 'info', confirmButtonText: 'OK'});
+                        var varmodbox = document.getElementById("id_MoWoClose");
+                        varmodbox.style.display = "none";  
+                    }
+                    //alert("Data Updated successfully.");
+                });
+            }
+            else
+            {
+                alert("user click no");
+            }
+        });        
     }
     else
     {
@@ -196,16 +256,18 @@ function funModWoDetails_WoClose()
     }     
     //alert("Test-Finished");
 }
+
+/*
 //-------------- Open Model WO Close -----------------------  
 function funOpenMod_WoClose()
 {
-    let intDebugEnable = 0;
+    let intDebugEnable = 1;
         
     if(intDebugEnable === 1)    alert("funOpenMod_WoClose");
     
     //alert("Location 400 : Work order Close..");    
     var strWorkOrderNumber  = document.getElementById("id_ModWoDetails_WoNo").innerHTML;
-    var strMachineNo        = document.getElementById("id_ModWoDetails_Machine").innerHTML;   
+    var strMachineNo        = document.getElementById("id_ModWoDetails_Site").innerHTML;   
     //alert(strWorkOrderNumber);     
     //---------- Close Model_Wo Details --------------------------------------
     //var varmodbox = document.getElementById("id_MoWoDetails");
@@ -240,22 +302,7 @@ function funOpenMod_WoClose()
             sel_cusordno.appendChild(el);
         }   
     }); 
-    //---------------- Load Now Date and time to Model Box --------------------------
-    /*
-    // Get the current date and time
-    const now = new Date();
-    // Format the date and time as required by the datetime-local input
-    const year = now.getFullYear().toString().padStart(4, '0');
-    const month = (now.getMonth() + 1).toString().padStart(2, '0');
-    const day = now.getDate().toString().padStart(2, '0');
-    const hours = now.getHours().toString().padStart(2, '0');
-    const minutes = now.getMinutes().toString().padStart(2, '0');
-
-    // Set the value of the input
-    const datetimeInput = document.getElementById('id_ModWoClose_dtmDateTime');
-    datetimeInput.value = `${year}-${month}-${day}T${hours}:${minutes}`;
-    datetimeInput.disabled = true;    
-    */
+   
     funModWoClose_CorrectionAction();
 }
 //------------- WO CLose : Change Fault Type Filter Value --------------------------------
@@ -371,3 +418,4 @@ function funModWoClose_UsedMaterial()
         }              
     });
 }
+*/

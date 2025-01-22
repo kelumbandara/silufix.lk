@@ -28,7 +28,7 @@ function funMoWoDetails_Close()
 //--------------- Function Click Create Breakdown ----------------------------
 function funWoTableRowClicked()
 {        
-    let intDebugEnable = 1;        
+    let intDebugEnable = 0;        
     if(intDebugEnable === 1)    alert("funWoTableRowClicked");
     
     if(!roll_areas_ary.includes('1001811'))
