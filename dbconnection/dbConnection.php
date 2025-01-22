@@ -1,9 +1,9 @@
 <?php
 
     //$servername = "localhost";
-    //$username = "sky";
-    //$password = "noyoN@1234";
-    //$database = "wms1760g";
+    //$username = "root";
+    //$password = "";
+    //$database = "mms1810a";
     //$database2 = "wms1760g_mcdata";
     
     $servername = "perahara.lk";
