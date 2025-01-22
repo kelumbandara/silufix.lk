@@ -28,12 +28,12 @@
                                             <td style="width:65%;" id="id_ModWoAllocate_WoDate">-</td>   
                                         </tr> 
                                         <tr>
-                                            <td style="width:30%;">Problem</td>
+                                            <td style="width:30%;">Created By</td>
                                             <td style="width:5%;">:</td>   
                                             <td style="width:65%;" id="id_ModWoAllocate_WoProblem">-</td>   
                                         </tr> 
                                         <tr>
-                                            <td style="width:30%;">Machine</td>
+                                            <td style="width:30%;">Mobile Number</td>
                                             <td style="width:5%;">:</td>   
                                             <td style="width:65%;" id="id_ModWoAllocate_Machine">-</td>   
                                         </tr> 

@@ -28,9 +28,8 @@ function funMoWoDetails_Close()
 //--------------- Function Click Create Breakdown ----------------------------
 function funWoTableRowClicked()
 {        
-    //alert("Table row Clicked..1"); 
-    //writeToLogFile("Open Workorder details :"); 
-    //alert("Log test ..");
+    let intDebugEnable = 0;        
+    if(intDebugEnable === 1)    alert("funWoTableRowClicked");
     
     if(!roll_areas_ary.includes('1001811'))
     {
@@ -44,7 +43,7 @@ function funWoTableRowClicked()
     }
     else
     {
-        //alert("Read Table : Test-1"); 
+        if(intDebugEnable === 1)    alert("Open Wo Details");
         //---------- Read ReceiptNumber ----------------------------------------
         //var table3 = $('#example1').DataTable();        
         //var mydata = table3.rows('.selected').data(); 
@@ -54,7 +53,7 @@ function funWoTableRowClicked()
         var strWorkOrderNumber      = mydata[0][1];
         var strWorkOrderDepartment  = mydata[0][3];
         var strWorkOrderCategory    = mydata[0][5];
-        var strWorkOrderStatus      = mydata[0][7];
+        var strWorkOrderStatus      = mydata[0][8];
         //var strWorkOrderVerify      = mydata[0][8];
         JS_SessionArry[0].WorkOrderNo           = strWorkOrderNumber;
         JS_SessionArry[0].WorkOrderDepartment   = strWorkOrderDepartment;
@@ -77,18 +76,26 @@ function funWoTableRowClicked()
         const DataAry = []; 
         DataAry[0] = strWorkOrderNumber;        
         DataAry[1] = strWorkOrderDepartment;        
-        //alert(DataAry);   
+        if(intDebugEnable === 1)    alert("DataAry :" + DataAry);   
         $.post('class/getData_ModWoDetails.php', { userpara: DataAry}, function(json_data2) 
         {
-            //alert(json_data2);  
+            if(intDebugEnable === 1)    alert("json_data2 :" + json_data2);   
             var res = $.parseJSON(json_data2);
+
             document.getElementById("id_ModWoDetails_WoNo").innerHTML       = res.WorkOrderNo_Ary;
             document.getElementById("id_ModWoDetails_WoDate").innerHTML     = res.CreatedDateTime_Ary;   
             let tmpWoCategory   = res.WorkOrderCategory_Ary[0];
             //(tmpWoCategory);            
-            document.getElementById("id_ModWoDetails_WoProblem").innerHTML  = "NA";
-            document.getElementById("id_ModWoDetails_Machine").innerHTML = "NA";                
+            document.getElementById("id_ModWoDetails_Site").innerHTML       = res.Site_Ary[0];
+            document.getElementById("id_ModWoDetails_Location").innerHTML   = res.Location_Ary[0];
+            document.getElementById("id_ModWoDetails_Building").innerHTML   = res.Building_Ary[0];
+            document.getElementById("id_ModWoDetails_CreatedDep").innerHTML = JS_SessionArry[0].CurrentUserDepartment;
+            document.getElementById("id_ModWoDetails_CreatedEmp").innerHTML = JS_SessionArry[0].CurrentUserName;
+            document.getElementById("id_ModWoDetails_MobileNo").innerHTML = JS_SessionArry[0].CurrentUserContact;
+                     
             //tmpWoCategory = "BreakDown";
+
+            /*
             if(tmpWoCategory === "BreakDown")
             {
                 //alert("Breakdown-1");
@@ -124,6 +131,7 @@ function funWoTableRowClicked()
                 alert("Wo Category not found");
                 //writeToLogFile("Home Table: Wo Category not found");
             }
+                */
             //------------- Update Wo Event Log --------------------------------------
             var strEventList = "";
             var EventList_Ary = res.WoEventLog_Ary[0];
@@ -218,6 +226,7 @@ function funWoTableRowClicked()
                 //alert("No data found");
             }
         });
+        /*
         //------------ Read Chat History Data List -------------------------
         DataAry[0] = "funGetChatHistoryData";      
         DataAry[1] = strWorkOrderNumber;     
@@ -245,6 +254,7 @@ function funWoTableRowClicked()
                 //alert("No data found");
             }       
         });
+        */
     }
 }
 
@@ -366,6 +376,7 @@ function funWoDetailsRefresh(tmpWorkOrderNo )
             //alert("No data found");
         }
     });
+    /*
     //------------ Read Chat History Data List -------------------------
     DataAry[0] = "funGetChatHistoryData";      
     DataAry[1] = tmpWorkOrderNo;     
@@ -398,6 +409,7 @@ function funWoDetailsRefresh(tmpWorkOrderNo )
     });
     if(intDebugEnable === 1) alert("Location : 780 ");
     return "true";
+    */
 }
 //---------------- Model : Already CheckIn Users Row Clicked Function---------------------------
 $('#id_tblmod_wocheckin tbody').on('click', 'tr', function () 

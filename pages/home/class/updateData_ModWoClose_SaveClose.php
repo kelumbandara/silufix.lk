@@ -10,21 +10,21 @@
     date_default_timezone_set('Asia/Kolkata');
     $strServerDateTime = date("Y-m-d H:i:s");    
     //----------- Declare Variables -----------------------  
-    $WorkOrderNo    = $num[0]; 
-    $FaultType      = $num[1]; 
-    $FaultLevel1    = $num[2]; 
-    $FaultLevel2    = $num[3]; 
-    $FaultLevel3    = $num[4]; 
-    $FaultLevel4    = $num[5];         
-    $CloseDateTime  = $num[6];
-    $ClosedUser     = $num[7];
+    $WorkOrderNo        = $num[0]; 
+    $CloseDateTime      = $strServerDateTime;
+    $ClosedUser         = $num[1];
+   
+    //$FaultType          = $num[1]; 
+    //$CorrectionAction   = $num[2]; 
+    //$Note               = $num[3]; 
+    //$UsedMaterial       = $num[4];             
     //$Note           = $num[7];
-    
+       
     $RespondUser      = $_SESSION["user_name"];   
     //$WorkOrderStatusChange  = "Respond";
-    $WorkOrderStatusChange  = $num[3];
+    //$WorkOrderStatusChange  = $num[3];
     $WoState    = "Closed";
-    $WoVerify   = "-";
+    //$WoVerify   = "-";
     $State      = 3;
            
     //----------- Declare Variables -----------------------    
@@ -34,7 +34,7 @@
     
     try 
     {
-        //------ Check WorkOrder State < 3 (If Workorder closed , can not verify) ------------------
+        //------ Check WorkOrder State < 3 (If Workorder closed , can not close) ------------------
         $checkStateStmt = $conn->prepare("SELECT State FROM tblwo_event WHERE WorkOrderNo = :wono");
         $checkStateStmt->bindParam(':wono', $WorkOrderNo);
         $checkStateStmt->execute();
@@ -43,17 +43,13 @@
         if ($row['State'] < 3) 
         {
              //$stmt = $conn->prepare("UPDATE tblwo_event SET RespondDateTime=:respdt, RespondUser=:respusr, WoStatus =:wost, State=:stat WHERE WorkOrderNo=:wono");
-            $stmt = $conn->prepare("UPDATE tblwo_event SET ClosedFaultType=:flttp,ClosedFaultLevel1=:fltlvl1,ClosedFaultLevel2=:fltlvl2,ClosedFaultLevel3=:fltlvl3,ClosedFaultLevel4=:fltlvl4,ClosedDateTime=:clsdt,ClosedUser=:clsusr,WoStatus=:wost, WoVerify=:woveri, State=:stat WHERE WorkOrderNo=:wono");
-            $stmt->bindParam(':flttp', $FaultType);
-            $stmt->bindParam(':fltlvl1', $FaultLevel1); 
-            $stmt->bindParam(':fltlvl2', $FaultLevel2);
-            $stmt->bindParam(':fltlvl3', $FaultLevel3);
-            $stmt->bindParam(':fltlvl4', $FaultLevel4);
+            $stmt = $conn->prepare("UPDATE tblwo_event SET ClosedDateTime=:clsdt,ClosedUser=:clsusr,WoStatus=:wost, State=:stat WHERE WorkOrderNo=:wono");
+            
             $stmt->bindParam(':clsdt', $CloseDateTime);
             $stmt->bindParam(':clsusr',$ClosedUser);
             //$stmt->bindParam(':eventlg', $Note);
             $stmt->bindParam(':wost', $WoState);  
-            $stmt->bindParam(':woveri', $WoVerify);          
+            //$stmt->bindParam(':woveri', $WoVerify);          
             $stmt->bindParam(':stat', $State);        
             $stmt->bindParam(':wono', $WorkOrderNo);     
             $stmt->execute();   

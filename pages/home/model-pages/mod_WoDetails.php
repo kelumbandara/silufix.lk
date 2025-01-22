@@ -13,8 +13,7 @@
             <!-- Modal body -->
             <div class="modal-body">
                 <div class="row">                    
-                    <div class="col-md-7">  
-                        <label class="text-warning"><strong>Work Order Details</strong></label>
+                    <div class="col-md-6"> 
                         <table style="width: 100%"> 
                             <tbody>
                                 <tr>
@@ -23,31 +22,49 @@
                                     <td style="width:66%;" id="id_ModWoDetails_WoNo">-</td>            
                                 </tr>
                                 <tr>
+                                    <td style="width:33%;">Site</td>
+                                    <td style="width:2%;">:</td>   
+                                    <td style="width:65%;" id="id_ModWoDetails_Site">-</td>   
+                                </tr> 
+                                <tr>
+                                    <td style="width:33%;">Location</td>
+                                    <td style="width:2%;">:</td>   
+                                    <td style="width:65%;"> <div class="fixed-height-label overflow-auto" style="height: 30px; max-height: 30px;" id="id_ModWoDetails_Location" readonly></div> </td>   
+                                </tr> 
+                                <tr>
+                                    <td style="width:33%;">Building</td>
+                                    <td style="width:2%;">:</td>   
+                                    <td style="width:65%;"> <div class="fixed-height-label overflow-auto" style="height: 30px; max-height: 30px;" id="id_ModWoDetails_Building" readonly></div> </td>   
+                                </tr> 
+                            </tbody>               
+                        </table>                        
+                    </div>                     
+                    <div class="col-md-6"> 
+                        <table style="width: 100%"> 
+                            <tbody>
+                                <tr>
                                     <td style="width:33%;">Date</td>
                                     <td style="width:2%;">:</td>   
                                     <td style="width:65%;" id="id_ModWoDetails_WoDate">-</td>   
                                 </tr> 
                                 <tr>
-                                    <td style="width:33%;">Problem</td>
+                                    <td style="width:33%;">Created Dep</td>
+                                    <td style="width:2%;">:</td>            
+                                    <td style="width:66%;" id="id_ModWoDetails_CreatedDep">-</td>            
+                                </tr>
+                                <tr>
+                                    <td style="width:33%;">Created Emp</td>
                                     <td style="width:2%;">:</td>   
-                                    <td style="width:65%;"> <div class="fixed-height-label overflow-auto" style="height: 30px; max-height: 30px;" id="id_ModWoDetails_WoProblem" readonly></div> </td>   
+                                    <td style="width:65%;" id="id_ModWoDetails_CreatedEmp">-</td>   
                                 </tr> 
                                 <tr>
-                                    <td style="width:33%;">Machine</td>
+                                    <td style="width:33%;">Mobile No</td>
                                     <td style="width:2%;">:</td>   
-                                    <td style="width:65%;"> <div class="fixed-height-label overflow-auto" style="height: 30px; max-height: 30px;" id="id_ModWoDetails_Machine" readonly></div> </td>   
-                                </tr> 
+                                    <td style="width:65%;"> <div class="fixed-height-label overflow-auto" style="height: 30px; max-height: 30px;" id="id_ModWoDetails_MobileNo" readonly></div> </td>   
+                                </tr>                                 
                             </tbody>               
                         </table>                        
-                    </div>                     
-                    <div class="col-md-5"> 
-                        <div class="form-group">
-                           <label><strong>Chat History</strong></label>
-                            <div class="fixed-height-label overflow-auto" style="height: 100px; max-height: 140px;" id="id_ModWoDetails_ChatHistory" readonly>                              
-                            
-                            </div> 
-                        </div>
-                    </div>
+                    </div> 
                 </div>     
                 
                 <div class="border-top my-1"></div>  
@@ -103,8 +120,7 @@
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary" onclick="funModWoDetails_WoVerify()" style="width: 32%" <?php echo (in_array('1001815', $roll_areas) ? '' : 'disabled'); ?>>Verify</button>
                             <button type="submit" class="btn btn-primary" onclick="funModWoDetails_WoReOpen()" style="width: 32%" <?php echo (in_array('1001816', $roll_areas) ? '' : 'disabled'); ?>>Re-Open</button>
-                            <button type="submit" class="btn btn-primary" onclick="funModWoDetails_WoChat()" style="width: 32%" <?php echo (in_array('1001817', $roll_areas) ? '' : 'disabled'); ?>>Chat</button>             
-                          
+                           
                         </div>
                     </div>
                 </div>

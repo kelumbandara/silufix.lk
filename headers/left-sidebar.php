@@ -210,17 +210,17 @@
                         <?php endif; ?>
                         <?php if (in_array('603' , $roll_section)): ?>
                             <li class="nav-item disabled">
-                                <a href="../setting_errorlevel/setting_errorlevel.php" class="nav-link">
+                                <a href="../masterdata_upload/masterdata_redtag.php" class="nav-link">
                                     <i class="nav-icon far fa-edit "></i>
-                                    <p>Master Data Upload</p>
+                                    <p>Master Data - Redtag</p>
                                 </a>
                             </li>   
                         <?php endif; ?>
                         <?php if (in_array('604' , $roll_section)): ?>
                             <li class="nav-item disabled">
-                                <a href="../machine_monitoring_configuration/index.php" class="nav-link">
+                                <a href="../masterdata_upload/issuetype.php" class="nav-link">
                                     <i class="nav-icon far fa-edit "></i>
-                                    <p>Machine Configuration</p>
+                                    <p>Issue Types</p>
                                 </a>
                             </li>   
                         <?php endif; ?>

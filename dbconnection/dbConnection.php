@@ -8,8 +8,13 @@
     
     $servername = "perahara.lk";
     $username = "kelum";
-    $password = "sKy@1234";
+    $password = "sKy@1234-3";
     $database = "mms1810a";
+       
+    //$servername = "perahara.lk";
+    //$username = "kelum";
+    //$password = "sKy@1234";
+    //$database = "mms1810a";
     //$database2 = "wms1760g_mcdata";
     
     try 

@@ -242,7 +242,8 @@ $('#id_tblmod_woallocated tbody').on('click', 'tr', function ()
 
 //--------------- Function Click Create Breakdown ----------------------------
 function funModWoDetails_AllocateMC()
-{        
+{       
+    //alert("funModWoDetails_AllocateMC");
     //---------- Check Login Required --------------------------------
     if(roll_other_ary.includes('90011'))          // User Check Required....
     {
@@ -270,8 +271,8 @@ function funOpenMod_WoAllocate()
     //---------- Update Wo Details ---------------------------------------
     var strWorkOrderNumber  = document.getElementById("id_ModWoDetails_WoNo").innerHTML;  
     var strWorkOrderDate    = document.getElementById("id_ModWoDetails_WoDate").innerHTML;
-    var strWorkProblem      = document.getElementById("id_ModWoDetails_WoProblem").innerHTML;
-    var strMachineNo        = document.getElementById("id_ModWoDetails_Machine").innerHTML;
+    var strWorkProblem      = document.getElementById("id_ModWoDetails_CreatedEmp").innerHTML;
+    var strMachineNo        = document.getElementById("id_ModWoDetails_MobileNo").innerHTML;
 
     //---------- Open Model_Wo Close --------------------------------------
     var varmodbox = document.getElementById("id_ModWoAllocate");
@@ -285,12 +286,11 @@ function funOpenMod_WoAllocate()
     if(intDebugEnable === 1)   alert("Load All Mechanic");
     const DataAry = []; 
     DataAry[0] = strWorkOrderNumber;        
-    DataAry[1] = strMachineNo;        
-    //alert(DataAry);             
-    //var vblSendPara =  "1234";         
+    DataAry[1] = JS_SessionArry[0].CurrentIssueType;;        
+    if(intDebugEnable === 1)   alert("DataAry :" + DataAry);        
     $.post('class/getData_ModWoAllocate.php', { userpara: DataAry}, function(json_data2) 
     {
-        //alert(json_data2);  
+        if(intDebugEnable === 1)   alert("json_data2 :" + json_data2);  
         var res = $.parseJSON(json_data2); 
         var strEPF          = new Array();
         var strName         = new Array();

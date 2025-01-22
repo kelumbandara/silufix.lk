@@ -22,7 +22,8 @@ function funModWoDetails_WoReOpen()
 //-------------- Open Model WO Checking -----------------------  
 function funOpenMod_WoReOpen()
 {
-    //alert("Re-open");
+    let intDebugEnable = 1;
+    if(intDebugEnable === 1)    alert("funOpenMod_WoReOpen");
     
     Swal.fire({
       title: 'Re-Open Work Order',
@@ -48,10 +49,10 @@ function funOpenMod_WoReOpen()
                 DataAry[2] = JS_SessionArry[0].CurrentUserName;
                 DataAry[3] = JS_SessionArry[0].CurrentUserContact;
 
-                //alert(DataAry);
+                if(intDebugEnable === 1)    alert("DataAry :" +DataAry);
                 $.post('class/updateData_WoReOpen.php', { userpara: DataAry }, function(json_data2) 
                 {
-                    //alert(json_data2);           
+                    if(intDebugEnable === 1)    alert("json_data2 :" +json_data2);        
                     //var res = $.parseJSON(json_data2);   
                     //---------- Close Model_Wo Details --------------------------------------
                     //var varmodbox = document.getElementById("id_MoWoDetails");

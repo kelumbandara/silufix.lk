@@ -42,6 +42,7 @@
                 //$strTex += "<td>" . $row["Password"] . "</td>";
                 $strText .= "<td data-password='" . htmlspecialchars($row["Password"], ENT_QUOTES, 'UTF-8') . "'>********</td>";
                 $strText .= "<td>" . $row["Department"] . "</td>";
+                $strText .= "<td>" . $row["IssueType"] . "</td>";
                 $strText .= "<td>" . $row["Contact"] . "</td>";            
                 $strText .= "<td>" . $row["Email"] . "</td>";
                 $strText .= "<td>" . $row["UserType"] . "</td>";
@@ -122,10 +123,14 @@
         $strUserName    = $num[4];
         $strPassword    = $num[5];
         $strDepartment  = $num[6];
-        $strContact     = $num[7];
-        $strEmail       = $num[8];
-        $strUserType    = $num[9];
-        $strAvailability    = $num[10];
+        //$strIssueType   = $num[7];
+        // Convert array to a comma-separated string
+        $strIssueType = implode(",", $num[7]);
+
+        $strContact     = $num[8];
+        $strEmail       = $num[9];
+        $strUserType    = $num[10];
+        $strAvailability    = $num[11];
         $strStatus    = "Active";
        
         try 
@@ -133,11 +138,12 @@
             if($strPassword == "********")
             {
                 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                $stmt = $conn->prepare("UPDATE tblusers_account SET EPF=:epf, EmpName=:empname, UserName=:username, Department=:department, Contact=:contact, Email=:email, UserType=:usertype, Availability=:availability, Status=:status WHERE ID=:userid");
+                $stmt = $conn->prepare("UPDATE tblusers_account SET EPF=:epf, EmpName=:empname, UserName=:username, Department=:department,IssueType=:issuetype, Contact=:contact, Email=:email, UserType=:usertype, Availability=:availability, Status=:status WHERE ID=:userid");
                 $stmt->bindParam(':epf', $strEPF);
                 $stmt->bindParam(':empname', $strEmpName);
                 $stmt->bindParam(':username', $strUserName);
                 $stmt->bindParam(':department', $strDepartment);
+                $stmt->bindParam(':issuetype', $strIssueType);
                 $stmt->bindParam(':contact', $strContact);
                 $stmt->bindParam(':email', $strEmail);
                 $stmt->bindParam(':usertype', $strUserType);
@@ -148,12 +154,13 @@
             else 
             {
                 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                $stmt = $conn->prepare("UPDATE tblusers_account SET EPF=:epf, EmpName=:empname, UserName=:username, Password=:password, Department=:department, Contact=:contact, Email=:email, UserType=:usertype, Availability=:availability, Status=:status WHERE ID=:userid");
+                $stmt = $conn->prepare("UPDATE tblusers_account SET EPF=:epf, EmpName=:empname, UserName=:username, Password=:password, Department=:department, IssueType=:issuetype, Contact=:contact, Email=:email, UserType=:usertype, Availability=:availability, Status=:status WHERE ID=:userid");
                 $stmt->bindParam(':epf', $strEPF);
                 $stmt->bindParam(':empname', $strEmpName);
                 $stmt->bindParam(':username', $strUserName);
                 $stmt->bindParam(':password', $strPassword);
                 $stmt->bindParam(':department', $strDepartment);
+                $stmt->bindParam(':issuetype', $strIssueType);
                 $stmt->bindParam(':contact', $strContact);
                 $stmt->bindParam(':email', $strEmail);
                 $stmt->bindParam(':usertype', $strUserType);
@@ -181,21 +188,26 @@
         $strUserName    = $num[4];
         $strPassword    = $num[5];
         $strDepartment  = $num[6];
-        $strContact     = $num[7];
-        $strEmail       = $num[8];
-        $strUserType    = $num[9];
-        $strAvailability    = $num[10];
+        //$strIssueType   = $num[7];
+         // Convert array to a comma-separated string
+        $strIssueType = implode(",", $num[7]);
+
+        $strContact     = $num[8];
+        $strEmail       = $num[9];
+        $strUserType    = $num[10];
+        $strAvailability    = $num[11];
         $strStatus    = "Active";
        
         try 
         {
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $stmt = $conn->prepare("INSERT INTO tblusers_account (EPF, EmpName, UserName, Password, Department, Contact, Email, UserType, Availability, Status) VALUES (:epf, :empname, :username, :password, :department, :contact, :email, :usertype, :availability, :status)");
+            $stmt = $conn->prepare("INSERT INTO tblusers_account (EPF, EmpName, UserName, Password, Department, IssueType, Contact, Email, UserType, Availability, Status) VALUES (:epf, :empname, :username, :password, :department, :issuetype, :contact, :email, :usertype, :availability, :status)");
             $stmt->bindParam(':epf', $strEPF);
             $stmt->bindParam(':empname', $strEmpName);
             $stmt->bindParam(':username', $strUserName);
             $stmt->bindParam(':password', $strPassword);
             $stmt->bindParam(':department', $strDepartment);
+            $stmt->bindParam(':issuetype', $strIssueType);
             $stmt->bindParam(':contact', $strContact);
             $stmt->bindParam(':email', $strEmail);
             $stmt->bindParam(':usertype', $strUserType);

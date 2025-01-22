@@ -4,7 +4,7 @@
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header bg-primary">
-                <h5 class="modal-title text-white" id="exampleModalLabel">Mechanic Check In</h5>
+                <h5 class="modal-title text-white" id="exampleModalLabel">User Check In</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="funModWoCheckIn_Close()">
                     <span aria-hidden="true" class="text-white close-icon"><i class="fas fa-times"></i></span>
                 </button>
