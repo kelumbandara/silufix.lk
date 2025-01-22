@@ -10,6 +10,8 @@
     $username = "kelum";
     $password = "sKy@1234-3";
     $database = "mms1810a";
+
+    // this is dev
        
     //$servername = "perahara.lk";
     //$username = "kelum";
