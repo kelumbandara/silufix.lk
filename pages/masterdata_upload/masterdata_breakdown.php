@@ -39,7 +39,7 @@ if (isset($_FILES['file']))
         //------------- Delete All Rows ----------------------------
         try 
         {
-            $sql2 = "TRUNCATE TABLE tblwo_issuetype";
+            $sql2 = "TRUNCATE TABLE tblwo_masterdata_breakdown";
             $truncatetable = mysqli_query($conn2, $sql2);
             if($truncatetable !== FALSE)
             {
@@ -67,27 +67,31 @@ if (isset($_FILES['file']))
             //$Department     = isset($row[0]) ? $row[0] : '&nbsp;' ;
             //$MC_Category    = isset($row[1]) ? $row[1] : '&nbsp;' ;
             //$FaultType      = isset($row[2]) ? $row[2] : '&nbsp;' ;
-            $IssueType          = isset($row[0]) ? $row[0] : '&nbsp;' ;
-            $ResponsiblePerson  = isset($row[1]) ? $row[1] : '&nbsp;' ;
-            $TeamMembers        = isset($row[2]) ? $row[2] : '&nbsp;' ;
-          
+            $Site                   = isset($row[0]) ? $row[0] : '&nbsp;' ;
+            $Location               = isset($row[1]) ? $row[1] : '&nbsp;' ;
+            $Building               = isset($row[2]) ? $row[2] : '&nbsp;' ;
+            $IssueType              = isset($row[3]) ? $row[3] : '&nbsp;' ;
+            $IssueDescriptionMain   = isset($row[4]) ? $row[4] : '&nbsp;' ;
+            $IssueDescriptionSub    = isset($row[5]) ? $row[5] : '&nbsp;' ;
+
             //$Level4 = "1";            
             //if($FaultType == ""){ $FaultType = "NA";}
             //if($BodyCode == "")     { $BodyCode = " Blank ";}
             // $repProduct = str_replace(chr(39), chr(32),$Product);
             //$repProduct2 = str_replace(chr(96), chr(32),$repProduct);
             
-            //$repIssueDescriptionMain = str_replace(["'", "<", ">", "'", "/"]," ", $IssueDescriptionMain);
+            $repIssueDescriptionMain = str_replace(["'", "<", ">", "'", "/"]," ", $IssueDescriptionMain);
+            $repIssueDescriptionSub = str_replace(["'", "<", ">", "'", "/"]," ", $IssueDescriptionSub);
             //$repDesignDescription = str_replace(["'", "<", ">", "'"]," ", $DesignDescription);
             
-            echo  $IssueType . '&nbsp;' . $ResponsiblePerson . '&nbsp;' . $TeamMembers;                       
+            echo  $Site . '&nbsp;' . $Location . '&nbsp;' . $Building . '&nbsp;'. $IssueType. '&nbsp;' .$repIssueDescriptionMain. '&nbsp;' . $repIssueDescriptionSub;                       
             echo '<BR>';
             echo '<BR>';  
                        
             //INSERT INTO tblerrorlevel (ID, Department, McCategory, Level1, Level2, Level3, Level4) VALUES (NULL, 'dep', 'mc', 'l1', 'l2', 'l3', 'l4');
 
-            $sql = "INSERT INTO tblwo_issuetype (IssueType, ResponsiblePerson, TeamMembers) "
-                    . "VALUES ('" .$IssueType. "','" . $ResponsiblePerson . "','" . $TeamMembers . "')";
+            $sql = "INSERT INTO tblwo_masterdata_breakdown (Site, Location, Building, IssueType, IssueDescriptionMain, IssueDescriptionSub) "
+                    . "VALUES ('" .$Site. "','" . $Location . "','" . $Building . "','" . $IssueType. "','" .$repIssueDescriptionMain. "','" .$repIssueDescriptionSub. "')";
              
             //$sql = "INSERT INTO tblsmsevent (ServerDateTime, UnitId, UnitModel, MfmID, Region, Province, Area, ECSC, SinNo, FederNo, Status, V1N, V2N, V3N, I1A, I2A, I3A,TotalkW, TotalkVA, kWh, kVAh) "
             //        . "VALUES ('".$server_date."','".$UnitId."','SMS-1470B','".$MfmID."', 'R1', 'CP', 'Kegalle', 'ECSC1', 'SIN1', 'F1_Rotuwa', '".$Status."', '".$V1N."','".$V2N."', '".$V3N."', '".$I1A."', '".$I2A."', '".$I3A."', '".$TotalkW."', '".$TotalkVA."', '".$kWh."', '".$kVAh."')";
@@ -141,13 +145,15 @@ if (isset($_FILES['file']))
                     <!-- /.card-header -->                    
                     <div class="card card-default" >
                         <div class="card-header">
-                            <h2 class="card-title">Issue Type Update </h2>
+                            <h2 class="card-title">Master Data Update - Breakdown</h2>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                     <i class="fas fa-minus"></i>
                                 </button>                                
                             </div>
                         </div>
+                        
+                        
                         
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -193,11 +199,6 @@ if (isset($_FILES['file']))
        document.getElementById('id_edate').valueAsDate = new Date(Date.now() + ( 3600 * 1000 * 24));
        //funViewReport();
    });
-   //--------------- Print Report function ------------------------------------------
-   function funPrintReport() 
-   {                
-       window.print();		
-   }
-</script>
+   </script>
 </body>
 </html>
