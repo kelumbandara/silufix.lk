@@ -202,9 +202,9 @@
                         <?php endif; ?>                        
                         <?php if (in_array('602' , $roll_section)): ?>
                             <li class="nav-item disabled">
-                                <a href="../data_management/index.php" class="nav-link">
+                                <a href="../masterdata_upload/masterdata_breakdown.php" class="nav-link">
                                     <i class="nav-icon far fa-edit "></i>
-                                    <p>Data Management</p>
+                                    <p>Master Data - Breakdown</p>
                                 </a>
                             </li>   
                         <?php endif; ?>
