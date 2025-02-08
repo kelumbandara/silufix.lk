@@ -192,15 +192,8 @@
                         </a>
                     <?php endif; ?>
                     <ul class="nav nav-treeview">
+                                             
                         <?php if (in_array('601' , $roll_section)): ?>
-                            <li class="nav-item">
-                                <a href="../machine_management/index.php" class="nav-link">
-                                    <i class="nav-icon far fa-edit"></i>
-                                    <p>Machine Management</p>
-                                </a>
-                            </li>
-                        <?php endif; ?>                        
-                        <?php if (in_array('602' , $roll_section)): ?>
                             <li class="nav-item disabled">
                                 <a href="../masterdata_upload/masterdata_breakdown.php" class="nav-link">
                                     <i class="nav-icon far fa-edit "></i>
@@ -208,11 +201,19 @@
                                 </a>
                             </li>   
                         <?php endif; ?>
-                        <?php if (in_array('603' , $roll_section)): ?>
+                        <?php if (in_array('602' , $roll_section)): ?>
                             <li class="nav-item disabled">
                                 <a href="../masterdata_upload/masterdata_redtag.php" class="nav-link">
                                     <i class="nav-icon far fa-edit "></i>
                                     <p>Master Data - Redtag</p>
+                                </a>
+                            </li>   
+                        <?php endif; ?>
+                        <?php if (in_array('603' , $roll_section)): ?>
+                            <li class="nav-item disabled">
+                                <a href="../masterdata_upload/masterdata_service.php" class="nav-link">
+                                    <i class="nav-icon far fa-edit "></i>
+                                    <p>Master Data - Service</p>
                                 </a>
                             </li>   
                         <?php endif; ?>

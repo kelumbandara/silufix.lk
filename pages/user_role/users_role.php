@@ -159,19 +159,19 @@
                             </div>
                             <div class="form-check mb-0 ml-4">
                                 <input class="form-check-input" type="checkbox" value="" id="id_601">
-                                <label class="form-check-label" for="id_601">Machine Management</label>
+                                <label class="form-check-label" for="id_601">Master Data- Breakdown</label>
                             </div>
                             <div class="form-check mb-0 ml-4">
                                 <input class="form-check-input" type="checkbox" value="" id="id_602">
-                                <label class="form-check-label" for="id_602">Data Management</label>
+                                <label class="form-check-label" for="id_602">Master Data- Redtag</label>
                             </div>
                             <div class="form-check mb-0 ml-4">
                                 <input class="form-check-input" type="checkbox" value="" id="id_603">
-                                <label class="form-check-label" for="id_603">Master Data Upload</label>
+                                <label class="form-check-label" for="id_603">Master Data- Service</label>
                             </div>  
                             <div class="form-check mb-0 ml-4">
                                 <input class="form-check-input" type="checkbox" value="" id="id_604">
-                                <label class="form-check-label" for="id_604">Machine Configuration</label>
+                                <label class="form-check-label" for="id_604">Issue Types</label>
                             </div>  
                            <!-- User Profile -->
                             <div class="form-check mb-0">
