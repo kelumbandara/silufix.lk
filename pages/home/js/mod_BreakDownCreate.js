@@ -358,7 +358,7 @@ function funModBrkDownCre_Update()
     DataAry[0] = "MMS-1810A";
     DataAry[1] = "Unit-1";
     DataAry[2] = "RelatedDep";
-    DataAry[3] = "BrkDown";
+    DataAry[3] = "BreakDown";
     DataAry[4] = "";  // WorkOrderSubCategory
     DataAry[5] = "";  // WorkOrderSubCategory2    
 
