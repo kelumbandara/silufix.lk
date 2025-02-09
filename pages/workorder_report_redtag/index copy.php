@@ -71,14 +71,9 @@
                                     </select>
                                 </div>
                                 <div class="col-md-2">                   
-                                    <label style="font-weight: bolder;" >Category</label>    
-                                    <select class="form-control select2" onchange="funLoadAllChart()" id="id_Select_Category" style="width: 100%;">
-                                        <option value="All">All</option> 
-                                        <option value="Safty">Safty</option> 
-                                        <option value="Leakages">Leakages</option> 
-                                        <option value="Rust/Corrosion">Rust/Corrosion</option> 
-                                        <option value="Contamination">Contamination</option> 
-                                        <option value="Other">Other</option> 
+                                    <label style="font-weight: bolder;" >Issue Type</label>    
+                                    <select class="form-control select2" onchange="funLoadAllChart()" id="id_Select_IssueType" style="width: 100%;">
+                                        <option selected="none"></option> 
                                     </select>
                                 </div>
                                 <div class="col-md-2">                   
@@ -113,7 +108,7 @@
                         <div class="col-md-3">
                             <div class="card card-default" >                        
                                 <div class="card-header">
-                                    <h3 class="card-title"> Work Order Category</h3>
+                                    <h3 class="card-title"> Red Tag Category</h3>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                             <i class="fas fa-minus"></i>
@@ -127,7 +122,7 @@
                         <div class="col-md-3">
                             <div class="card card-default" >  
                                 <div class="card-header">
-                                    <h3 class="card-title">Work Order Status</h3>
+                                    <h3 class="card-title">Red Tag Status</h3>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                             <i class="fas fa-minus"></i>
@@ -158,7 +153,7 @@
                         <div class="col-md-12">
                             <div class="card card-default" >                        
                                 <div class="card-header">
-                                    <h3 class="card-title">Machine Wise Maintenance </h3>
+                                    <h3 class="card-title">Machine Wise Red Tag Category</h3>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                             <i class="fas fa-minus"></i>
@@ -264,7 +259,7 @@
            ]
         });   
         funLoad_Departments();
-        //funLoad_Categories();
+        funLoad_IssueType();
         
     });
 
@@ -282,7 +277,7 @@
         DataAry[1] = document.getElementById("id_startdate").value;
         DataAry[2] = document.getElementById("id_enddate").value;
         DataAry[3] = document.getElementById("id_Select_Department").value;
-        DataAry[4] = document.getElementById("id_Select_Category").value;
+        DataAry[4] = document.getElementById("id_Select_IssueType").value;
         DataAry[5] = document.getElementById("id_Select_Status").value;
 
         if(intDebugEnable === 1) alert("DataAry :" + DataAry);
@@ -297,8 +292,8 @@
                 document.getElementById("id_divBuildingMnt_chart1").innerHTML = '&nbsp;';
                 document.getElementById("id_divBuildingMnt_chart1").innerHTML = '<canvas id="id_canBuildingMnt_chart1" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>';
                 
-                const AryCheckIn_Lable      = ["Safty", "Leakages", "Rust/Corrosion", "Contamination","Other"];
-                const AryCheckIn_Colors   = ["red","blue","green","pink", "yellow"];
+                const AryCheckIn_Lable      = ["Safty", "Leakages", "Worn Out or Broken Part", "Unusual Vibration/Heat", "Hard to Clean Area", "Other"];
+                const AryCheckIn_Colors   = ["red","blue","green","pink", "yellow", "gray" ];
 
                 var donutChartCanvas = $('#id_canBuildingMnt_chart1').get(0).getContext('2d');               
                 var donutData = {
@@ -351,7 +346,7 @@
         DataAry[1] = document.getElementById("id_startdate").value;
         DataAry[2] = document.getElementById("id_enddate").value;
         DataAry[3] = document.getElementById("id_Select_Department").value;
-        DataAry[4] = document.getElementById("id_Select_Category").value;
+        DataAry[4] = document.getElementById("id_Select_IssueType").value;
         DataAry[5] = document.getElementById("id_Select_Status").value;
         
         if(intDebugEnable === 1) alert("DataAry :" + DataAry);
@@ -414,7 +409,8 @@
         });  
      
     }
-    function funLoadBarChart() {
+    function funLoadBarChart() 
+    {
     let intDebugEnable = 0;
 
     const DataAry = [];
@@ -424,7 +420,7 @@
     DataAry[1] = document.getElementById("id_startdate").value;
     DataAry[2] = document.getElementById("id_enddate").value;
     DataAry[3] = document.getElementById("id_Select_Department").value;
-    DataAry[4] = document.getElementById("id_Select_Category").value;
+    DataAry[4] = document.getElementById("id_Select_IssueType").value;
     DataAry[5] = document.getElementById("id_Select_Status").value;
 
     if (intDebugEnable === 1) alert("DataAry :" + DataAry);
@@ -438,8 +434,8 @@
             document.getElementById("Id_DivStackedBarChart_1").innerHTML = '<canvas id="id_CanStackedBarChart_1" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>';
 
             var stackedBarChartCanvas = $('#id_CanStackedBarChart_1').get(0).getContext('2d');
-            var CategoryColorAry = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
-            var CategoryNameAry = ['Safety', 'Leakages', 'Rust/Corrosion', 'Contamination', 'Other'];
+            var CategoryColorAry = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#808080'];
+            var CategoryNameAry = ['Safety', 'Leakages', 'Worn Out or Broken Part', 'Unusual Vibration/Heat', 'Hard to Clean Area', 'Other'];
 
             var stackedBarChart1_Data = {
                 labels: res.Data_Ary[0],
@@ -477,6 +473,14 @@
                         borderColor: CategoryColorAry[4],
                         borderWidth: 1,
                         data: res.Data_Ary[5]
+                    }
+                    ,
+                    {
+                        label: CategoryNameAry[5],
+                        backgroundColor: CategoryColorAry[5],
+                        borderColor: CategoryColorAry[5],
+                        borderWidth: 1,
+                        data: res.Data_Ary[6]
                     }
                 ]
             };
@@ -520,7 +524,7 @@
     DataAry[1] = document.getElementById("id_startdate").value;
     DataAry[2] = document.getElementById("id_enddate").value;
     DataAry[3] = document.getElementById("id_Select_Department").value;
-    DataAry[4] = document.getElementById("id_Select_Category").value;
+    DataAry[4] = document.getElementById("id_Select_IssueType").value;
     DataAry[5] = document.getElementById("id_Select_Status").value;
 
     if (intDebugEnable === 1) alert("DataAry :" + DataAry);
@@ -535,7 +539,7 @@
 
             var barChartCanvas = $('#id_CanStackedBarChart_2').get(0).getContext('2d');
             var CategoryColorAry = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
-            var CategoryNameAry = ['Safety', 'Leakages', 'Rust/Corrosion', 'Contamination', 'Other'];
+            var CategoryNameAry = ['Safety', 'Leakages', 'Worn Out or Broken Part', 'Unusual Vibration/Heat', 'Hard to Clean Area', 'Other'];
             
             var barChart2_Data2 = {
                 labels: res.Data_Ary[0],
@@ -622,7 +626,7 @@
         DataAry[1] = document.getElementById("id_startdate").value;
         DataAry[2] = document.getElementById("id_enddate").value;
         DataAry[3] = document.getElementById("id_Select_Department").value;
-        DataAry[4] = document.getElementById("id_Select_Category").value;
+        DataAry[4] = document.getElementById("id_Select_IssueType").value;
         DataAry[5] = document.getElementById("id_Select_Status").value;
         
         if(intDebugEnable === 1) alert("DataAry :" + DataAry);
@@ -674,7 +678,7 @@
         //---------------- Load Departments --------------------------------------
         DataAry[0] = "funGetFilteredData";        // Function Name    
         DataAry[1] = "Department";
-        DataAry[2] = "tblwo_errorlevel_breakdown";
+        DataAry[2] = "tblwo_departments";
         DataAry[3] = "0";
         if(intDebugEnable === 1)    alert("DataAry :" + DataAry);      
         $.post('comFunctions.php', { userpara: DataAry }, function(json_data2) 
@@ -712,18 +716,18 @@
             
         });
     }
-    /*
-    //------------- Load Categories to Filter Data -------------------
-    function funLoad_Categories() 
+    
+    //------------- Load Issue Type to Filter Data -------------------
+    function funLoad_IssueType() 
     {
         let intDebugEnable = 1;        
-        if(intDebugEnable === 1)    alert("funLoad_Departments");
+        if(intDebugEnable === 1)    alert("funLoad_IssueType");
                 
         const DataAry = [];         
         //---------------- Load Departments --------------------------------------
         DataAry[0] = "funGetFilteredData";        // Function Name    
-        DataAry[1] = "WorkOrderSubCategory";
-        DataAry[2] = "tblwo_event";
+        DataAry[1] = "IssueType";
+        DataAry[2] = "tblwo_issuetype";
         DataAry[3] = "0";
         if(intDebugEnable === 1)    alert("DataAry :" + DataAry);      
         $.post('comFunctions.php', { userpara: DataAry }, function(json_data2) 
@@ -735,11 +739,11 @@
                 AryDepartment = res.Data_Ary;
                 if(intDebugEnable === 1) alert("AryDepartment : " + AryDepartment); 
                 //------------ Remove All Items in "AryUserType" -----------------------------------
-                var options5 = document.querySelectorAll('#id_Select_Category option');
+                var options5 = document.querySelectorAll('#id_Select_IssueType option');
                 options5.forEach(o => o.remove());
                                  
                 //------------ Fill New Items -------------------------------------
-                var sel_UserType = document.getElementById("id_Select_Category");
+                var sel_UserType = document.getElementById("id_Select_IssueType");
                 var opt4 = "All";
                 var el4 = document.createElement("option");
                 el4.textContent = opt4;
@@ -760,7 +764,7 @@
             
         });
     }
-    */
+    
     //------------- Load All Charts And Table ------------------
     function funLoadAllChart() 
     {

@@ -65,14 +65,14 @@ try
         $Site                = "";      //YourDepartment';
         $Location            = "";
         $Building            = "";   
-        $IssueType           = "";
-        $IssueDescriptionMain    = "";
+        $IssueType           = $ServiceSection;
+        $IssueDescriptionMain    = $ListOfMachinery;
         $IssueDescriptionSub     = "";
 
         $Note                = "";
         $CreatedDateTime     = $strServerDateTime;
-        $CreatedDepartment   = "";
-        $CreatedUser         = "";
+        $CreatedDepartment   = $Contractor;
+        $CreatedUser         = "0";
         $PlannedDateTime     = "";
         $AllocatedUser       = ''; // Placeholder value
         $RespondDateTime     = '';
@@ -85,12 +85,13 @@ try
         $VerifiedDateTime    = $strServerDateTime;
         $VerifiedUser        = ''; // Placeholder value
         $WoDescription       = "";
-        $WoEventLog          = "Auto Created a Service on " . $strServerDateTime;
-        $Shift               = '';
-        $WoStatus            = "";
+
+        $WoEventLog          = "Service Placed - On " . $strServerDateTime . " By MMS Admin";
+        $Shift               = 'A';
+        $WoStatus            = "New";
         $AlertSentState      = "";
         $Attachment          = "";
-        $State               = 0;
+        $State               = 1;
   
         //UPDATE tblprod_setting SET ID=?,WorkCenterNo=?,WorkCenterName=?,StyleNo=?,LowerValue=?,UpperValue=?,SMV=?,LowerColor=?,MiddleColor=?,UpperColor=?,State=? WHERE ID=?
         try

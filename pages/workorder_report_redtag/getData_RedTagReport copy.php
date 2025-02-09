@@ -32,9 +32,7 @@
         $strEndDate     = $num[2];
         $strDepartment  = $num[3];
         $strCategory    = $num[4];
-        $strStatus      = $num[5];
-
-        
+        $strStatus      = $num[5];        
          
         $whereClause = "WorkOrderCategory = 'RedTag' AND State < 6 AND ClosedDateTime IS NOT NULL AND DATE(CreatedDateTime) BETWEEN :sdate AND :edate";
                 
@@ -59,8 +57,9 @@
                 SELECT 
                     COUNT(CASE WHEN WorkOrderSubCategory = 'Safety' THEN 1 END) AS Safety_Count,
                     COUNT(CASE WHEN WorkOrderSubCategory = 'Leakages' THEN 1 END) AS Leakages_Count,
-                    COUNT(CASE WHEN WorkOrderSubCategory = 'Rust/Corrosion' THEN 1 END) AS Rust_Corrosion_Count,
-                    COUNT(CASE WHEN WorkOrderSubCategory = 'Contamination' THEN 1 END) AS Contamination_Count,
+                    COUNT(CASE WHEN WorkOrderSubCategory = 'Worn Out or Broken Part' THEN 1 END) AS Worn_Out_or_Broken_Part_Count,
+                    COUNT(CASE WHEN WorkOrderSubCategory = 'Unusual Vibration/Heat' THEN 1 END) AS Unusual_Vibration_Heat_Count,
+                    COUNT(CASE WHEN WorkOrderSubCategory = 'Hard to Clean Area' THEN 1 END) AS Hard_to_Clean_Area_Count,
                     COUNT(CASE WHEN WorkOrderSubCategory = 'Other' THEN 1 END) AS Other_Count
                 FROM 
                     tblwo_event
@@ -80,9 +79,10 @@
             {   
                 $ReturnData_ary[0][0] = $row['Safety_Count']; 
                 $ReturnData_ary[0][1] = $row['Leakages_Count']; 
-                $ReturnData_ary[0][2] = $row['Rust_Corrosion_Count']; 
-                $ReturnData_ary[0][3] = $row['Contamination_Count'];
-                $ReturnData_ary[0][4] = $row['Other_Count'];                               
+                $ReturnData_ary[0][2] = $row['Worn_Out_or_Broken_Part_Count']; 
+                $ReturnData_ary[0][3] = $row['Unusual_Vibration_Heat_Count'];
+                $ReturnData_ary[0][4] = $row['Hard_to_Clean_Area_Count'];
+                $ReturnData_ary[0][5] = $row['Other_Count'];                               
                 $i++;
             }  
             if($i === 0)    // No Data
@@ -210,16 +210,15 @@
         }
         
         try 
-        {           
-          
-        
+        { 
             $sqlString = "
                 SELECT 
                     WoDepartment,
                     COUNT(CASE WHEN WorkOrderSubCategory = 'Safety' THEN 1 END) AS Safety_Count,
                     COUNT(CASE WHEN WorkOrderSubCategory = 'Leakages' THEN 1 END) AS Leakages_Count,
-                    COUNT(CASE WHEN WorkOrderSubCategory = 'Rust/Corrosion' THEN 1 END) AS Rust_Corrosion_Count,
-                    COUNT(CASE WHEN WorkOrderSubCategory = 'Contamination' THEN 1 END) AS Contamination_Count,
+                    COUNT(CASE WHEN WorkOrderSubCategory = 'Worn Out or Broken Part' THEN 1 END) AS Worn_Out_or_Broken_Part_Count,
+                    COUNT(CASE WHEN WorkOrderSubCategory = 'Unusual Vibration/Heat' THEN 1 END) AS Unusual_Vibration_Heat_Count,
+                    COUNT(CASE WHEN WorkOrderSubCategory = 'Hard to Clean Area' THEN 1 END) AS Hard_to_Clean_Area_Count,
                     COUNT(CASE WHEN WorkOrderSubCategory = 'Other' THEN 1 END) AS Other_Count
                 FROM 
                     tblwo_event 
@@ -244,10 +243,11 @@
                 $ReturnData_ary[0][$i] = $row['WoDepartment'];
                 $ReturnData_ary[1][$i] = $row['Safety_Count']; 
                 $ReturnData_ary[2][$i] = $row['Leakages_Count']; 
-                $ReturnData_ary[3][$i] = $row['Rust_Corrosion_Count']; 
-                $ReturnData_ary[4][$i] = $row['Contamination_Count']; 
-                $ReturnData_ary[5][$i] = $row['Other_Count']; 
-                 
+                $ReturnData_ary[3][$i] = $row['Worn_Out_or_Broken_Part_Count']; 
+                $ReturnData_ary[4][$i] = $row['Unusual_Vibration_Heat_Count']; 
+                $ReturnData_ary[5][$i] = $row['Hard_to_Clean_Area_Count']; 
+                $ReturnData_ary[6][$i] = $row['Other_Count']; 
+                
                 $i++;
             }  
             if($i === 0)    // No Data
@@ -322,9 +322,11 @@
                  MachineNo,
                     COUNT(CASE WHEN WorkOrderSubCategory = 'Safety' THEN 1 END) AS Safety_Count,
                     COUNT(CASE WHEN WorkOrderSubCategory = 'Leakages' THEN 1 END) AS Leakages_Count,
-                    COUNT(CASE WHEN WorkOrderSubCategory = 'Rust/Corrosion' THEN 1 END) AS Rust_Corrosion_Count,
-                    COUNT(CASE WHEN WorkOrderSubCategory = 'Contamination' THEN 1 END) AS Contamination_Count,
+                    COUNT(CASE WHEN WorkOrderSubCategory = 'Worn Out or Broken Part' THEN 1 END) AS Worn_Out_or_Broken_Part_Count,
+                    COUNT(CASE WHEN WorkOrderSubCategory = 'Unusual Vibration/Heat' THEN 1 END) AS Unusual_Vibration_Heat_Count,
+                    COUNT(CASE WHEN WorkOrderSubCategory = 'Hard to Clean Area' THEN 1 END) AS Hard_to_Clean_Area_Count,
                     COUNT(CASE WHEN WorkOrderSubCategory = 'Other' THEN 1 END) AS Other_Count
+                    
                 FROM 
                     tblwo_event 
                 WHERE " . $whereClause . 
@@ -348,10 +350,10 @@
                 $ReturnData_ary[0][$i] = $row['MachineNo'];
                 $ReturnData_ary[1][$i] = $row['Safety_Count']; 
                 $ReturnData_ary[2][$i] = $row['Leakages_Count']; 
-                $ReturnData_ary[3][$i] = $row['Rust_Corrosion_Count']; 
-                $ReturnData_ary[4][$i] = $row['Contamination_Count']; 
-                $ReturnData_ary[5][$i] = $row['Other_Count']; 
-                 
+                $ReturnData_ary[3][$i] = $row['Worn_Out_or_Broken_Part_Count']; 
+                $ReturnData_ary[4][$i] = $row['Unusual_Vibration_Heat_Count']; 
+                $ReturnData_ary[5][$i] = $row['Hard_to_Clean_Area_Count']; 
+                $ReturnData_ary[5][$i] = $row['Other_Count'];
                 $i++;
             }  
             if($i === 0)    // No Data

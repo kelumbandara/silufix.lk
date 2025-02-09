@@ -32,17 +32,15 @@
         $strEndDate     = $num[2];
         $strDepartment  = $num[3];
         $strCategory    = $num[4];
-        $strStatus      = $num[5];
-
-        
+        $strStatus      = $num[5];        
          
         $whereClause = "WorkOrderCategory = 'RedTag' AND State < 6 AND ClosedDateTime IS NOT NULL AND DATE(CreatedDateTime) BETWEEN :sdate AND :edate";
                 
         if ($strDepartment !== "All") {
-            $whereClause .= " AND WoDepartment = '" . $strDepartment . "'";
+            $whereClause .= " AND CreatedDepartment = '" . $strDepartment . "'";
         }
         if ($strCategory !== "All") {
-            $whereClause .= " AND WorkOrderSubCategory = '" . $strCategory . "'";
+            $whereClause .= " AND IssueType = '" . $strCategory . "'";
         }  
         if ($strStatus !== "All") 
         {
@@ -54,19 +52,14 @@
             }           
         } 
         try 
-        {  
-            $sqlString = "
-                SELECT 
-                    COUNT(CASE WHEN WorkOrderSubCategory = 'Safety' THEN 1 END) AS Safety_Count,
-                    COUNT(CASE WHEN WorkOrderSubCategory = 'Leakages' THEN 1 END) AS Leakages_Count,
-                    COUNT(CASE WHEN WorkOrderSubCategory = 'Worn Out or Broken Part' THEN 1 END) AS Worn_Out_or_Broken_Part_Count,
-                    COUNT(CASE WHEN WorkOrderSubCategory = 'Unusual Vibration/Heat' THEN 1 END) AS Unusual_Vibration_Heat_Count,
-                    COUNT(CASE WHEN WorkOrderSubCategory = 'Hard to Clean Area' THEN 1 END) AS Hard_to_Clean_Area_Count,
-                    COUNT(CASE WHEN WorkOrderSubCategory = 'Other' THEN 1 END) AS Other_Count
+        {              
+            $sqlString = "SELECT 
+                    IssueType, 
+                    COUNT(*) AS TotalCount
                 FROM 
                     tblwo_event
-                WHERE " . $whereClause;
-     
+                WHERE " . $whereClause . " GROUP BY IssueType";            
+           
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
             //$stmt = $conn->prepare("SELECT WorkOrderNo,CheckInUserDateTime,CheckOutUserDateTime FROM tblwo_allcheckinusers WHERE CheckInUser=:chkinusr");
             $stmt = $conn->prepare($sqlString);
@@ -79,12 +72,9 @@
             
             foreach($result as $row)
             {   
-                $ReturnData_ary[0][0] = $row['Safety_Count']; 
-                $ReturnData_ary[0][1] = $row['Leakages_Count']; 
-                $ReturnData_ary[0][2] = $row['Worn_Out_or_Broken_Part_Count']; 
-                $ReturnData_ary[0][3] = $row['Unusual_Vibration_Heat_Count'];
-                $ReturnData_ary[0][4] = $row['Hard_to_Clean_Area_Count'];
-                $ReturnData_ary[0][5] = $row['Other_Count'];                               
+                $ReturnData_ary[0][$i] = $row['IssueType']; 
+                $ReturnData_ary[1][$i] = $row['TotalCount']; 
+                                          
                 $i++;
             }  
             if($i === 0)    // No Data
@@ -121,10 +111,10 @@
         $whereClause = "WorkOrderCategory = 'RedTag' AND State < 6 AND ClosedDateTime IS NOT NULL AND DATE(CreatedDateTime) BETWEEN :sdate AND :edate";
                 
         if ($strDepartment !== "All") {
-            $whereClause .= " AND WoDepartment = '" . $strDepartment . "'";
+            $whereClause .= " AND CreatedDepartment = '" . $strDepartment . "'";
         }
         if ($strCategory !== "All") {
-            $whereClause .= " AND WorkOrderSubCategory = '" . $strCategory . "'";
+            $whereClause .= " AND IssueType = '" . $strCategory . "'";
         }  
         if ($strStatus !== "All") 
         {
@@ -196,10 +186,10 @@
         $whereClause = "WorkOrderCategory = 'RedTag' AND State < 6 AND ClosedDateTime IS NOT NULL AND DATE(CreatedDateTime) BETWEEN :sdate AND :edate";
                 
         if ($strDepartment !== "All") {
-            $whereClause .= " AND WoDepartment = '" . $strDepartment . "'";
+            $whereClause .= " AND CreatedDepartment = '" . $strDepartment . "'";
         }
         if ($strCategory !== "All") {
-            $whereClause .= " AND WorkOrderSubCategory = '" . $strCategory . "'";
+            $whereClause .= " AND IssueType = '" . $strCategory . "'";
         }  
         if ($strStatus !== "All") 
         {
@@ -212,12 +202,11 @@
         }
         
         try 
-        {           
-          
-        
+        { 
+            /*
             $sqlString = "
                 SELECT 
-                    WoDepartment,
+                    CreatedDepartment,
                     COUNT(CASE WHEN WorkOrderSubCategory = 'Safety' THEN 1 END) AS Safety_Count,
                     COUNT(CASE WHEN WorkOrderSubCategory = 'Leakages' THEN 1 END) AS Leakages_Count,
                     COUNT(CASE WHEN WorkOrderSubCategory = 'Worn Out or Broken Part' THEN 1 END) AS Worn_Out_or_Broken_Part_Count,
@@ -228,8 +217,17 @@
                     tblwo_event 
                 WHERE " . $whereClause . 
                 " GROUP BY 
-                    WoDepartment;";
-            
+                    CreatedDepartment;";
+            */
+            $sqlString = "
+                SELECT 
+                    CreatedDepartment, 
+                    COUNT(*) AS TotalCount
+                FROM 
+                    tblwo_event
+                WHERE " . $whereClause . " GROUP BY CreatedDepartment";
+
+
             // echo $sqlString;
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
             //$stmt = $conn->prepare("SELECT WorkOrderNo,CheckInUserDateTime,CheckOutUserDateTime FROM tblwo_allcheckinusers WHERE CheckInUser=:chkinusr");
@@ -244,14 +242,9 @@
             $i = 0;
             foreach($result as $row)
             {   
-                $ReturnData_ary[0][$i] = $row['WoDepartment'];
-                $ReturnData_ary[1][$i] = $row['Safety_Count']; 
-                $ReturnData_ary[2][$i] = $row['Leakages_Count']; 
-                $ReturnData_ary[3][$i] = $row['Worn_Out_or_Broken_Part_Count']; 
-                $ReturnData_ary[4][$i] = $row['Unusual_Vibration_Heat_Count']; 
-                $ReturnData_ary[5][$i] = $row['Hard_to_Clean_Area_Count']; 
-                $ReturnData_ary[6][$i] = $row['Other_Count']; 
-                
+                $ReturnData_ary[0][$i] = $row['CreatedDepartment'];
+                $ReturnData_ary[1][$i] = $row['TotalCount']; 
+                              
                 $i++;
             }  
             if($i === 0)    // No Data
@@ -286,7 +279,7 @@
         $whereClause = "WorkOrderCategory = 'RedTag' AND State < 6 AND ClosedDateTime IS NOT NULL AND DATE(CreatedDateTime) BETWEEN :sdate AND :edate";
                 
         if ($strDepartment !== "All") {
-            $whereClause .= " AND WoDepartment = '" . $strDepartment . "'";
+            $whereClause .= " AND CreatedDepartment = '" . $strDepartment . "'";
         }
         if ($strCategory !== "All") {
             $whereClause .= " AND WorkOrderSubCategory = '" . $strCategory . "'";
@@ -302,40 +295,21 @@
         }
         
         try 
-        {           
-                /*
+        {       
+            
             $sqlString = "
                 SELECT 
-                    WoDepartment,
-                    COUNT(CASE WHEN WorkOrderSubCategory = 'Safety' THEN 1 END) AS Safety_Count,
-                    COUNT(CASE WHEN WorkOrderSubCategory = 'Leakages' THEN 1 END) AS Leakages_Count,
-                    COUNT(CASE WHEN WorkOrderSubCategory = 'Rust/Corrosion' THEN 1 END) AS Rust_Corrosion_Count,
-                    COUNT(CASE WHEN WorkOrderSubCategory = 'Contamination' THEN 1 END) AS Contamination_Count,
-                    COUNT(CASE WHEN WorkOrderSubCategory = 'Other' THEN 1 END) AS Other_Count
-                FROM 
-                    tblwo_event 
-                WHERE 
-                     WorkOrderCategory = 'RedTag'
-                GROUP BY 
-                    WoDepartment;";
-                 * */
-         
-           
-            $sqlString = "
-                SELECT 
-                 MachineNo,
-                    COUNT(CASE WHEN WorkOrderSubCategory = 'Safety' THEN 1 END) AS Safety_Count,
-                    COUNT(CASE WHEN WorkOrderSubCategory = 'Leakages' THEN 1 END) AS Leakages_Count,
-                    COUNT(CASE WHEN WorkOrderSubCategory = 'Worn Out or Broken Part' THEN 1 END) AS Worn_Out_or_Broken_Part_Count,
-                    COUNT(CASE WHEN WorkOrderSubCategory = 'Unusual Vibration/Heat' THEN 1 END) AS Unusual_Vibration_Heat_Count,
-                    COUNT(CASE WHEN WorkOrderSubCategory = 'Hard to Clean Area' THEN 1 END) AS Hard_to_Clean_Area_Count,
-                    COUNT(CASE WHEN WorkOrderSubCategory = 'Other' THEN 1 END) AS Other_Count
-                    
+                 Location,
+                    COUNT(CASE WHEN Site = 'site 1' THEN 1 END) AS Site1_Count,
+                    COUNT(CASE WHEN Site = 'site 2' THEN 1 END) AS Site2_Count,
+                    COUNT(CASE WHEN Site = 'site 3' THEN 1 END) AS Site3_Count,
+                    COUNT(CASE WHEN Site = 'site 4' THEN 1 END) AS Site4_Count,
+                    COUNT(CASE WHEN Site = 'site 5' THEN 1 END) AS Site5_Count
                 FROM 
                     tblwo_event 
                 WHERE " . $whereClause . 
                 " GROUP BY 
-                    MachineNo;";
+                    Location;";            
             
             // echo $sqlString;
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
@@ -351,13 +325,12 @@
             $i = 0;
             foreach($result as $row)
             {   
-                $ReturnData_ary[0][$i] = $row['MachineNo'];
-                $ReturnData_ary[1][$i] = $row['Safety_Count']; 
-                $ReturnData_ary[2][$i] = $row['Leakages_Count']; 
-                $ReturnData_ary[3][$i] = $row['Worn_Out_or_Broken_Part_Count']; 
-                $ReturnData_ary[4][$i] = $row['Unusual_Vibration_Heat_Count']; 
-                $ReturnData_ary[5][$i] = $row['Hard_to_Clean_Area_Count']; 
-                $ReturnData_ary[5][$i] = $row['Other_Count'];
+                $ReturnData_ary[0][$i] = $row['Location'];
+                $ReturnData_ary[1][$i] = $row['Site1_Count']; 
+                $ReturnData_ary[2][$i] = $row['Site2_Count']; 
+                $ReturnData_ary[3][$i] = $row['Site3_Count']; 
+                $ReturnData_ary[4][$i] = $row['Site4_Count']; 
+                $ReturnData_ary[5][$i] = $row['Site5_Count'];                 
                 $i++;
             }  
             if($i === 0)    // No Data
@@ -388,13 +361,12 @@
         $strEndDate3        = $num[2];
         $strDepartment      = $num[3];
         $strCategory        = $num[4];
-        $strStatus          = $num[5];
-         
+        $strStatus          = $num[5];         
         
         $whereClause = "wo.WorkOrderCategory = 'RedTag' AND State < 6 AND wo.ClosedDateTime IS NOT NULL AND DATE(wo.CreatedDateTime) BETWEEN :sdate AND :edate";
                 
         if ($strDepartment !== "All") {
-            $whereClause .= " AND wo.WoDepartment = '" . $strDepartment . "'";
+            $whereClause .= " AND wo.CreatedDepartment = '" . $strDepartment . "'";
         }
         if ($strCategory !== "All") {
             $whereClause .= " AND wo.WorkOrderSubCategory = '" . $strCategory . "'";
@@ -415,12 +387,12 @@
                 SELECT             
                     wo.WorkOrderNo,
                     wo.CreatedDateTime,
-                    wo.WoDepartment,
-                    wo.WorkOrderSubCategory,
-                    wo.McCategory,
-                    wo.MachineNo,
-                    wo.ClosedFaultType,
-                    wo.WoDescription,
+                    wo.CreatedDepartment,               
+                    wo.Site,
+                    wo.Location,
+                    wo.Building,
+                    wo.IssueType,
+                    wo.IssueDescriptionMain,
                     wo.WoStatus,
                     wo.CreatedUser,
                     wo.RespondDateTime,                    
@@ -461,12 +433,12 @@
             {
                 $ReturnData_ary[$i][0] = $row['WorkOrderNo'];
                 $ReturnData_ary[$i][1] = $row['CreatedDateTime']; 
-                $ReturnData_ary[$i][2] = $row['WoDepartment']; 
-                $ReturnData_ary[$i][3] = $row['WorkOrderSubCategory']; 
-                $ReturnData_ary[$i][4] = $row['McCategory'];
-                $ReturnData_ary[$i][5] = $row['MachineNo'];
-                $ReturnData_ary[$i][6] = $row['ClosedFaultType'];
-                $ReturnData_ary[$i][7] = $row['WoDescription']; 
+                $ReturnData_ary[$i][2] = $row['CreatedDepartment']; 
+                $ReturnData_ary[$i][3] = $row['Site']; 
+                $ReturnData_ary[$i][4] = $row['Location'];
+                $ReturnData_ary[$i][5] = $row['Building'];
+                $ReturnData_ary[$i][6] = $row['IssueType'];
+                $ReturnData_ary[$i][7] = $row['IssueDescriptionMain']; 
                 $ReturnData_ary[$i][8] = $row['WoStatus'];    
                 $ReturnData_ary[$i][9] = $row['CreatedUser'];
                 $ReturnData_ary[$i][10] = $row['RespondDateTime']; 

@@ -216,8 +216,8 @@
                                         <th>Department</th>    
                                         <th>By</th>
                                         <th>Category</th>
-                                        <th>Issue Type</th>
-                                        <th>Issue Description</th>                                                  
+                                        <th>Issue/Service Type</th>
+                                        <th>Issue/Service Description</th>                                                  
                                         <th>Status</th>
                                         <th><center>ReOpen</center></th>
                                     </tr>
