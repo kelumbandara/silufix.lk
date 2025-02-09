@@ -6,7 +6,7 @@
     
     $num = $_POST["userpara"];    
     $strFuncType = $num[0];    
-    //$strFuncType = "funGetData_PieChart1";
+    //$strFuncType = "funGetData_BarChart2";
       
     //----------- Set TimeZone ----------------------------
     date_default_timezone_set('Asia/Kolkata');
@@ -382,12 +382,19 @@
     }
     else if($strFuncType === "funGetData_BarChart2") //------------- funUpdateEventLog --------------------
     {
+   
         $strStarDate2   = $num[1];
         $strEndDate2    = $num[2];
         $strDepartment  = $num[3];
         $strCategory    = $num[4];
         $strStatus      = $num[5];
-         
+                
+        //$strStarDate2   = '2024-06-22';
+        //$strEndDate2    = '2024-06-28';
+        //$strDepartment  = 'All';
+        //$strCategory    = 'All';
+        //$strStatus      = 'All';
+        
         $whereClause = "WorkOrderCategory = 'BreakDown' AND State < 6 AND ClosedDateTime IS NOT NULL AND DATE(CreatedDateTime) BETWEEN :sdate AND :edate";
                 
         if ($strDepartment !== "All") {
@@ -426,7 +433,7 @@
             foreach($result as $row)
             {   
                 $ReturnData_ary[0][$i] = $row['WoDepartment'];
-                $ReturnData_ary[1][$i] = number_format($row['Time_Duration'] / 60, 1); 
+                $ReturnData_ary[1][$i] = number_format($row['Time_Duration'] / 60, 2);
                  
                 $i++;
             }  

@@ -597,9 +597,9 @@
         DataAry[4] = document.getElementById("id_Select_Category").value;
         DataAry[5] = document.getElementById("id_Select_Status").value;
 
-        if (intDebugEnable === 1) alert("DataAry :" + DataAry);
+        //if (intDebugEnable === 1) alert("DataAry :" + DataAry);
         $.post('getData_BdReport.php', { userpara: DataAry }, function(json_data2) {
-            if (intDebugEnable === 1) alert("json_data2 :" + json_data2);
+            //if (intDebugEnable === 1) alert("json_data2 :" + json_data2);
             var res = $.parseJSON(json_data2);
             if (res.Status_Ary[0] === "true") {
                 if (intDebugEnable === 1) alert("data available");
@@ -675,7 +675,7 @@
         DataAry[4] = document.getElementById("id_Select_Category").value;
         DataAry[5] = document.getElementById("id_Select_Status").value;
 
-        if(intDebugEnable === 1) alert("DataAry :" + DataAry);
+        if(intDebugEnable === 1) alert("DataAry Chart2 :" + DataAry);
         $.post('getData_BdReport.php', { userpara: DataAry }, function(json_data2) 
         {
             if(intDebugEnable === 1) alert("json_data2:" + json_data2);           

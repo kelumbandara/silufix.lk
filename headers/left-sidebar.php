@@ -58,36 +58,21 @@
                         <?php endif; ?>
                         <?php if (in_array('203' , $roll_section)): ?>
                             <li class="nav-item">
-                                <a href="../workorder_report_plannedmnt/index.php" class="nav-link">
-                                    <i class="nav-icon fas fa-chart-pie"></i>
-                                    <p>Planned Maintenance</p>
-                                </a>
-                            </li> 
-                        <?php endif; ?>
-                        <?php if (in_array('204' , $roll_section)): ?>
-                            <li class="nav-item">
                                 <a href="../workorder_report_redtag/index.php" class="nav-link">
                                     <i class="nav-icon fas fa-chart-pie"></i>
                                     <p>Red Tag</p>
                                 </a>
                             </li> 
                         <?php endif; ?>
-                        <?php if (in_array('205' , $roll_section)): ?>
+                        <?php if (in_array('204' , $roll_section)): ?>
                             <li class="nav-item">
-                                <a href="../workorder_report_buildingmnt/index.php" class="nav-link">
+                                <a href="../workorder_report_service/index.php" class="nav-link">
                                     <i class="nav-icon fas fa-chart-pie"></i>
-                                    <p>Building Maintenance</p>
+                                    <p>Service</p>
                                 </a>
                             </li> 
-                        <?php endif; ?>
-                        <?php if (in_array('206' , $roll_section)): ?>
-                            <li class="nav-item">
-                                <a href="../workorder_report_other/index.php" class="nav-link">
-                                    <i class="nav-icon fas fa-chart-pie"></i>
-                                    <p>Other</p>
-                                </a>
-                            </li> 
-                        <?php endif; ?>
+                        <?php endif; ?>                       
+                        
                     </ul>
                 </li>
                 <li class="nav-item">
