@@ -412,6 +412,7 @@
         dtbl1 = $('#example1').DataTable();    
         
         //--- Load Tables --------------------------------------   
+        funAutoCreateServiceWo();
         //funLoad_WoTableFilterDepData();
         //funRefresh_DowntimeDashboard();        
         funRefresh_MechanicDashboard();        
@@ -421,6 +422,7 @@
         funRefresh_WoTable();
         //MQTTconnect();
         funAutoVerifyWo();
+ 
     }); 
     $('#myCustomSearchBox').keyup(function() 
     {
@@ -1394,7 +1396,28 @@
         // Return the formatted time
         return formattedHours + ':' + formattedMinutes;
     }
-
+    //--------------- Auto Create Service Workorders -----------------------
+    function funAutoCreateServiceWo()
+    {
+        let intDebugEnable = 1;
+        
+        if(intDebugEnable === 1)    alert("funAutoCreateServiceWo");
+        const DataAry = [];  
+        DataAry[0] = "funAutoCreateService";
+        //DataAry[1] = JS_SessionArry[0].WorkOrderNo;        // Table Name
+        //DataAry[2] = JS_SessionArry[0].CurrentUserEPF;                 
+        //DataAry[3] = JS_SessionArry[0].CurrentUserName;
+        //DataAry[4] = JS_SessionArry[0].CurrentUserContact;
+        if(intDebugEnable === 1)    alert(DataAry);
+        
+        $.post('class/insertData_WoService.php', { userpara: DataAry }, function(json_data2) 
+        {
+            if(intDebugEnable === 1)    alert(json_data2);           
+            var res = $.parseJSON(json_data2); 
+            if(intDebugEnable === 1)    alert(res.Status_Ary[0]); 
+        }); 
+        
+    }
     
     
 </script>

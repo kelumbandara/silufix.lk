@@ -66,7 +66,7 @@ if (isset($_FILES['file']))
                     $endOfWeek = $date->format('Y-m-d'); // Sunday of the week
                     
                     $repListOfMachinery     = str_replace(["'", "<", ">", "'", "/"], " ", $ListOfMachinery);
-                    $repResponciblePerson     = str_replace(["'", "<", ">", "'", "/"], " ", $ResponciblePerson);
+                    $repResponciblePerson     = str_replace(["'", "<", ">", "'", "/"], ",", $ResponciblePerson);
 
                     $output .= "<tr>
                                     <td>$strServerDateTime</td>                            
