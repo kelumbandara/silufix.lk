@@ -1399,15 +1399,10 @@
     //--------------- Auto Create Service Workorders -----------------------
     function funAutoCreateServiceWo()
     {
-        let intDebugEnable = 1;
-        
+        let intDebugEnable = 0;        
         if(intDebugEnable === 1)    alert("funAutoCreateServiceWo");
         const DataAry = [];  
-        DataAry[0] = "funAutoCreateService";
-        //DataAry[1] = JS_SessionArry[0].WorkOrderNo;        // Table Name
-        //DataAry[2] = JS_SessionArry[0].CurrentUserEPF;                 
-        //DataAry[3] = JS_SessionArry[0].CurrentUserName;
-        //DataAry[4] = JS_SessionArry[0].CurrentUserContact;
+        DataAry[0] = "funAutoCreateService";        
         if(intDebugEnable === 1)    alert(DataAry);
         
         $.post('class/insertData_WoService.php', { userpara: DataAry }, function(json_data2) 
@@ -1415,7 +1410,17 @@
             if(intDebugEnable === 1)    alert(json_data2);           
             var res = $.parseJSON(json_data2); 
             if(intDebugEnable === 1)    alert(res.Status_Ary[0]); 
-        }); 
+
+            if(res.Status_Ary[0] === "false")
+            {
+                Swal.fire({
+                        title: 'Alert !!',
+                        text: 'Fail to Auto Create Servicess for this week.',
+                        icon: 'Warning', // success, error, warning, info, question
+                        confirmButtonText: 'OK'
+                    });
+            }    
+        });
         
     }
     

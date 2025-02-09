@@ -11,8 +11,6 @@ $strServerDateTime = date("Y-m-d H:i:s");
 // Get current week number
 date_default_timezone_set('Asia/Kolkata');
 $WeekNo = date("W"); 
-echo $WeekNo;
-echo "<br>";
 
 // Declare variables
 $Status_ary = array();
@@ -23,9 +21,6 @@ $i = 0; // Initialize counter
 try 
 {
     $strSqlString = "SELECT * FROM tblwo_masterdata_service WHERE WeekNo = :wkno AND State = 0";
-    echo $strSqlString;
-    echo "<br>";
-
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);                       
     $stmt = $conn->prepare($strSqlString);
     $stmt->bindParam(':wkno', $WeekNo, PDO::PARAM_INT); 
@@ -35,17 +30,15 @@ try
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);        
 
     foreach ($result as $row) 
-    {   
-
+    {  
+      
         //------ UPDATE State = 1 ----------------------------------------
         $ID = $row['ID'];  // Assuming 'ID' is the primary key column
-        //echo "Updating record ID: " . $ID . "<br>";
         // UPDATE Query to set State = 1
         $updateSql = "UPDATE tblwo_masterdata_service SET State = 1 WHERE ID = :id";
         $updateStmt = $conn->prepare($updateSql);
         $updateStmt->bindParam(':id', $ID, PDO::PARAM_INT);
         $updateStmt->execute();        
-        //echo "Updated record ID: " . $ID . " to State = 1 <br>";
         
         //$rowData = array();
         //$ID             = $row['ID'];
@@ -119,11 +112,6 @@ try
         //------------------- Insert Data to WO ---------------------------------
         try 
         {    
-
-            Week,ServiceSection,FileNo,ListOfMachinery,Quantity,TypeOfService,ResponciblePerson,Contractor,TimeFrequency,PreArrangement
-            :wk,:sersec,:filno,:lstofmch,:qty,:typofser,:resppersn,:cnter,:tmfreq,:prearngmnt
-
-
             $stmt = $conn->prepare("INSERT INTO tblwo_event(
                 ServerDateTime, FactoryCode, Unit, RelatedDepartment, WorkOrderNo, WorkOrderCategory, WorkOrderSubCategory, 
                 WorkOrderSubCategory2, Site, Location, Building, IssueType, IssueDescriptionMain, IssueDescriptionSub, 
@@ -149,16 +137,17 @@ try
             $stmt->bindParam(':issuedesc1', $IssueDescriptionMain);
             $stmt->bindParam(':issuedesc2', $IssueDescriptionSub);
 
-            $FileNo         = $row['FileNo'];  // Use actual column name
-        $ServiceSection = $row['ServiceSection'];       
-        $ListOfMachinery    = $row['ListOfMachinery'];
-        $Quantity           = $row['Quantity'];
-        $TypeOfService      = $row['TypeOfService'];
-        $ResponciblePerson  = $row['ResponciblePerson'];
-        $Contractor         = $row['Contractor'];
-        $TimeFrequency      = $row['TimeFrequency'];
-        $PreArrangement     = $row['PreArrangement'];        
-        $PlannedDateTime    = $row['PlannedDateTime'];
+            $stmt->bindParam(':wk', $WeekNo);
+            $stmt->bindParam(':sersec', $ServiceSection);
+            $stmt->bindParam(':filno', $FileNo);
+
+            $stmt->bindParam(':lstofmch', $ListOfMachinery);
+            $stmt->bindParam(':qty', $Quantity);
+            $stmt->bindParam(':typofser', $TypeOfService);
+            $stmt->bindParam(':resppersn', $ResponciblePerson);
+            $stmt->bindParam(':cnter', $Contractor);
+            $stmt->bindParam(':tmfreq', $TimeFrequency);
+            $stmt->bindParam(':prearngmnt', $PreArrangement);
 
             $stmt->bindParam(':note', $Note);
             $stmt->bindParam(':credt', $CreatedDateTime);
@@ -184,6 +173,7 @@ try
             $stmt->bindParam(':stat', $State);
 
             $stmt->execute();
+
             if ($stmt->rowCount() > 0) 
             {
                 $Status_ary[0] = "true";
@@ -193,7 +183,8 @@ try
             {
                 $Status_ary[0] = "false";
                 $Status_ary[1] = "Data not inserted"; 
-            }      
+            }   
+
             //$data[1] = "Dats Saved Successfully";   
         } 
         catch (PDOException $ex) 
