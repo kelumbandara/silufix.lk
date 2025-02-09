@@ -51,58 +51,42 @@ if (isset($_FILES['file']))
                 $strTemp = isset($row[9 + $i]) ? $row[9 + $i] : '&nbsp;'; 
                 if ($strTemp == "x")
                 {
-                    $WeekNo = ($i + 1);
-
-                    $year = date("Y"); // Get the current year
-                    //$WeekNo = 10; // Example week number (change this dynamically)
-                    
-                    // Get the first day (Monday) of the given week number
-                    $date = new DateTime();
-                    $date->setISODate($year, $WeekNo); 
-                    
-                    // Get start and end date of the week
-                    $startOfWeek = $date->format('Y-m-d'); // Monday of the week
-                    $date->modify('+6 days');
-                    $endOfWeek = $date->format('Y-m-d'); // Sunday of the week
-                    
-                    $repListOfMachinery     = str_replace(["'", "<", ">", "'", "/"], " ", $ListOfMachinery);
-                    $repResponciblePerson     = str_replace(["'", "<", ">", "'", "/"], " ", $ResponciblePerson);
-
-                    $output .= "<tr>
-                                    <td>$strServerDateTime</td>                            
-                                    <td>$FileNo</td>
-                                    <td>$ServiceSection</td>
-                                    <td>$repListOfMachinery</td>
-                                    <td>$Quantity</td>
-                                    <td>$TypeOfService</td>
-                                    <td>$repResponciblePerson</td>
-                                    <td>$Contractor</td>
-                                    <td>$TimeFrequency</td>
-                                    <td>$PreArrangement</td>
-                                    <td>$WeekNo</td>
-                                    <td>$startOfWeek</td>
-                                    
-                                </tr>";
-                                          
-                    $sql = "INSERT INTO tblwo_masterdata_service 
-                                (ServerDateTime, FileNo, ServiceSection, ListOfMachinery, Quantity, TypeOfService, 
-                                ResponciblePerson, Contractor, TimeFrequency, PreArrangement, WeekNo, PlannedDateTime, State) 
-                            VALUES 
-                                ('$strServerDateTime', '$FileNo', '$ServiceSection', '$repListOfMachinery', '$Quantity', 
-                                '$TypeOfService', '$repResponciblePerson', '$Contractor', '$TimeFrequency', '$PreArrangement', '$WeekNo', '$startOfWeek', '0')";
-
-                    mysqli_query($conn2, $sql);
-
-                    //$sql = "INSERT INTO tblwo_masterdata_service (Site, Location, Building, IssueType, IssueDescriptionMain, IssueDescriptionSub) "
-                    //     . "VALUES ('$Site', '$Location', '$Building', '$IssueType', '$repIssueDescriptionMain', '$repIssueDescriptionSub')";
-                    
-                    //mysqli_query($conn2, $sql);
+                    $WeekNo .= ($i + 1) . ","; // Ensured proper concatenation
                     
                 }
             }
-
+            $WeekNo = rtrim($WeekNo, ",");
            
+            $repListOfMachinery     = str_replace(["'", "<", ">", "'", "/"], " ", $ListOfMachinery);
+            $repResponciblePerson     = str_replace(["'", "<", ">", "'", "/"], " ", $ResponciblePerson);
+
+            $output .= "<tr>
+                            <td>$strServerDateTime</td>                            
+                            <td>$FileNo</td>
+                            <td>$ServiceSection</td>
+                            <td>$repListOfMachinery</td>
+                            <td>$Quantity</td>
+                            <td>$TypeOfService</td>
+                            <td>$repResponciblePerson</td>
+                            <td>$Contractor</td>
+                            <td>$TimeFrequency</td>
+                            <td>$PreArrangement</td>
+                            <td>$WeekNo</td>
+                        </tr>";
+                                    
+            $sql = "INSERT INTO tblwo_masterdata_service 
+                        (ServerDateTime, FileNo, ServiceSection, ListOfMachinery, Quantity, TypeOfService, 
+                        ResponciblePerson, Contractor, TimeFrequency, PreArrangement, WeekNo) 
+                    VALUES 
+                        ('$strServerDateTime', '$FileNo', '$ServiceSection', '$repListOfMachinery', '$Quantity', 
+                        '$TypeOfService', '$repResponciblePerson', '$Contractor', '$TimeFrequency', '$PreArrangement', '$WeekNo')";
+
+            mysqli_query($conn2, $sql);
+
+            //$sql = "INSERT INTO tblwo_masterdata_service (Site, Location, Building, IssueType, IssueDescriptionMain, IssueDescriptionSub) "
+            //     . "VALUES ('$Site', '$Location', '$Building', '$IssueType', '$repIssueDescriptionMain', '$repIssueDescriptionSub')";
             
+            //mysqli_query($conn2, $sql);
         }
     }
     else 
@@ -152,8 +136,6 @@ if (isset($_FILES['file']))
                                     <th>TimeFrequency</th>
                                     <th>PreArrangement</th>
                                     <th>WeekNo</th>
-                                    <th>PlannedDateTime</th>
-                                    
                             </thead>
                             <tbody>
                                 <?php echo $output; ?>
