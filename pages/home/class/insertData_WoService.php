@@ -58,8 +58,7 @@ try
         $Contractor         = $row['Contractor'];
         $TimeFrequency      = $row['TimeFrequency'];
         $PreArrangement     = $row['PreArrangement'];        
-        $PlannedDateTime    = $row['PlannedDateTime'];
-        $State              = $row['State'];
+        $PlannedDateTime    = $row['PlannedDateTime'];      
    
         // Sample Data
         $FactoryCode         = "MMS-1810A";    //'WMS-1760A';
@@ -120,8 +119,20 @@ try
         //------------------- Insert Data to WO ---------------------------------
         try 
         {    
-            $stmt = $conn->prepare("INSERT INTO tblwo_event(ServerDateTime, FactoryCode, Unit, RelatedDepartment, WorkOrderNo, WorkOrderCategory, WorkOrderSubCategory, WorkOrderSubCategory2, Site, Location, Building, IssueType, IssueDescriptionMain, IssueDescriptionSub, Note, CreatedDateTime, CreatedDepartment, CreatedUser, PlannedDateTime, AllocatedUser, RespondDateTime, RespondUser, ClosedDateTime, ClosedUser, FaultType, UsedSpairParts, Remark, VerifiedDateTime, VerifiedUser, WoDescription, WoEventLog, Shift, WoStatus, AlertSentState, Attachment, State) 
-                        VALUES (:svrdt, :faccod, :unit, :reldep, :wono, :wocat, :wosubcat, :wosubcat2, :site1, :location, :bldg, :issuetype, :issuedesc1, :issuedesc2, :note, :credt, :credep, :creusr, :plndt, :alocusr, :stddt, :stdusr, :clsdt, :clsusr, :fltType, :spairparts, :remark, :veridt, :verusr, :wodescrip, :woevntlog, :shft, :wostats, :altsntst, :attach, :stat)");
+
+            Week,ServiceSection,FileNo,ListOfMachinery,Quantity,TypeOfService,ResponciblePerson,Contractor,TimeFrequency,PreArrangement
+            :wk,:sersec,:filno,:lstofmch,:qty,:typofser,:resppersn,:cnter,:tmfreq,:prearngmnt
+
+
+            $stmt = $conn->prepare("INSERT INTO tblwo_event(
+                ServerDateTime, FactoryCode, Unit, RelatedDepartment, WorkOrderNo, WorkOrderCategory, WorkOrderSubCategory, 
+                WorkOrderSubCategory2, Site, Location, Building, IssueType, IssueDescriptionMain, IssueDescriptionSub, 
+                Week,ServiceSection,FileNo,ListOfMachinery,Quantity,TypeOfService,ResponciblePerson,Contractor,TimeFrequency,PreArrangement,          
+                Note, CreatedDateTime, CreatedDepartment, CreatedUser, PlannedDateTime, AllocatedUser, RespondDateTime, RespondUser, 
+                ClosedDateTime, ClosedUser, FaultType, UsedSpairParts, Remark, VerifiedDateTime, VerifiedUser, WoDescription, WoEventLog, Shift, WoStatus, AlertSentState, Attachment, State) 
+                        VALUES (:svrdt, :faccod, :unit, :reldep, :wono, :wocat, :wosubcat, :wosubcat2, :site1, :location, :bldg, :issuetype, :issuedesc1, :issuedesc2, 
+                                   :wk,:sersec,:filno,:lstofmch,:qty,:typofser,:resppersn,:cnter,:tmfreq,:prearngmnt,
+                        :note, :credt, :credep, :creusr, :plndt, :alocusr, :stddt, :stdusr, :clsdt, :clsusr, :fltType, :spairparts, :remark, :veridt, :verusr, :wodescrip, :woevntlog, :shft, :wostats, :altsntst, :attach, :stat)");
                         // Bind parameters
             $stmt->bindParam(':svrdt', $strServerDateTime);
             $stmt->bindParam(':faccod', $FactoryCode);
@@ -137,6 +148,18 @@ try
             $stmt->bindParam(':issuetype', $IssueType);
             $stmt->bindParam(':issuedesc1', $IssueDescriptionMain);
             $stmt->bindParam(':issuedesc2', $IssueDescriptionSub);
+
+            $FileNo         = $row['FileNo'];  // Use actual column name
+        $ServiceSection = $row['ServiceSection'];       
+        $ListOfMachinery    = $row['ListOfMachinery'];
+        $Quantity           = $row['Quantity'];
+        $TypeOfService      = $row['TypeOfService'];
+        $ResponciblePerson  = $row['ResponciblePerson'];
+        $Contractor         = $row['Contractor'];
+        $TimeFrequency      = $row['TimeFrequency'];
+        $PreArrangement     = $row['PreArrangement'];        
+        $PlannedDateTime    = $row['PlannedDateTime'];
+
             $stmt->bindParam(':note', $Note);
             $stmt->bindParam(':credt', $CreatedDateTime);
             $stmt->bindParam(':credep', $CreatedDepartment);
