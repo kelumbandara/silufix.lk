@@ -90,20 +90,12 @@
                             </div>
                             <div class="form-check mb-0 ml-4">
                                 <input class="form-check-input" type="checkbox" value="" id="id_203">
-                                <label class="form-check-label" for="id_203">Planned Maintenance</label>
+                                <label class="form-check-label" for="id_203">Red Tag</label>
                             </div>                           
                             <div class="form-check mb-0 ml-4">
                                 <input class="form-check-input" type="checkbox" value="" id="id_204">
-                                <label class="form-check-label" for="id_204">Building Maintenance</label>
-                            </div>
-                            <div class="form-check mb-0 ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="id_205">
-                                <label class="form-check-label" for="id_205">Building Maintenance</label>
-                            </div>
-                            <div class="form-check mb-0 ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="id_206">
-                                <label class="form-check-label" for="id_206">Other</label>
-                            </div>                             
+                                <label class="form-check-label" for="id_204">Service</label>
+                            </div>                                                      
                             
                             <!-- Machine Monitoring -->
                             <div class="form-check mb-0">
@@ -159,19 +151,19 @@
                             </div>
                             <div class="form-check mb-0 ml-4">
                                 <input class="form-check-input" type="checkbox" value="" id="id_601">
-                                <label class="form-check-label" for="id_601">Machine Management</label>
+                                <label class="form-check-label" for="id_601">Master Data- Breakdown</label>
                             </div>
                             <div class="form-check mb-0 ml-4">
                                 <input class="form-check-input" type="checkbox" value="" id="id_602">
-                                <label class="form-check-label" for="id_602">Data Management</label>
+                                <label class="form-check-label" for="id_602">Master Data- Redtag</label>
                             </div>
                             <div class="form-check mb-0 ml-4">
                                 <input class="form-check-input" type="checkbox" value="" id="id_603">
-                                <label class="form-check-label" for="id_603">Master Data Upload</label>
+                                <label class="form-check-label" for="id_603">Master Data- Service</label>
                             </div>  
                             <div class="form-check mb-0 ml-4">
                                 <input class="form-check-input" type="checkbox" value="" id="id_604">
-                                <label class="form-check-label" for="id_604">Machine Configuration</label>
+                                <label class="form-check-label" for="id_604">Issue Types</label>
                             </div>  
                            <!-- User Profile -->
                             <div class="form-check mb-0">
@@ -320,7 +312,7 @@
 
 <script>
     
-    var idSectionsArray = ["id_10","id_20","id_201","id_202","id_203","id_204","id_205","id_206","id_30","id_301","id_302","id_303","id_40", "id_401", "id_402", "id_403", "id_50", "id_501", "id_502", "id_60","id_601","id_602","id_603","id_604","id_70"];
+    var idSectionsArray = ["id_10","id_20","id_201","id_202","id_203","id_204","id_30","id_301","id_302","id_303","id_40", "id_401", "id_402", "id_403", "id_50", "id_501", "id_502", "id_60","id_601","id_602","id_603","id_604","id_70"];
     var idAreaArray = ["id_10011","id_10012","id_10015","id_10016","id_10017","id_10018","id_1001811","id_1001812","id_1001813","id_1001814","id_1001815","id_1001816","id_1001817","id_1001818","id_10019","id_10020","id_10021","id_10022","id_10023"];
     var idOtherArray = ["id_90011","id_90012","id_90013","id_9001311","id_9001312","id_9001313","id_9001314","id_9001315","id_9001316"];
     //let ArrayRoleDescription    = []; 

@@ -108,7 +108,7 @@
                         <div class="col-md-3">
                             <div class="card card-default" >                        
                                 <div class="card-header">
-                                    <h3 class="card-title"> Red Tag Issue Type</h3>
+                                    <h3 class="card-title"> Red Tag Category</h3>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                             <i class="fas fa-minus"></i>
@@ -153,7 +153,7 @@
                         <div class="col-md-12">
                             <div class="card card-default" >                        
                                 <div class="card-header">
-                                    <h3 class="card-title">Site Wise Red Tag Category</h3>
+                                    <h3 class="card-title">Machine Wise Red Tag Category</h3>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                             <i class="fas fa-minus"></i>
@@ -186,11 +186,11 @@
                                                     <th>WorkOrderNo</th>
                                                     <th>CreatedDateTime</th>
                                                     <th>Department</th>                                                    
-                                                    <th>Site</th>                                                                                               
-                                                    <th>Location</th>
-                                                    <th>Building</th>
-                                                    <th>IssueType</th>
-                                                    <th>Issue Description</th>
+                                                    <th>Category</th>                                                                                               
+                                                    <th>McCategory</th>
+                                                    <th>MachineNo</th>
+                                                    <th>FaultType</th>
+                                                    <th>Description</th>
                                                     <th>Status</th>                                                    
                                                     <th>CreatedUser</th>                                                    
                                                     <th>RespondDateTime</th>
@@ -259,17 +259,19 @@
            ]
         });   
         funLoad_Departments();
-        //funLoad_IssueType();
-        //funLoadAllChart();  // Sometimes need to inside keep funLoad_IssueType()
+        funLoad_IssueType();
+        
     });
 
     //-------------------- ViewReport Function --------------------------------------------
     function funLoadPieChart() 
     { 
         let intDebugEnable = 0;
+
         //alert("View reportButton clicked!");
         //- 1. get data from php page
-        const DataAry = [];             
+        const DataAry = [];     
+        
         //-------------- Chart1 ------------------------------
         DataAry[0] = "funGetData_PieChart1";        // Table Name
         DataAry[1] = document.getElementById("id_startdate").value;
@@ -290,8 +292,7 @@
                 document.getElementById("id_divBuildingMnt_chart1").innerHTML = '&nbsp;';
                 document.getElementById("id_divBuildingMnt_chart1").innerHTML = '<canvas id="id_canBuildingMnt_chart1" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>';
                 
-                //const AryCheckIn_Lable      = ["Safty", "Leakages", "Worn Out or Broken Part", "Unusual Vibration/Heat", "Hard to Clean Area", "Other"];
-                const AryCheckIn_Lable      = res.Data_Ary[0];
+                const AryCheckIn_Lable      = ["Safty", "Leakages", "Worn Out or Broken Part", "Unusual Vibration/Heat", "Hard to Clean Area", "Other"];
                 const AryCheckIn_Colors   = ["red","blue","green","pink", "yellow", "gray" ];
 
                 var donutChartCanvas = $('#id_canBuildingMnt_chart1').get(0).getContext('2d');               
@@ -299,7 +300,7 @@
                     labels: AryCheckIn_Lable,
                     datasets: [
                     {
-                        data: res.Data_Ary[1],
+                        data: res.Data_Ary[0],
                         backgroundColor : AryCheckIn_Colors
                     }]};
                 var donutOptions = {maintainAspectRatio : false, responsive : true};
@@ -406,184 +407,212 @@
                 if(intDebugEnable === 1) alert("Error"); 
             }
         });  
+     
     }
-    //------- Load Bar Chart -----------------------------
     function funLoadBarChart() 
     {
-        let intDebugEnable = 0;
+    let intDebugEnable = 0;
 
-        const DataAry = [];        
-        //-------------- Horizontal Bar Chart ------------------------------
-        DataAry[0] = "funGetData_BarChart1"; // Table Name
-        DataAry[1] = document.getElementById("id_startdate").value;
-        DataAry[2] = document.getElementById("id_enddate").value;
-        DataAry[3] = document.getElementById("id_Select_Department").value;
-        DataAry[4] = document.getElementById("id_Select_IssueType").value;
-        DataAry[5] = document.getElementById("id_Select_Status").value;
+    const DataAry = [];
 
-        if (intDebugEnable === 1) alert("DataAry :" + DataAry);
-        $.post('getData_RedTagReport.php', { userpara: DataAry }, function(json_data2) 
-        {
-            if (intDebugEnable === 1) alert("json_data2 :" + json_data2);
-            var res = $.parseJSON(json_data2);
-            if (res.Status_Ary[0] === "true") 
-            {
-                if (intDebugEnable === 1) alert("data available");
+    //-------------- Horizontal Bar Chart ------------------------------
+    DataAry[0] = "funGetData_BarChart1"; // Table Name
+    DataAry[1] = document.getElementById("id_startdate").value;
+    DataAry[2] = document.getElementById("id_enddate").value;
+    DataAry[3] = document.getElementById("id_Select_Department").value;
+    DataAry[4] = document.getElementById("id_Select_IssueType").value;
+    DataAry[5] = document.getElementById("id_Select_Status").value;
 
-                // Prepare for chart rendering
-                document.getElementById("Id_DivStackedBarChart_1").innerHTML = '&nbsp;';
-                document.getElementById("Id_DivStackedBarChart_1").innerHTML = '<canvas id="id_CanStackedBarChart_1" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>';
+    if (intDebugEnable === 1) alert("DataAry :" + DataAry);
+    $.post('getData_RedTagReport.php', { userpara: DataAry }, function(json_data2) {
+        if (intDebugEnable === 1) alert("json_data2 :" + json_data2);
+        var res = $.parseJSON(json_data2);
+        if (res.Status_Ary[0] === "true") {
+            if (intDebugEnable === 1) alert("data available");
 
-                var stackedBarChartCanvas = $('#id_CanStackedBarChart_1').get(0).getContext('2d');
+            document.getElementById("Id_DivStackedBarChart_1").innerHTML = '&nbsp;';
+            document.getElementById("Id_DivStackedBarChart_1").innerHTML = '<canvas id="id_CanStackedBarChart_1" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>';
 
-                // Prepare colors for each category (ensure there are enough colors)
-                var CategoryColorAry = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#808080'];
-                var CategoryNameAry = res.Data_Ary[0]; // Categories are in Data_Ary[0]
+            var stackedBarChartCanvas = $('#id_CanStackedBarChart_1').get(0).getContext('2d');
+            var CategoryColorAry = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#808080'];
+            var CategoryNameAry = ['Safety', 'Leakages', 'Worn Out or Broken Part', 'Unusual Vibration/Heat', 'Hard to Clean Area', 'Other'];
 
-                // Ensure there are enough colors for the categories
-                while (CategoryColorAry.length < CategoryNameAry.length) {
-                    CategoryColorAry.push('#'+(Math.random()*0xFFFFFF<<0).toString(16)); // Generate random color if needed
-                }
-
-                var stackedBarChart1_Data = {
-                    labels: CategoryNameAry,
-                    datasets: [{
-                        label: CategoryNameAry[0], // Label for the first dataset (you can iterate if you have multiple datasets)
-                        backgroundColor: CategoryColorAry[0], // Color for the first dataset
+            var stackedBarChart1_Data = {
+                labels: res.Data_Ary[0],
+                datasets: [{
+                        label: CategoryNameAry[0],
+                        backgroundColor: CategoryColorAry[0],
                         borderColor: CategoryColorAry[0],
                         borderWidth: 1,
-                        data: res.Data_Ary[1] // Data values are in Data_Ary[1]
+                        data: res.Data_Ary[1]
+                    },
+                    {
+                        label: CategoryNameAry[1],
+                        backgroundColor: CategoryColorAry[1],
+                        borderColor: CategoryColorAry[1],
+                        borderWidth: 1,
+                        data: res.Data_Ary[2]
+                    },
+                    {
+                        label: CategoryNameAry[2],
+                        backgroundColor: CategoryColorAry[2],
+                        borderColor: CategoryColorAry[2],
+                        borderWidth: 1,
+                        data: res.Data_Ary[3]
+                    },
+                    {
+                        label: CategoryNameAry[3],
+                        backgroundColor: CategoryColorAry[3],
+                        borderColor: CategoryColorAry[3],
+                        borderWidth: 1,
+                        data: res.Data_Ary[4]
+                    },
+                    {
+                        label: CategoryNameAry[4],
+                        backgroundColor: CategoryColorAry[4],
+                        borderColor: CategoryColorAry[4],
+                        borderWidth: 1,
+                        data: res.Data_Ary[5]
+                    }
+                    ,
+                    {
+                        label: CategoryNameAry[5],
+                        backgroundColor: CategoryColorAry[5],
+                        borderColor: CategoryColorAry[5],
+                        borderWidth: 1,
+                        data: res.Data_Ary[6]
+                    }
+                ]
+            };
+
+            var stackedBarChartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    xAxes: [{
+                        stacked: true
+                    }],
+                    yAxes: [{
+                        stacked: true
                     }]
-                };
+                }
+            };
 
-                var stackedBarChartOptions = {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: { // Chart.js 3.x or later uses 'x' instead of 'xAxes'
-                            stacked: true
-                        },
-                        y: { // Chart.js 3.x or later uses 'y' instead of 'yAxes'
-                            stacked: true
-                        }
+            new Chart(stackedBarChartCanvas, {
+                type: 'horizontalBar',
+                data: stackedBarChart1_Data,
+                options: stackedBarChartOptions
+            });
+
+        } else if (res.Status_Ary[0] === "false") {
+            document.getElementById("Id_DivStackedBarChart_1").innerHTML = '&nbsp;';
+            document.getElementById("Id_DivStackedBarChart_1").innerHTML = '<canvas id="id_CanStackedBarChart_1" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>';
+
+            if (intDebugEnable === 1) alert("data not available");
+        } else {
+            document.getElementById("Id_DivStackedBarChart_1").innerHTML = '&nbsp;';
+            document.getElementById("Id_DivStackedBarChart_1").innerHTML = '<canvas id="id_CanStackedBarChart_1" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>';
+            if (intDebugEnable === 1) alert("Error");
+        }
+    });
+
+    //-------------- Bar Chart 2 ------------------------------
+ 
+
+    //-------------- Vertical Bar Chart ------------------------------
+    DataAry[0] = "funGetData_BarChart2"; // Table Name
+    DataAry[1] = document.getElementById("id_startdate").value;
+    DataAry[2] = document.getElementById("id_enddate").value;
+    DataAry[3] = document.getElementById("id_Select_Department").value;
+    DataAry[4] = document.getElementById("id_Select_IssueType").value;
+    DataAry[5] = document.getElementById("id_Select_Status").value;
+
+    if (intDebugEnable === 1) alert("DataAry :" + DataAry);
+    $.post('getData_RedTagReport.php', { userpara: DataAry }, function(json_data2) {
+        if (intDebugEnable === 1) alert("json_data2 :" + json_data2);
+        var res = $.parseJSON(json_data2);
+        if (res.Status_Ary[0] === "true") {
+            if (intDebugEnable === 1) alert("data available");
+
+            document.getElementById("Id_DivStackedBarChart_2").innerHTML = '&nbsp;';
+            document.getElementById("Id_DivStackedBarChart_2").innerHTML = '<canvas id="id_CanStackedBarChart_2" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>';
+
+            var barChartCanvas = $('#id_CanStackedBarChart_2').get(0).getContext('2d');
+            var CategoryColorAry = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+            var CategoryNameAry = ['Safety', 'Leakages', 'Worn Out or Broken Part', 'Unusual Vibration/Heat', 'Hard to Clean Area', 'Other'];
+            
+            var barChart2_Data2 = {
+                labels: res.Data_Ary[0],
+                datasets: [{
+                        label: CategoryNameAry[0],
+                        backgroundColor: CategoryColorAry[0],
+                        borderColor: CategoryColorAry[0],
+                        borderWidth: 1,
+                        data: res.Data_Ary[1]
+                    },
+                    {
+                        label: CategoryNameAry[1],
+                        backgroundColor: CategoryColorAry[1],
+                        borderColor: CategoryColorAry[1],
+                        borderWidth: 1,
+                        data: res.Data_Ary[2]
+                    },
+                    {
+                        label: CategoryNameAry[2],
+                        backgroundColor: CategoryColorAry[2],
+                        borderColor: CategoryColorAry[2],
+                        borderWidth: 1,
+                        data: res.Data_Ary[3]
+                    },
+                    {
+                        label: CategoryNameAry[3],
+                        backgroundColor: CategoryColorAry[3],
+                        borderColor: CategoryColorAry[3],
+                        borderWidth: 1,
+                        data: res.Data_Ary[4]
+                    },
+                    {
+                        label: CategoryNameAry[4],
+                        backgroundColor: CategoryColorAry[4],
+                        borderColor: CategoryColorAry[4],
+                        borderWidth: 1,
+                        data: res.Data_Ary[5]
                     }
-                };
+                ]
+            };
 
-                // Create the chart
-                new Chart(stackedBarChartCanvas, {
-                    type: 'bar', // Use 'bar' for newer Chart.js versions
-                    data: stackedBarChart1_Data,
-                    options: stackedBarChartOptions
-                });
+            var barChartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    xAxes: [{
+                        stacked: true
+                    }],
+                    yAxes: [{
+                        stacked: true
+                    }]
+                }
+            };
 
-            } 
-            else if (res.Status_Ary[0] === "false") {
-                document.getElementById("Id_DivStackedBarChart_1").innerHTML = '&nbsp;';
-                document.getElementById("Id_DivStackedBarChart_1").innerHTML = '<canvas id="id_CanStackedBarChart_1" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>';
+            new Chart(barChartCanvas, {
+                type: 'bar',
+                data: barChart2_Data2,
+                options: barChartOptions
+            });
 
-                if (intDebugEnable === 1) alert("data not available");
-            }
-             else {
-                document.getElementById("Id_DivStackedBarChart_1").innerHTML = '&nbsp;';
-                document.getElementById("Id_DivStackedBarChart_1").innerHTML = '<canvas id="id_CanStackedBarChart_1" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>';
-                if (intDebugEnable === 1) alert("Error");
-            }
-        });
-        //-------------- Bar Chart 2 ------------------------------    
+        } else if (res.Status_Ary[0] === "false") {
+            document.getElementById("Id_DivStackedBarChart_2").innerHTML = '&nbsp;';
+            document.getElementById("Id_DivStackedBarChart_2").innerHTML = '<canvas id="id_CanStackedBarChart_2" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>';
+            if (intDebugEnable === 1) alert("data not available");
+        } else {
+            document.getElementById("Id_DivStackedBarChart_2").innerHTML = '&nbsp;';
+            document.getElementById("Id_DivStackedBarChart_2").innerHTML = '<canvas id="id_CanStackedBarChart_2" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>';
+            if (intDebugEnable === 1) alert("Error");
+        }
+    });
 
-        //-------------- Vertical Bar Chart ------------------------------
-        DataAry[0] = "funGetData_BarChart2"; // Table Name
-        DataAry[1] = document.getElementById("id_startdate").value;
-        DataAry[2] = document.getElementById("id_enddate").value;
-        DataAry[3] = document.getElementById("id_Select_Department").value;
-        DataAry[4] = document.getElementById("id_Select_IssueType").value;
-        DataAry[5] = document.getElementById("id_Select_Status").value;
 
-        if (intDebugEnable === 1) alert("DataAry :" + DataAry);
-        $.post('getData_RedTagReport.php', { userpara: DataAry }, function(json_data2) 
-        {
-            if (intDebugEnable === 1) alert("json_data2 :" + json_data2);
-            var res = $.parseJSON(json_data2);
-            if (res.Status_Ary[0] === "true") {
-                if (intDebugEnable === 1) alert("data available");
-
-                document.getElementById("Id_DivStackedBarChart_2").innerHTML = '&nbsp;';
-                document.getElementById("Id_DivStackedBarChart_2").innerHTML = '<canvas id="id_CanStackedBarChart_2" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>';
-
-                var barChartCanvas = $('#id_CanStackedBarChart_2').get(0).getContext('2d');
-                var CategoryColorAry = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
-                var CategoryNameAry = ['Site 1', 'Site 2', 'Site 3', 'Site4', 'Site 5'];
-                
-                var barChart2_Data2 = {
-                    labels: res.Data_Ary[0],
-                    datasets: [{
-                            label: CategoryNameAry[0],
-                            backgroundColor: CategoryColorAry[0],
-                            borderColor: CategoryColorAry[0],
-                            borderWidth: 1,
-                            data: res.Data_Ary[1]
-                        },
-                        {
-                            label: CategoryNameAry[1],
-                            backgroundColor: CategoryColorAry[1],
-                            borderColor: CategoryColorAry[1],
-                            borderWidth: 1,
-                            data: res.Data_Ary[2]
-                        },
-                        {
-                            label: CategoryNameAry[2],
-                            backgroundColor: CategoryColorAry[2],
-                            borderColor: CategoryColorAry[2],
-                            borderWidth: 1,
-                            data: res.Data_Ary[3]
-                        },
-                        {
-                            label: CategoryNameAry[3],
-                            backgroundColor: CategoryColorAry[3],
-                            borderColor: CategoryColorAry[3],
-                            borderWidth: 1,
-                            data: res.Data_Ary[4]
-                        },
-                        {
-                            label: CategoryNameAry[4],
-                            backgroundColor: CategoryColorAry[4],
-                            borderColor: CategoryColorAry[4],
-                            borderWidth: 1,
-                            data: res.Data_Ary[5]
-                        }
-                    ]
-                };
-
-                var barChartOptions = {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        xAxes: [{
-                            stacked: true
-                        }],
-                        yAxes: [{
-                            stacked: true
-                        }]
-                    }
-                };
-
-                new Chart(barChartCanvas, {
-                    type: 'bar',
-                    data: barChart2_Data2,
-                    options: barChartOptions
-                });
-
-            } else if (res.Status_Ary[0] === "false") {
-                document.getElementById("Id_DivStackedBarChart_2").innerHTML = '&nbsp;';
-                document.getElementById("Id_DivStackedBarChart_2").innerHTML = '<canvas id="id_CanStackedBarChart_2" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>';
-                if (intDebugEnable === 1) alert("data not available");
-            } else {
-                document.getElementById("Id_DivStackedBarChart_2").innerHTML = '&nbsp;';
-                document.getElementById("Id_DivStackedBarChart_2").innerHTML = '<canvas id="id_CanStackedBarChart_2" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>';
-                if (intDebugEnable === 1) alert("Error");
-            }
-        });
-    }
+}
 
     //-------------------- ViewReport Function --------------------------------------------
     function funLoadTable() 
@@ -679,8 +708,10 @@
                     el5.value = opt5;
                     sel_UserType.appendChild(el5);
                 }
-                //-------------- Load Issue Type ------------------
-                funLoad_IssueType();               
+                //-------------- Set User Department in Filter ------------------
+                funLoadPieChart();
+                funLoadBarChart();
+                funLoadTable();
             }
             
         });
@@ -689,7 +720,7 @@
     //------------- Load Issue Type to Filter Data -------------------
     function funLoad_IssueType() 
     {
-        let intDebugEnable = 0;        
+        let intDebugEnable = 1;        
         if(intDebugEnable === 1)    alert("funLoad_IssueType");
                 
         const DataAry = [];         
@@ -727,9 +758,8 @@
                     sel_UserType.appendChild(el5);
                 }
                 //-------------- Set User Department in Filter ------------------
-                funLoadPieChart();
-                funLoadBarChart();
-                funLoadTable();
+                //document.getElementById("id_funHome_SelDepartmentFilter").value = JS_SessionArry[0].CurrentUserDepartment; 
+                //funRefresh_WoTable();
             }
             
         });

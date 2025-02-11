@@ -216,8 +216,8 @@
                                         <th>Department</th>    
                                         <th>By</th>
                                         <th>Category</th>
-                                        <th>Issue Type</th>
-                                        <th>Issue Description</th>                                                  
+                                        <th>Issue/Service Type</th>
+                                        <th>Issue/Service Description</th>                                                  
                                         <th>Status</th>
                                         <th><center>ReOpen</center></th>
                                     </tr>
@@ -412,6 +412,7 @@
         dtbl1 = $('#example1').DataTable();    
         
         //--- Load Tables --------------------------------------   
+        funAutoCreateServiceWo();
         //funLoad_WoTableFilterDepData();
         //funRefresh_DowntimeDashboard();        
         funRefresh_MechanicDashboard();        
@@ -421,6 +422,7 @@
         funRefresh_WoTable();
         //MQTTconnect();
         funAutoVerifyWo();
+ 
     }); 
     $('#myCustomSearchBox').keyup(function() 
     {
@@ -1394,7 +1396,33 @@
         // Return the formatted time
         return formattedHours + ':' + formattedMinutes;
     }
+    //--------------- Auto Create Service Workorders -----------------------
+    function funAutoCreateServiceWo()
+    {
+        let intDebugEnable = 0;        
+        if(intDebugEnable === 1)    alert("funAutoCreateServiceWo");
+        const DataAry = [];  
+        DataAry[0] = "funAutoCreateService";        
+        if(intDebugEnable === 1)    alert(DataAry);
+        
+        $.post('class/insertData_WoService.php', { userpara: DataAry }, function(json_data2) 
+        {
+            if(intDebugEnable === 1)    alert(json_data2);           
+            var res = $.parseJSON(json_data2); 
+            if(intDebugEnable === 1)    alert(res.Status_Ary[0]); 
 
+            if(res.Status_Ary[0] === "false")
+            {
+                Swal.fire({
+                        title: 'Alert !!',
+                        text: 'Fail to Auto Create Servicess for this week.',
+                        icon: 'Warning', // success, error, warning, info, question
+                        confirmButtonText: 'OK'
+                    });
+            }    
+        });
+        
+    }
     
     
 </script>

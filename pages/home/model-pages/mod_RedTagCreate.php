@@ -11,7 +11,7 @@
             </div>
             <!-- Modal body -->
             <div class="modal-body">
-                <h6 class="modal-title text-center" id="id_ModRedTagCre_lblUserDep" style="width: 100%">User's Department : Engineering</h6>
+                <h6 class="modal-title text-center" id="id_ModRedTagCre_lblUserDep" style="width: 100%">User's Department : --</h6>
                
                 <div class="row p-1">                    
                     <div class="col-md-12">                   

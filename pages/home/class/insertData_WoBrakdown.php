@@ -78,140 +78,58 @@
     } 
     //------------------- Insert Data to WO ---------------------------------
     try 
-    {        
-        if($WorkOrderCategory == "BreakDown")
+    {    
+        $stmt = $conn->prepare("INSERT INTO tblwo_event(ServerDateTime, FactoryCode, Unit, RelatedDepartment, WorkOrderNo, WorkOrderCategory, WorkOrderSubCategory, WorkOrderSubCategory2, Site, Location, Building, IssueType, IssueDescriptionMain, IssueDescriptionSub, Note, CreatedDateTime, CreatedDepartment, CreatedUser, PlannedDateTime, AllocatedUser, RespondDateTime, RespondUser, ClosedDateTime, ClosedUser, FaultType, UsedSpairParts, Remark, VerifiedDateTime, VerifiedUser, WoDescription, WoEventLog, Shift, WoStatus, AlertSentState, Attachment, State) 
+                    VALUES (:svrdt, :faccod, :unit, :reldep, :wono, :wocat, :wosubcat, :wosubcat2, :site1, :location, :bldg, :issuetype, :issuedesc1, :issuedesc2, :note, :credt, :credep, :creusr, :plndt, :alocusr, :stddt, :stdusr, :clsdt, :clsusr, :fltType, :spairparts, :remark, :veridt, :verusr, :wodescrip, :woevntlog, :shft, :wostats, :altsntst, :attach, :stat)");
+                    // Bind parameters
+        $stmt->bindParam(':svrdt', $strServerDateTime);
+        $stmt->bindParam(':faccod', $FactoryCode);
+        $stmt->bindParam(':unit', $Unit);
+        $stmt->bindParam(':reldep', $RelatedDepartment);
+        $stmt->bindParam(':wono', $WorkOrderNo);
+        $stmt->bindParam(':wocat', $WorkOrderCategory);
+        $stmt->bindParam(':wosubcat', $WorkOrderSubCategory);
+        $stmt->bindParam(':wosubcat2', $WorkOrderSubCategory2);
+        $stmt->bindParam(':site1', $Site);
+        $stmt->bindParam(':location', $Location);
+        $stmt->bindParam(':bldg', $Building);
+        $stmt->bindParam(':issuetype', $IssueType);
+        $stmt->bindParam(':issuedesc1', $IssueDescriptionMain);
+        $stmt->bindParam(':issuedesc2', $IssueDescriptionSub);
+        $stmt->bindParam(':note', $Note);
+        $stmt->bindParam(':credt', $CreatedDateTime);
+        $stmt->bindParam(':credep', $CreatedDepartment);
+        $stmt->bindParam(':creusr', $CreatedUser);
+        $stmt->bindParam(':plndt', $PlannedDateTime);
+        $stmt->bindParam(':alocusr', $AllocatedUser);
+        $stmt->bindParam(':stddt', $RespondDateTime);
+        $stmt->bindParam(':stdusr', $RespondUser);
+        $stmt->bindParam(':clsdt', $ClosedDateTime);
+        $stmt->bindParam(':clsusr', $ClosedUser);
+        $stmt->bindParam(':fltType', $FaultType);
+        $stmt->bindParam(':spairparts', $UsedSpairParts);
+        $stmt->bindParam(':remark', $Remark);
+        $stmt->bindParam(':veridt', $VerifiedDateTime);
+        $stmt->bindParam(':verusr', $VerifiedUser);
+        $stmt->bindParam(':wodescrip', $WoDescription);
+        $stmt->bindParam(':woevntlog', $WoEventLog);
+        $stmt->bindParam(':shft', $Shift);
+        $stmt->bindParam(':wostats', $WoStatus);
+        $stmt->bindParam(':altsntst', $AlertSentState);
+        $stmt->bindParam(':attach', $Attachment);
+        $stmt->bindParam(':stat', $State);
+
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) 
         {
-            // Check if WoStatus is not "New" or "Inprogress" for the given MachineNo
-            $sql = "SELECT COUNT(*) AS count 
-                    FROM tblwo_event 
-                    WHERE MachineNo = :mcno 
-                        AND WoStatus IN ('New', 'Inprogress')
-                        AND WorkOrderCategory = 'BreakDown'";
-            
-            $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':mcno', $MachineNo);
-            $stmt->execute();
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if ($row['count'] != 0) 
-            {
-                // WoStatus is either "New" or "Inprogress", no need to insert
-                //echo "No need to insert record as WoStatus is either 'New' or 'Inprogress' for the given MachineNo.";
-                $Status_ary[0] = "false";
-                $Status_ary[1] = "Data Alraedy Inserted"; 
-            }
-            else
-            { 
-                echo("hi");
-                // WoStatus is not "New" or "Inprogress", proceed with insertion
-                $stmt = $conn->prepare("INSERT INTO tblwo_event(ServerDateTime, FactoryCode, Unit, RelatedDepartment, WorkOrderNo, WorkOrderCategory, WorkOrderSubCategory, WorkOrderSubCategory2, Site, Building, IssueType, IssueDescription1, Issue_Description2, Note, CreatedDateTime, CreatedDepartment, CreatedUser, PlannedDateTime, AllocatedUser, RespondDateTime, RespondUser, ClosedDateTime, ClosedUser, FaultType, UsedSpairParts, Remark, VerifiedDateTime, VerifiedUser, WoDescription, WoEventLog, Shift, WoStatus, AlertSentState, Attachment, State) 
-                        VALUES (:svrdt, :faccod, :unit, :reldep, :wono, :wocat, :wosubcat, :wosubcat2, :site, :bldg, :issuetype, :issuedesc1, :issuedesc2, :note, :credt, :credep, :creusr, :plndt, :alocusr, :stddt, :stdusr, :clsdt, :clsusr, :fltType, :spairparts, :remark, :veridt, :verusr, :wodescrip, :woevntlog, :shft, :wostats, :altsntst, :attach, :stat)");
-                        // Bind parameters
-                    $stmt->bindParam(':svrdt', $strServerDateTime);
-                    $stmt->bindParam(':faccod', $FactoryCode);
-                    $stmt->bindParam(':unit', $Unit);
-                    $stmt->bindParam(':reldep', $RelatedDepartment);
-                    $stmt->bindParam(':wono', $WorkOrderNo);
-                    $stmt->bindParam(':wocat', $WorkOrderCategory);
-                    $stmt->bindParam(':wosubcat', $WorkOrderSubCategory);
-                    $stmt->bindParam(':wosubcat2', $WorkOrderSubCategory2);
-                    $stmt->bindParam(':site', $site);
-                    $stmt->bindParam(':bldg', $building);
-                    $stmt->bindParam(':issuetype', $issuer_type);
-                    $stmt->bindParam(':issuedesc1', $isuer_description);
-                    $stmt->bindParam(':issuedesc2', $Issue_Description2);
-                    $stmt->bindParam(':note', $Note);
-                    $stmt->bindParam(':credt', $CreatedDateTime);
-                    $stmt->bindParam(':credep', $CreatedDepartment);
-                    $stmt->bindParam(':creusr', $CreatedUser);
-                    $stmt->bindParam(':plndt', $PlannedDateTime);
-                    $stmt->bindParam(':alocusr', $AllocatedUser);
-                    $stmt->bindParam(':stddt', $RespondDateTime);
-                    $stmt->bindParam(':stdusr', $RespondUser);
-                    $stmt->bindParam(':clsdt', $ClosedDateTime);
-                    $stmt->bindParam(':clsusr', $ClosedUser);
-                    $stmt->bindParam(':fltType', $FaultType);
-                    $stmt->bindParam(':spairparts', $UsedSpairParts);
-                    $stmt->bindParam(':remark', $Remark);
-                    $stmt->bindParam(':veridt', $VerifiedDateTime);
-                    $stmt->bindParam(':verusr', $VerifiedUser);
-                    $stmt->bindParam(':wodescrip', $WoDescription);
-                    $stmt->bindParam(':woevntlog', $WoEventLog);
-                    $stmt->bindParam(':shft', $Shift);
-                    $stmt->bindParam(':wostats', $WoStatus);
-                    $stmt->bindParam(':altsntst', $AlertSentState);
-                    $stmt->bindParam(':attach', $Attachment);
-                    $stmt->bindParam(':stat', $State);
-
-                // Execute the insertion query
-                $stmt->execute();
-                //echo "Record inserted successfully.";
-                if ($stmt->rowCount() > 0) 
-                {
-                    $Status_ary[0] = "true";
-                    $Status_ary[1] = "Inserted new record"; 
-                } 
-                else
-                {
-                    $Status_ary[0] = "false";
-                    $Status_ary[1] = "Data not inserted"; 
-                } 
-            }
-        }
+            $Status_ary[0] = "true";
+            $Status_ary[1] = "Inserted new record"; 
+        } 
         else
         {
-            $stmt = $conn->prepare("INSERT INTO tblwo_event(ServerDateTime, FactoryCode, Unit, RelatedDepartment, WorkOrderNo, WorkOrderCategory, WorkOrderSubCategory, WorkOrderSubCategory2, Site, Location, Building, IssueType, IssueDescriptionMain, IssueDescriptionSub, Note, CreatedDateTime, CreatedDepartment, CreatedUser, PlannedDateTime, AllocatedUser, RespondDateTime, RespondUser, ClosedDateTime, ClosedUser, FaultType, UsedSpairParts, Remark, VerifiedDateTime, VerifiedUser, WoDescription, WoEventLog, Shift, WoStatus, AlertSentState, Attachment, State) 
-                        VALUES (:svrdt, :faccod, :unit, :reldep, :wono, :wocat, :wosubcat, :wosubcat2, :site1, :location, :bldg, :issuetype, :issuedesc1, :issuedesc2, :note, :credt, :credep, :creusr, :plndt, :alocusr, :stddt, :stdusr, :clsdt, :clsusr, :fltType, :spairparts, :remark, :veridt, :verusr, :wodescrip, :woevntlog, :shft, :wostats, :altsntst, :attach, :stat)");
-                        // Bind parameters
-            $stmt->bindParam(':svrdt', $strServerDateTime);
-            $stmt->bindParam(':faccod', $FactoryCode);
-            $stmt->bindParam(':unit', $Unit);
-            $stmt->bindParam(':reldep', $RelatedDepartment);
-            $stmt->bindParam(':wono', $WorkOrderNo);
-            $stmt->bindParam(':wocat', $WorkOrderCategory);
-            $stmt->bindParam(':wosubcat', $WorkOrderSubCategory);
-            $stmt->bindParam(':wosubcat2', $WorkOrderSubCategory2);
-            $stmt->bindParam(':site1', $Site);
-            $stmt->bindParam(':location', $Location);
-            $stmt->bindParam(':bldg', $Building);
-            $stmt->bindParam(':issuetype', $IssueType);
-            $stmt->bindParam(':issuedesc1', $IssueDescriptionMain);
-            $stmt->bindParam(':issuedesc2', $IssueDescriptionSub);
-            $stmt->bindParam(':note', $Note);
-            $stmt->bindParam(':credt', $CreatedDateTime);
-            $stmt->bindParam(':credep', $CreatedDepartment);
-            $stmt->bindParam(':creusr', $CreatedUser);
-            $stmt->bindParam(':plndt', $PlannedDateTime);
-            $stmt->bindParam(':alocusr', $AllocatedUser);
-            $stmt->bindParam(':stddt', $RespondDateTime);
-            $stmt->bindParam(':stdusr', $RespondUser);
-            $stmt->bindParam(':clsdt', $ClosedDateTime);
-            $stmt->bindParam(':clsusr', $ClosedUser);
-            $stmt->bindParam(':fltType', $FaultType);
-            $stmt->bindParam(':spairparts', $UsedSpairParts);
-            $stmt->bindParam(':remark', $Remark);
-            $stmt->bindParam(':veridt', $VerifiedDateTime);
-            $stmt->bindParam(':verusr', $VerifiedUser);
-            $stmt->bindParam(':wodescrip', $WoDescription);
-            $stmt->bindParam(':woevntlog', $WoEventLog);
-            $stmt->bindParam(':shft', $Shift);
-            $stmt->bindParam(':wostats', $WoStatus);
-            $stmt->bindParam(':altsntst', $AlertSentState);
-            $stmt->bindParam(':attach', $Attachment);
-            $stmt->bindParam(':stat', $State);
-
-            $stmt->execute();
-            if ($stmt->rowCount() > 0) 
-            {
-                $Status_ary[0] = "true";
-                $Status_ary[1] = "Inserted new record"; 
-            } 
-            else
-            {
-                $Status_ary[0] = "false";
-                $Status_ary[1] = "Data not inserted"; 
-            }  
-        }
+            $Status_ary[0] = "false";
+            $Status_ary[1] = "Data not inserted"; 
+        }      
         //$data[1] = "Dats Saved Successfully";   
     } 
     catch (PDOException $ex) 

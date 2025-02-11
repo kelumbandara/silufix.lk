@@ -71,20 +71,23 @@
                                     </select>
                                 </div>
                                 <div class="col-md-2">                   
-                                    <label style="font-weight: bolder;" >Machine Category</label>    
-                                    <select class="form-control select2" onchange="funLoadAllChart()" id="id_Select_Category" style="width: 100%;">
-                                       
+                                    <label style="font-weight: bolder;" >Site</label>    
+                                    <select class="form-control select2" onchange="funLoadAllChart()" id="id_Select_Site" style="width: 100%;">
+                                        <option value="All">All</option>                                         
+                                        <option value="site 1">site 1</option> 
+                                        <option value="site 2">site 2</option> 
+                                        <option value="site 3">site 3</option>
+                                        <option value="site 4">site 4</option> 
+                                        <option value="site 5">site 5</option>
                                     </select>
                                 </div>
                                 <div class="col-md-2">                   
-                                    <label style="font-weight: bolder;" >Fault Type</label>    
-                                    <select class="form-control select2" onchange="funLoadAllChart()" id="id_Select_Status" style="width: 100%;">
-                                        <option value="All">All</option> 
-                                        <option value="Electrical">Electrical</option> 
-                                        <option value="Mechanical">Mechanical</option> 
-                                        <option value="Pneumatic">Pneumatic</option> 
+                                    <label style="font-weight: bolder;" >Issue Type</label>    
+                                    <select class="form-control select2" onchange="funLoadAllChart()" id="id_Select_IssueType" style="width: 100%;">
+                                       
                                     </select>
                                 </div>
+                                
                                 <div class="col-md-2"> 
                                     <div class="form-group">                                         
                                         <div class="form-group">
@@ -150,7 +153,7 @@
                         <div class="col-md-3">
                             <div class="card card-default" >  
                                 <div class="card-header">
-                                    <h3 class="card-title">Fault Type</h3>
+                                    <h3 class="card-title">Location</h3>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                             <i class="fas fa-minus"></i>
@@ -164,7 +167,7 @@
                         <div class="col-md-6">
                             <div class="card card-default" >                        
                                 <div class="card-header">
-                                    <h3 class="card-title">Machine Category</h3>
+                                    <h3 class="card-title">Location</h3>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                             <i class="fas fa-minus"></i>
@@ -227,8 +230,8 @@
                                                     <th>CreatedDate</th>
                                                     <th>Department</th>
                                                     <th>Machine Category</th>
-                                                    <th>Machine Number</th> 
-                                                    <th>Fault type</th>           
+                                                    <th>Site</th> 
+                                                    <th>Location</th>           
                                                     <th>W/o Description</th>
                                                     <th>W/o Status</th>
                                                     <th>CreatedUser</th>
@@ -238,9 +241,7 @@
                                                     <th>ClosedDateTime</th>
                                                     <th>ClosedUser</th>
                                                     <th>Total Time Duration</th>
-                                                    <th>Cloused Fault Type</th>
-                                                    <th>Cloused Fault level01</th>
-                                                    <th>Cloused Fault level02</th>
+                                                    <th>Building</th>                                                   
                                                     <th>ReOpenedDateTime</th>
                                                     <th>ReOpenedUser</th>
                                                     <th>VerifiedDateTime</th>
@@ -300,7 +301,7 @@
            ]
         });   
         funLoad_Departments();
-        //funLoad_Categories();
+        //funLoad_IssueType();
         
     });
 
@@ -308,18 +309,15 @@
     function funLoadPieChart() 
     { 
         let intDebugEnable = 0;
-
-        //alert("View reportButton clicked!");
-        //- 1. get data from php page
-        const DataAry = [];   
-        
+        const DataAry = [];      
+           
         //-------------- Chart new 1 ------------------------------
         DataAry[0] = "funGetData_PieChartNew1";        // Table Name
         DataAry[1] = document.getElementById("id_startdate").value;
         DataAry[2] = document.getElementById("id_enddate").value;
         DataAry[3] = document.getElementById("id_Select_Department").value;
-        DataAry[4] = document.getElementById("id_Select_Category").value;
-        DataAry[5] = document.getElementById("id_Select_Status").value;
+        DataAry[4] = document.getElementById("id_Select_IssueType").value;
+        DataAry[5] = document.getElementById("id_Select_Site").value;
 
         if(intDebugEnable === 1) alert("DataAry :" + DataAry);
         $.post('getData_BdReport.php', { userpara: DataAry }, function(json_data2) 
@@ -378,14 +376,14 @@
                 
             }
         });
-
-         //-------------- Chart new 2 ------------------------------
+        
+        //-------------- Chart new 2 ------------------------------
          DataAry[0] = "funGetData_PieChartNew2";        // Table Name
         DataAry[1] = document.getElementById("id_startdate").value;
         DataAry[2] = document.getElementById("id_enddate").value;
         DataAry[3] = document.getElementById("id_Select_Department").value;
-        DataAry[4] = document.getElementById("id_Select_Category").value;
-        DataAry[5] = document.getElementById("id_Select_Status").value;
+        DataAry[4] = document.getElementById("id_Select_IssueType").value;
+        DataAry[5] = document.getElementById("id_Select_Site").value;
 
         if(intDebugEnable === 1) alert("DataAry :" + DataAry);
         $.post('getData_BdReport.php', { userpara: DataAry }, function(json_data2) 
@@ -446,14 +444,14 @@
                 
             }
         });
-
+        
         //-------------- Chart3 ------------------------------
         DataAry[0] = "funGetData_PieChart3";        // Table Name
         DataAry[1] = document.getElementById("id_startdate").value;
         DataAry[2] = document.getElementById("id_enddate").value;
         DataAry[3] = document.getElementById("id_Select_Department").value;
-        DataAry[4] = document.getElementById("id_Select_Category").value;
-        DataAry[5] = document.getElementById("id_Select_Status").value;
+        DataAry[4] = document.getElementById("id_Select_IssueType").value;
+        DataAry[5] = document.getElementById("id_Select_Site").value;
 
         if(intDebugEnable === 1) alert("DataAry :" + DataAry);
         $.post('getData_BdReport.php', { userpara: DataAry }, function(json_data2) 
@@ -515,13 +513,14 @@
                 
             }
         });
+      
         //-------------- Chart2 ------------------------------
         DataAry[0] = "funGetData_PieChart4";        // Table Name
         DataAry[1] = document.getElementById("id_startdate").value;
         DataAry[2] = document.getElementById("id_enddate").value;
         DataAry[3] = document.getElementById("id_Select_Department").value;
-        DataAry[4] = document.getElementById("id_Select_Category").value;
-        DataAry[5] = document.getElementById("id_Select_Status").value;
+        DataAry[4] = document.getElementById("id_Select_IssueType").value;
+        DataAry[5] = document.getElementById("id_Select_Site").value;
         
         if(intDebugEnable === 1) alert("DataAry :" + DataAry);
         $.post('getData_BdReport.php', { userpara: DataAry }, function(json_data2) 
@@ -586,22 +585,23 @@
     function funLoadBarChart() 
     {
         let intDebugEnable = 0;
-        //alert("this is Bar chart");
-        //- 1. get data from php page
-        const DataAry = [];          
+        const DataAry = [];      
+        
         //-------------- Bar Chart1 ------------------------------
         DataAry[0] = "funGetData_BarChart1"; // Table Name
         DataAry[1] = document.getElementById("id_startdate").value;
         DataAry[2] = document.getElementById("id_enddate").value;
         DataAry[3] = document.getElementById("id_Select_Department").value;
-        DataAry[4] = document.getElementById("id_Select_Category").value;
-        DataAry[5] = document.getElementById("id_Select_Status").value;
+        DataAry[4] = document.getElementById("id_Select_IssueType").value;
+        DataAry[5] = document.getElementById("id_Select_Site").value;
 
-        //if (intDebugEnable === 1) alert("DataAry :" + DataAry);
-        $.post('getData_BdReport.php', { userpara: DataAry }, function(json_data2) {
-            //if (intDebugEnable === 1) alert("json_data2 :" + json_data2);
+        if (intDebugEnable === 1) alert("DataAry :" + DataAry);
+        $.post('getData_BdReport.php', { userpara: DataAry }, function(json_data2)
+        {
+            if (intDebugEnable === 1) alert("json_data2 :" + json_data2);
             var res = $.parseJSON(json_data2);
-            if (res.Status_Ary[0] === "true") {
+            if (res.Status_Ary[0] === "true") 
+            {
                 if (intDebugEnable === 1) alert("data available");
 
                 document.getElementById("id_divBuildingMnt_chart3").innerHTML = '&nbsp;';
@@ -609,7 +609,7 @@
 
                 var barChartCanvas = $('#id_canBuildingMnt_chart3').get(0).getContext('2d');
                 var CategoryColorAry = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
-                var CategoryNameAry = ['Electrical', 'Mechanical', 'Pneumatic'];
+                var CategoryNameAry = ['New', 'Inprogress', 'Closed'];
 
                 var barChart2_Data2 = {
                     labels: res.Data_Ary[0],
@@ -665,15 +665,15 @@
                 document.getElementById("id_divBuildingMnt_chart3").innerHTML = '<canvas id="id_canBuildingMnt_chart3" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>';
                 if (intDebugEnable === 1) alert("Error");
             }
-        });
-
-         //-------------- Chart new 2 ------------------------------
+        });        
+        
+        //-------------- Chart new 2 ------------------------------
         DataAry[0] = "funGetData_BarChart2";        // Table Name
         DataAry[1] = document.getElementById("id_startdate").value;
         DataAry[2] = document.getElementById("id_enddate").value;
         DataAry[3] = document.getElementById("id_Select_Department").value;
-        DataAry[4] = document.getElementById("id_Select_Category").value;
-        DataAry[5] = document.getElementById("id_Select_Status").value;
+        DataAry[4] = document.getElementById("id_Select_IssueType").value;
+        DataAry[5] = document.getElementById("id_Select_Site").value;
 
         if(intDebugEnable === 1) alert("DataAry Chart2 :" + DataAry);
         $.post('getData_BdReport.php', { userpara: DataAry }, function(json_data2) 
@@ -735,14 +735,14 @@
                 
             }
         });
-        
+        /*
         //-------------- Bar Chart 3 ------------------------------
         DataAry[0] = "funGetData_BarChart3";        // Table Name
         DataAry[1] = document.getElementById("id_startdate").value;
         DataAry[2] = document.getElementById("id_enddate").value;
         DataAry[3] = document.getElementById("id_Select_Department").value;
-        DataAry[4] = document.getElementById("id_Select_Category").value;
-        DataAry[5] = document.getElementById("id_Select_Status").value;
+        DataAry[4] = document.getElementById("id_Select_IssueType").value;
+        DataAry[5] = document.getElementById("id_Select_Site").value;
         
         if(intDebugEnable === 1) alert("DataAry :" + DataAry);
         $.post('getData_BdReport.php', { userpara: DataAry }, function(json_data2) 
@@ -833,6 +833,7 @@
                if(intDebugEnable === 1) alert("Error"); 
             }
         }); 
+        */
     }
 
     //-------------------- ViewReport Function --------------------------------------------
@@ -847,8 +848,8 @@
         DataAry[1] = document.getElementById("id_startdate").value;
         DataAry[2] = document.getElementById("id_enddate").value;
         DataAry[3] = document.getElementById("id_Select_Department").value;
-        DataAry[4] = document.getElementById("id_Select_Category").value;
-        DataAry[5] = document.getElementById("id_Select_Status").value;
+        DataAry[4] = document.getElementById("id_Select_IssueType").value;
+        DataAry[5] = document.getElementById("id_Select_Site").value;
         
         if(intDebugEnable === 1) alert("DataAry :" + DataAry);
         $.post('getData_BdReport.php', { userpara: DataAry }, function(json_data2) 
@@ -872,7 +873,7 @@
                 {
                     //intLinewiseTotalDT = res.LineWiseDowntimeCategory1_Ary[i]+res.LineWiseDowntimeCategory2_Ary[i]+res.LineWiseDowntimeCategory3_Ary[i]+res.LineWiseDowntimeCategory4_Ary[i]+res.LineWiseDowntimeCategory5_Ary[i]+res.LineWiseDowntimeCategory6_Ary[i];
                     intTmp = i + 1;
-                    dtbl2.row.add([intTmp.toString(), res.Data_Ary[i][0], res.Data_Ary[i][1], res.Data_Ary[i][2], res.Data_Ary[i][3] , res.Data_Ary[i][4],res.Data_Ary[i][5],res.Data_Ary[i][6],res.Data_Ary[i][7],res.Data_Ary[i][8],res.Data_Ary[i][9],res.Data_Ary[i][10],res.Data_Ary[i][11],res.Data_Ary[i][12],res.Data_Ary[i][13],res.Data_Ary[i][14],res.Data_Ary[i][15],res.Data_Ary[i][16],res.Data_Ary[i][17],res.Data_Ary[i][18],res.Data_Ary[i][19],res.Data_Ary[i][20],res.Data_Ary[i][21]]).draw(false);
+                    dtbl2.row.add([intTmp.toString(), res.Data_Ary[i][0], res.Data_Ary[i][1], res.Data_Ary[i][2], res.Data_Ary[i][3] , res.Data_Ary[i][4],res.Data_Ary[i][5],res.Data_Ary[i][6],res.Data_Ary[i][7],res.Data_Ary[i][8],res.Data_Ary[i][9],res.Data_Ary[i][10],res.Data_Ary[i][11],res.Data_Ary[i][12],res.Data_Ary[i][13],res.Data_Ary[i][14],res.Data_Ary[i][15],res.Data_Ary[i][16],res.Data_Ary[i][17],res.Data_Ary[i][18],res.Data_Ary[i][19]]).draw(false);
                 } 
             }
             else if(res.Status_Ary[0] === "false")   // No data found, insert new record
@@ -899,7 +900,7 @@
         //---------------- Load Departments --------------------------------------
         DataAry[0] = "funGetFilteredData";        // Function Name    
         DataAry[1] = "Department";
-        DataAry[2] = "tblwo_errorlevel_breakdown";
+        DataAry[2] = "tblwo_departments";
         DataAry[3] = "0";
         if(intDebugEnable === 1)    alert("DataAry :" + DataAry);      
         $.post('comFunctions.php', { userpara: DataAry }, function(json_data2) 
@@ -930,23 +931,23 @@
                     sel_UserType.appendChild(el5);
                 }
                 //-------------- Set User Department in Filter ------------------
-                funLoad_Categories();
+                funLoad_IssueType();
             }
             
         });
     }
     
     //------------- Load Categories to Filter Data -------------------
-    function funLoad_Categories() 
+    function funLoad_IssueType() 
     {
         let intDebugEnable = 0;        
-        if(intDebugEnable === 1)    alert("funLoad_Categories");
+        if(intDebugEnable === 1)    alert("funLoad_IssueType");
                 
         const DataAry = [];         
         //---------------- Load Departments --------------------------------------
         DataAry[0] = "funGetFilteredData";        // Function Name    
-        DataAry[1] = "MachineCategory";
-        DataAry[2] = "tblwo_machinemanagement";
+        DataAry[1] = "IssueType";
+        DataAry[2] = "tblwo_issuetype";
         DataAry[3] = "0";
         if(intDebugEnable === 1)    alert("DataAry :" + DataAry);      
         $.post('comFunctions.php', { userpara: DataAry }, function(json_data2) 
@@ -958,11 +959,11 @@
                 AryDepartment = res.Data_Ary;
                 if(intDebugEnable === 1) alert("AryDepartment : " + AryDepartment); 
                 //------------ Remove All Items in "AryUserType" -----------------------------------
-                var options5 = document.querySelectorAll('#id_Select_Category option');
+                var options5 = document.querySelectorAll('#id_Select_IssueType option');
                 options5.forEach(o => o.remove());
                                  
                 //------------ Fill New Items -------------------------------------
-                var sel_UserType = document.getElementById("id_Select_Category");
+                var sel_UserType = document.getElementById("id_Select_IssueType");
                 var opt4 = "All";
                 var el4 = document.createElement("option");
                 el4.textContent = opt4;

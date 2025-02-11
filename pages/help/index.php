@@ -74,7 +74,7 @@
         //funLoadUsers();
         var pdfContainer = document.getElementById('pdfContainer');
         var pdfIframe = document.getElementById('pdfIframe');
-        pdfIframe.src = '../../doc/UserManual.pdf'; // Set the source of the iframe to your PDF URL
+        pdfIframe.src = '../../doc/xxx.pdf'; // Set the source of the iframe to your PDF URL
         pdfContainer.style.display = 'block'; // Show the PDF container
     });  
     

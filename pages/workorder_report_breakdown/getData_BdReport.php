@@ -36,7 +36,7 @@
         $whereClause = "WorkOrderCategory = 'BreakDown' AND State < 6 AND ClosedDateTime IS NOT NULL AND DATE(CreatedDateTime) BETWEEN :sdate AND :edate";
                 
         if ($strDepartment !== "All") {
-            $whereClause .= " AND WoDepartment = '" . $strDepartment . "'";
+            $whereClause .= " AND CreatedDepartment = '" . $strDepartment . "'";
         }
         if ($strCategory !== "All") {
             $whereClause .= " AND McCategory = '" . $strCategory . "'";
@@ -48,10 +48,10 @@
         {   
             $sqlString = "
                 SELECT
-                WoDepartment, COUNT(*) AS Total_Count
+                CreatedDepartment, COUNT(*) AS Total_Count
                 FROM 
                     tblwo_event 
-                WHERE " . $whereClause." GROUP BY WoDepartment";
+                WHERE " . $whereClause." GROUP BY CreatedDepartment";
             
             
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
@@ -67,7 +67,7 @@
             $i = 0;
             foreach($result as $row)
             {   
-                $ReturnData_ary[0][$i] = $row['WoDepartment'];
+                $ReturnData_ary[0][$i] = $row['CreatedDepartment'];
                 $ReturnData_ary[1][$i] = $row['Total_Count']; 
                 
                                
@@ -107,24 +107,24 @@
         $whereClause = "WorkOrderCategory = 'BreakDown' AND State < 6 AND ClosedDateTime IS NOT NULL AND DATE(CreatedDateTime) BETWEEN :sdate AND :edate";
                 
         if ($strDepartment !== "All") {
-            $whereClause .= " AND WoDepartment = '" . $strDepartment . "'";
+            $whereClause .= " AND CreatedDepartment = '" . $strDepartment . "'";
         }
         if ($strCategory !== "All") {
-            $whereClause .= " AND McCategory = '" . $strCategory . "'";
+            $whereClause .= " AND Site = '" . $strCategory . "'";
         }  
         if ($strStatus !== "All") {
-            $whereClause .= " AND ClosedFaultType  = '" . $strStatus . "'";          
+            $whereClause .= " AND IssueType  = '" . $strStatus . "'";          
         } 
         
         try 
         {    
             $sqlString = "
                 SELECT 
-                    ClosedFaultType,
+                    Location,
                     SUM(TIMESTAMPDIFF(MINUTE, CreatedDateTime, ClosedDateTime)) AS Time_Duration 
                 FROM 
                     tblwo_event 
-                WHERE " . $whereClause." GROUP BY ClosedFaultType";
+                WHERE " . $whereClause." GROUP BY Location";
                 
 
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
@@ -140,7 +140,7 @@
             $i = 0;
             foreach($result as $row)
             {   
-                $ReturnData_ary[0][$i] = $row['ClosedFaultType'];
+                $ReturnData_ary[0][$i] = $row['Location'];
                 $ReturnData_ary[1][$i] = number_format($row['Time_Duration'] / 60, 1);
                 $i++;
             }  
@@ -176,7 +176,7 @@
         $whereClause = "WorkOrderCategory = 'BreakDown' AND State < 6 AND ClosedDateTime IS NOT NULL AND DATE(CreatedDateTime) BETWEEN :sdate AND :edate";
                 
         if ($strDepartment !== "All") {
-            $whereClause .= " AND WoDepartment = '" . $strDepartment . "'";
+            $whereClause .= " AND CreatedDepartment = '" . $strDepartment . "'";
         }
         if ($strCategory !== "All") {
             $whereClause .= " AND McCategory = '" . $strCategory . "'";
@@ -188,11 +188,11 @@
         {   
             $sqlString = "
                 SELECT 
-                    WoDepartment, 
+                    CreatedDepartment, 
                     SUM(TIMESTAMPDIFF(MINUTE, CreatedDateTime, ClosedDateTime)) AS Time_Duration 
                 FROM 
                     tblwo_event 
-               WHERE " . $whereClause." GROUP BY WoDepartment";
+               WHERE " . $whereClause." GROUP BY CreatedDepartment";
             
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
             //$stmt = $conn->prepare("SELECT WorkOrderNo,CheckInUserDateTime,CheckOutUserDateTime FROM tblwo_allcheckinusers WHERE CheckInUser=:chkinusr");
@@ -207,7 +207,7 @@
             $i = 0;
             foreach($result as $row)
             {   
-                $ReturnData_ary[0][$i] = $row['WoDepartment'];
+                $ReturnData_ary[0][$i] = $row['CreatedDepartment'];
                 $ReturnData_ary[1][$i] = number_format($row['Time_Duration'] / 60, 1);
                 $i++;
             }  
@@ -243,7 +243,7 @@
         $whereClause = "WorkOrderCategory = 'BreakDown' AND State < 6 AND ClosedDateTime IS NOT NULL AND DATE(CreatedDateTime) BETWEEN :sdate AND :edate";
                 
         if ($strDepartment !== "All") {
-            $whereClause .= " AND WoDepartment = '" . $strDepartment . "'";
+            $whereClause .= " AND CreatedDepartment = '" . $strDepartment . "'";
         }
         if ($strCategory !== "All") {
             $whereClause .= " AND McCategory = '" . $strCategory . "'";
@@ -255,11 +255,11 @@
         {   
             $sqlString = "
                 SELECT 
-                    WoDepartment, 
+                    CreatedDepartment, 
                     SUM(TIMESTAMPDIFF(MINUTE, CreatedDateTime, RespondDateTime)) AS Time_Duration 
                 FROM 
                     tblwo_event 
-               WHERE " . $whereClause." GROUP BY WoDepartment";
+               WHERE " . $whereClause." GROUP BY CreatedDepartment";
             
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
             //$stmt = $conn->prepare("SELECT WorkOrderNo,CheckInUserDateTime,CheckOutUserDateTime FROM tblwo_allcheckinusers WHERE CheckInUser=:chkinusr");
@@ -274,7 +274,7 @@
             $i = 0;
             foreach($result as $row)
             {   
-                $ReturnData_ary[0][$i] = $row['WoDepartment'];
+                $ReturnData_ary[0][$i] = $row['CreatedDepartment'];
                 $ReturnData_ary[1][$i] = number_format($row['Time_Duration'] / 60, 1); 
                 $i++;
             }  
@@ -310,29 +310,29 @@
         $whereClause = "WorkOrderCategory = 'BreakDown' AND State < 6 AND ClosedDateTime IS NOT NULL AND DATE(CreatedDateTime) BETWEEN :sdate AND :edate";
                 
         if ($strDepartment !== "All") {
-            $whereClause .= " AND WoDepartment = '" . $strDepartment . "'";
+            $whereClause .= " AND CreatedDepartment = '" . $strDepartment . "'";
         }
         if ($strCategory !== "All") {
-            $whereClause .= " AND McCategory = '" . $strCategory . "'";
+            $whereClause .= " AND Site = '" . $strCategory . "'";
         }  
         if ($strStatus !== "All") {
-            $whereClause .= " AND ClosedFaultType  = '" . $strStatus . "'";          
+            $whereClause .= " AND IssueType  = '" . $strStatus . "'";          
         } 
         
         try 
         {    
             $sqlString = " 
                 SELECT 
-                McCategory,
-                    SUM(CASE WHEN ClosedFaultType = 'Electrical' THEN TIMESTAMPDIFF(MINUTE, CreatedDateTime, ClosedDateTime) ELSE 0 END) AS Electrical_Count,
-                    SUM(CASE WHEN ClosedFaultType = 'Mechanical' THEN TIMESTAMPDIFF(MINUTE, CreatedDateTime, ClosedDateTime) ELSE 0 END) AS Mechanical_Count,
-                    SUM(CASE WHEN ClosedFaultType = 'Pneumatic' THEN TIMESTAMPDIFF(MINUTE, CreatedDateTime, ClosedDateTime) ELSE 0 END) AS Pneumatic_Count
+                Location,
+                    SUM(CASE WHEN WoStatus = 'New' THEN TIMESTAMPDIFF(MINUTE, CreatedDateTime, ClosedDateTime) ELSE 0 END) AS New_Count,
+                    SUM(CASE WHEN WoStatus = 'Inprogress' THEN TIMESTAMPDIFF(MINUTE, CreatedDateTime, ClosedDateTime) ELSE 0 END) AS Inprogress_Count,
+                    SUM(CASE WHEN WoStatus = 'Closed' THEN TIMESTAMPDIFF(MINUTE, CreatedDateTime, ClosedDateTime) ELSE 0 END) AS Closed_Count
                     
                 FROM 
                     tblwo_event 
                 WHERE " . $whereClause . 
                 " GROUP BY 
-                McCategory;";
+                Location;";
             
             // echo $sqlString;
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
@@ -348,10 +348,10 @@
             $i = 0;
             foreach($result as $row)
             {   
-                $ReturnData_ary[0][$i] = $row['McCategory'];
-                $ReturnData_ary[1][$i] = number_format($row['Electrical_Count'] / 60, 2); 
-                $ReturnData_ary[2][$i] = number_format($row['Mechanical_Count'] / 60, 2); 
-                $ReturnData_ary[3][$i] = number_format($row['Pneumatic_Count'] / 60, 2);               
+                $ReturnData_ary[0][$i] = $row['Location'];
+                $ReturnData_ary[1][$i] = number_format($row['New_Count'] / 60, 2); 
+                $ReturnData_ary[2][$i] = number_format($row['Inprogress_Count'] / 60, 2); 
+                $ReturnData_ary[3][$i] = number_format($row['Closed_Count'] / 60, 2);               
                  
                 $i++;
             }  
@@ -376,9 +376,6 @@
         }    
         $conn = null;
 
-
-
-
     }
     else if($strFuncType === "funGetData_BarChart2") //------------- funUpdateEventLog --------------------
     {
@@ -398,7 +395,7 @@
         $whereClause = "WorkOrderCategory = 'BreakDown' AND State < 6 AND ClosedDateTime IS NOT NULL AND DATE(CreatedDateTime) BETWEEN :sdate AND :edate";
                 
         if ($strDepartment !== "All") {
-            $whereClause .= " AND WoDepartment = '" . $strDepartment . "'";
+            $whereClause .= " AND CreatedDepartment = '" . $strDepartment . "'";
         }
         if ($strCategory !== "All") {
             $whereClause .= " AND McCategory = '" . $strCategory . "'";
@@ -412,11 +409,11 @@
             $sqlString = "
                 
                 SELECT 
-                    WoDepartment, 
+                    CreatedDepartment, 
                     AVG(TIMESTAMPDIFF(MINUTE, CreatedDateTime, RespondDateTime)) AS Time_Duration 
                 FROM 
                     tblwo_event 
-               WHERE " . $whereClause." GROUP BY WoDepartment";
+               WHERE " . $whereClause." GROUP BY CreatedDepartment";
            
             
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
@@ -432,7 +429,7 @@
             $i = 0;
             foreach($result as $row)
             {   
-                $ReturnData_ary[0][$i] = $row['WoDepartment'];
+                $ReturnData_ary[0][$i] = $row['CreatedDepartment'];
                 $ReturnData_ary[1][$i] = number_format($row['Time_Duration'] / 60, 2);
                  
                 $i++;
@@ -469,7 +466,7 @@
         $whereClause = "WorkOrderCategory = 'BreakDown' AND State < 6 AND ClosedDateTime IS NOT NULL AND DATE(CreatedDateTime) BETWEEN :sdate AND :edate";
                 
         if ($strDepartment !== "All") {
-            $whereClause .= " AND WoDepartment = '" . $strDepartment . "'";
+            $whereClause .= " AND CreatedDepartment = '" . $strDepartment . "'";
         }
         if ($strCategory !== "All") {
             $whereClause .= " AND McCategory = '" . $strCategory . "'";
@@ -544,13 +541,13 @@
         $whereClause = "wo.WorkOrderCategory = 'BreakDown' AND State < 6 AND wo.ClosedDateTime IS NOT NULL AND DATE(wo.CreatedDateTime) BETWEEN :sdate AND :edate";
 
         if ($strDepartment !== "All") {
-            $whereClause .= " AND wo.WoDepartment = '" . $strDepartment . "'";
+            $whereClause .= " AND wo.CreatedDepartment = '" . $strDepartment . "'";
         }
         if ($strCategory !== "All") {
-            $whereClause .= " AND wo.McCategory = '" . $strCategory . "'";
+            $whereClause .= " AND wo.Site = '" . $strCategory . "'";
         }          
         if ($strStatus !== "All") {
-            $whereClause .= " AND ClosedFaultType  = '" . $strStatus . "'";          
+            $whereClause .= " AND IssueType  = '" . $strStatus . "'";          
         } 
 
         try 
@@ -558,12 +555,12 @@
             $sqlString = "
                 SELECT             
                     wo.WorkOrderNo,
-                    wo.McCategory,
-                    wo.MachineNo,
-                    wo.WoDepartment,
+                    wo.Site,
+                    wo.Location,
+                    wo.CreatedDepartment,
                     wo.CreatedDateTime,
                     wo.CreatedUser,
-                    wo.CreatedFaultType,
+                    wo.IssueType,
                     wo.RespondDateTime,
                     wo.ClosedDateTime,
                     wo.ClosedUser,
@@ -574,9 +571,7 @@
                     wo.ReOpenedUser,
                     wo.WoDescription,
                     wo.WoStatus,
-                    wo.ClosedFaultType,
-                    wo.ClosedFaultLevel1,
-                    wo.ClosedFaultLevel2,
+                    wo.Building,                    
                     (
                         SELECT GROUP_CONCAT(DISTINCT ua.EmpName SEPARATOR ', ') 
                         FROM tblwo_allocatedusers AS acu
@@ -607,30 +602,24 @@
             {
                 $ReturnData_ary[$i][0] = $row['WorkOrderNo'];
                 $ReturnData_ary[$i][1] = $row['CreatedDateTime'];
-                $ReturnData_ary[$i][2] = $row['WoDepartment']; 
-                $ReturnData_ary[$i][3] = $row['McCategory']; 
-                $ReturnData_ary[$i][4] = $row['MachineNo']; 
-                $ReturnData_ary[$i][5] = $row['CreatedFaultType']; 
-
+                $ReturnData_ary[$i][2] = $row['CreatedDepartment']; 
+                $ReturnData_ary[$i][3] = $row['Site']; 
+                $ReturnData_ary[$i][4] = $row['Location']; 
+                $ReturnData_ary[$i][5] = $row['IssueType']; 
                 $ReturnData_ary[$i][6] = $row['WoDescription']; 
                 $ReturnData_ary[$i][7] = $row['WoStatus'];     
                 $ReturnData_ary[$i][8] = $row['CreatedUser'];           
-                $ReturnData_ary[$i][9] = $row['RespondDateTime'];   
-
+                $ReturnData_ary[$i][9] = $row['RespondDateTime'];
                 $ReturnData_ary[$i][10] = $row['AllocatedUsers'];                
                 $ReturnData_ary[$i][11] = $row['CheckInUsers'];
-
                 $ReturnData_ary[$i][12] = $row['ClosedDateTime'];                
                 $ReturnData_ary[$i][13] = $row['ClosedUser'];                 
                 $ReturnData_ary[$i][14] = number_format($row['TotTimeDuration']/ 60, 1) ;  
-                $ReturnData_ary[$i][15] = $row['ClosedFaultType']; 
-                $ReturnData_ary[$i][16] = $row['ClosedFaultLevel1']; 
-                $ReturnData_ary[$i][17] = $row['ClosedFaultLevel2'];  
-
-                $ReturnData_ary[$i][18] = $row['ReOpenedDateTime']; 
-                $ReturnData_ary[$i][19] = $row['ReOpenedUser']; 
-                $ReturnData_ary[$i][20] = $row['VerifiedDateTime']; 
-                $ReturnData_ary[$i][21] = $row['VerifiedUser'];
+                $ReturnData_ary[$i][15] = $row['Building'];             
+                $ReturnData_ary[$i][16] = $row['ReOpenedDateTime']; 
+                $ReturnData_ary[$i][17] = $row['ReOpenedUser']; 
+                $ReturnData_ary[$i][18] = $row['VerifiedDateTime']; 
+                $ReturnData_ary[$i][19] = $row['VerifiedUser'];
 
                 $i++;
             }  

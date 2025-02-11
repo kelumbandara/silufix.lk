@@ -19,7 +19,7 @@ $output = "";
 if (isset($_FILES['file'])) {
     if ($xlsx = SimpleXLSX::parse($_FILES['file']['tmp_name'])) {
         try {
-            $sql2 = "TRUNCATE TABLE tblwo_masterdata_redtag";
+            $sql2 = "TRUNCATE TABLE tblwo_masterdata_breakdown";
             $truncatetable = mysqli_query($conn2, $sql2);
         } catch (PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
@@ -47,7 +47,7 @@ if (isset($_FILES['file'])) {
                             <td>$repIssueDescriptionSub</td>
                         </tr>";
             
-            $sql = "INSERT INTO tblwo_masterdata_redtag (Site, Location, Building, IssueType, IssueDescriptionMain, IssueDescriptionSub) "
+            $sql = "INSERT INTO tblwo_masterdata_breakdown (Site, Location, Building, IssueType, IssueDescriptionMain, IssueDescriptionSub) "
                  . "VALUES ('$Site', '$Location', '$Building', '$IssueType', '$repIssueDescriptionMain', '$repIssueDescriptionSub')";
             
             mysqli_query($conn2, $sql);
@@ -67,7 +67,7 @@ if (isset($_FILES['file'])) {
         <div class="container-fluid">
             <div class="card card-default">
                 <div class="card-header">
-                    <h2 class="card-title">Master Data Update - Redtag</h2>
+                    <h2 class="card-title">Master Data Update - Breakdown</h2>
                 </div>
                 <div class="card-body">
                     <form method="post" enctype="multipart/form-data">

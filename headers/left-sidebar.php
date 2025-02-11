@@ -58,36 +58,21 @@
                         <?php endif; ?>
                         <?php if (in_array('203' , $roll_section)): ?>
                             <li class="nav-item">
-                                <a href="../workorder_report_plannedmnt/index.php" class="nav-link">
-                                    <i class="nav-icon fas fa-chart-pie"></i>
-                                    <p>Planned Maintenance</p>
-                                </a>
-                            </li> 
-                        <?php endif; ?>
-                        <?php if (in_array('204' , $roll_section)): ?>
-                            <li class="nav-item">
                                 <a href="../workorder_report_redtag/index.php" class="nav-link">
                                     <i class="nav-icon fas fa-chart-pie"></i>
                                     <p>Red Tag</p>
                                 </a>
                             </li> 
                         <?php endif; ?>
-                        <?php if (in_array('205' , $roll_section)): ?>
+                        <?php if (in_array('204' , $roll_section)): ?>
                             <li class="nav-item">
-                                <a href="../workorder_report_buildingmnt/index.php" class="nav-link">
+                                <a href="../workorder_report_service/index.php" class="nav-link">
                                     <i class="nav-icon fas fa-chart-pie"></i>
-                                    <p>Building Maintenance</p>
+                                    <p>Service</p>
                                 </a>
                             </li> 
-                        <?php endif; ?>
-                        <?php if (in_array('206' , $roll_section)): ?>
-                            <li class="nav-item">
-                                <a href="../workorder_report_other/index.php" class="nav-link">
-                                    <i class="nav-icon fas fa-chart-pie"></i>
-                                    <p>Other</p>
-                                </a>
-                            </li> 
-                        <?php endif; ?>
+                        <?php endif; ?>                       
+                        
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -192,27 +177,28 @@
                         </a>
                     <?php endif; ?>
                     <ul class="nav nav-treeview">
+                                             
                         <?php if (in_array('601' , $roll_section)): ?>
-                            <li class="nav-item">
-                                <a href="../machine_management/index.php" class="nav-link">
-                                    <i class="nav-icon far fa-edit"></i>
-                                    <p>Machine Management</p>
+                            <li class="nav-item disabled">
+                                <a href="../masterdata_upload/masterdata_breakdown.php" class="nav-link">
+                                    <i class="nav-icon far fa-edit "></i>
+                                    <p>Master Data - Breakdown</p>
                                 </a>
-                            </li>
-                        <?php endif; ?>                        
+                            </li>   
+                        <?php endif; ?>
                         <?php if (in_array('602' , $roll_section)): ?>
                             <li class="nav-item disabled">
-                                <a href="../data_management/index.php" class="nav-link">
+                                <a href="../masterdata_upload/masterdata_redtag.php" class="nav-link">
                                     <i class="nav-icon far fa-edit "></i>
-                                    <p>Data Management</p>
+                                    <p>Master Data - Redtag</p>
                                 </a>
                             </li>   
                         <?php endif; ?>
                         <?php if (in_array('603' , $roll_section)): ?>
                             <li class="nav-item disabled">
-                                <a href="../masterdata_upload/masterdata_redtag.php" class="nav-link">
+                                <a href="../masterdata_upload/masterdata_service.php" class="nav-link">
                                     <i class="nav-icon far fa-edit "></i>
-                                    <p>Master Data - Redtag</p>
+                                    <p>Master Data - Service</p>
                                 </a>
                             </li>   
                         <?php endif; ?>
