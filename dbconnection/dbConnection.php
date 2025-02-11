@@ -1,10 +1,12 @@
 <?php
+ 
+    
+    $servername = "perahara.lk";
+    $username = "kelum";
+    $password = "sKy@1234-3";
+    $database = "mms1810a";
+   
 
-    $servername = "localhost";
-    $username = "root";
-    $password = " ";
-    $database = "mms1810b";
-      
     //$servername = "perahara.lk";
     //$username = "kelum";
     //$password = "sKy@1234";
