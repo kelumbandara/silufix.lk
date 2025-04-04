@@ -3,7 +3,7 @@
     
     $servername = "localhost";
     $username = "root";
-    $password = "";
+    $password = "ecoGen@885n";
     $database = "mms1810b";
    
     //$servername = "perahara.lk";

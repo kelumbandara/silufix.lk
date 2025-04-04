@@ -73,9 +73,9 @@ try
         $CreatedDateTime     = $strServerDateTime;
         $CreatedDepartment   = $Contractor;
         $CreatedUser         = "0";
-        $PlannedDateTime     = "";
+        $PlannedDateTime     = $strServerDateTime;
         $AllocatedUser       = ''; // Placeholder value
-        $RespondDateTime     = '';
+        $RespondDateTime     = $strServerDateTime;
         $RespondUser         = ''; // Placeholder value
         $ClosedDateTime      = $strServerDateTime;
         $ClosedUser          = ''; // Placeholder value
