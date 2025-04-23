@@ -80,7 +80,7 @@
                     $stmt = $conn->prepare($query);
                     $stmt->bindParam(':stat', $intWoState); 
                 }
-                else if($CurrentUserType == "Assistance")   // Filter by Issue Type and own workorders
+                else if($CurrentUserType == "Assistance")   // Filter by Issue Type
                 {                    
                     // Convert the comma-separated string to an array
                     $issueTypesArray = explode(',', $CurrentIssueType); 
@@ -92,12 +92,10 @@
                     }
                     // Update the query to use named placeholders
                     $query .= " AND tblwo_event.IssueType IN (" . implode(',', $placeholders) . ")";
-                    $query .= " OR tblwo_event.CreatedUser = :creusr"; 
                     // Prepare the statement
                     $stmt = $conn->prepare($query);
                     // Bind the state parameter
                     $stmt->bindParam(':stat', $intWoState);
-                    $stmt->bindParam(':creusr', $CurrentUserEPF);
                     // Bind the issue types dynamically
                     foreach ($issueTypesArray as $index => $issueType) {
                         $stmt->bindValue(":issueType" . $index, $issueType);
@@ -118,13 +116,11 @@
                                     AND tblwo_allocatedusers.Status = 'Active'
                             )
                         ";
-                        $query .= " OR tblwo_event.CreatedUser = :creusr"; 
 
                         $stmt = $conn->prepare($query);
-                        $stmt->bindParam(':stat', $intWoState);                         
+                        $stmt->bindParam(':stat', $intWoState); 
                         //$stmt->bindParam(':isutp', $CurrentIssueType);
                         $stmt->bindParam(':alwusr', $CurrentUserEPF); 
-                        $stmt->bindParam(':creusr', $CurrentUserEPF);
                     
                     /*
                     $query .= " AND tblwo_event.CreatedUser = :creusr"; 

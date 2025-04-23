@@ -274,7 +274,7 @@ function funModRedTagCre_SelIssueTypeFilter()
 //-------------------- Select Issue Description Filter Function -------------------------
 function funModRedTagCre_SelIssueDescriptionFilter()
 {
-    let intDebugEnable = 0;  
+    let intDebugEnable = 1;  
     if(intDebugEnable === 1)    alert("funModRedTagCre_SelIssueDescriptionFilter"); 
      const DataAry = []; 
      DataAry[0] = "funGetFilteredData";        // Function Name    
