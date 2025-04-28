@@ -274,7 +274,7 @@ function funModRedTagCre_SelIssueTypeFilter()
 //-------------------- Select Issue Description Filter Function -------------------------
 function funModRedTagCre_SelIssueDescriptionFilter()
 {
-    let intDebugEnable = 1;  
+    let intDebugEnable = 0;  
     if(intDebugEnable === 1)    alert("funModRedTagCre_SelIssueDescriptionFilter"); 
      const DataAry = []; 
      DataAry[0] = "funGetFilteredData";        // Function Name    
@@ -287,6 +287,8 @@ function funModRedTagCre_SelIssueDescriptionFilter()
      DataAry[7] = document.getElementById("id_ModRedTagCre_Location").value;
      DataAry[8] = "Building";
      DataAry[9] = document.getElementById("id_ModRedTagCre_Building").value;
+     DataAry[10] = "Issuetype";
+     DataAry[11] = document.getElementById("id_ModRedTagCre_IssueType").value;
     
      if(intDebugEnable === 1)    alert("DataAry :" + DataAry); 
     $.post('class/comFunctions.php', { userpara: DataAry}, function(json_data2) 
