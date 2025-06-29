@@ -75,11 +75,19 @@
                                 
                                 <div class="form-row"> 
                                     
-                                    <div class="form-group col-md-3">
+                                    <div class="form-group col-md-2">
                                         <label>Issue Type</label>                                        
                                         <select class="form-control" multiple id="id_issuetype" required>                                                                                       
                                         </select>                                       
-                                    </div>                                     
+                                    </div>    
+
+                                    <div class="form-group col-md-2">
+                                        <label>Service Type</label>                                        
+                                        <select class="form-control" multiple id="id_servicetype" required>                                                                                       
+                                        </select>                                       
+                                    </div>    
+                                    
+                                    
                                     <div class="form-group col-md-2">
                                         <label>Contact</label>
                                         <input type="text" class="form-control" id="id_contact" required>
@@ -93,6 +101,7 @@
                                         <select class="form-control" id="id_usertype" required>                                           
                                         </select>
                                     </div> 
+                                      
                                     <div class="form-group col-md-2">
                                         <label>Availability</label>
                                         <select class="form-control" id="id_availability" required>
@@ -132,6 +141,7 @@
                                             <th>Password</th>
                                             <th>Department</th>
                                             <th>Issue Type</th>
+                                            <th>Service Type</th>
                                             <th>Contact</th>                                            
                                             <th>Email</th>
                                             <th>User Type</th>
@@ -176,6 +186,12 @@
             placeholder: "Select issue types",
             allowClear: true
         });
+        $('#id_servicetype').select2(
+        {
+            placeholder: "Select Service types",
+            allowClear: true
+        });
+
         funLoadUsers();        
     });
     //-------------- Load Users -------------------------------
@@ -264,6 +280,45 @@
                 options4.forEach(o => o.remove());
                 //------------ Fill New Items -------------------------------------
                 var sel_UserType = document.getElementById("id_issuetype");
+
+                //------------ Fill New Items -------------------------------------
+                // Add "All" as the first option
+                var allOption = document.createElement("option");
+                allOption.textContent = "All";
+                allOption.value = "All";
+                sel_UserType.appendChild(allOption);
+
+                for(var i = 0; i < AryDepartment.length; i++)
+                {
+                    var opt4 = AryDepartment[i];
+                    opt4 = AryDepartment[i];
+                    var el4 = document.createElement("option");
+                    el4.textContent = opt4;
+                    el4.value = opt4;
+                    sel_UserType.appendChild(el4);
+                }
+            }
+        });
+        //--------- Load Service Types  -------------------------------------
+        //const DataAry = [];
+        DataAry[0] = "funGetFilteredData";        // Function Name    
+        DataAry[1] = "ServiceType";
+        DataAry[2] = "tblwo_issuetype";
+        DataAry[3] = "0";
+        if(intDebugEnable === 1)    alert("Location : 200 " + DataAry);      
+        $.post('comFunctions.php', { userpara: DataAry }, function(json_data2) 
+        {
+            if(intDebugEnable === 1) alert("Location : 210 " + json_data2);
+            var res = $.parseJSON(json_data2);  
+            if(res.Status_Ary[0] === "true")
+            {
+                AryDepartment = res.Data_Ary;
+                if(intDebugEnable === 1) alert("Location : 220 " + AryDepartment); 
+                //------------ Remove All Items in "AryDepartment" -----------------------------------
+                var options4 = document.querySelectorAll('#id_servicetype option');
+                options4.forEach(o => o.remove());
+                //------------ Fill New Items -------------------------------------
+                var sel_UserType = document.getElementById("id_servicetype");
 
                 //------------ Fill New Items -------------------------------------
                 // Add "All" as the first option
@@ -392,10 +447,30 @@
                 // If you are using Select2, you may need to trigger an update
                 $('#id_issuetype').trigger('change');
 
-                document.getElementById("id_contact").value     = cells[7].innerText;
-                document.getElementById("id_email").value       = cells[8].innerText;
-                document.getElementById("id_usertype").value    = cells[9].innerText;
-                document.getElementById("id_availability").value  = cells[10].innerText;
+                // Assuming cells[7].innerText contains a comma-separated string
+                let selectedValues2 = cells[7].innerText.split(',');
+                if(intDebugEnable === 1)    alert("selectedValues2 :" + selectedValues2);
+                // Get the multi-select element
+                let selectElement2 = document.getElementById("id_servicetype");
+                // Loop through all options and set the selected ones
+                for (let option of selectElement2.options) 
+                {
+                    if (selectedValues2.includes(option.value)) 
+                    {
+                        option.selected = true; // Mark as selected
+                    } 
+                    else 
+                    {
+                        option.selected = false; // Mark as unselected
+                    }
+                }
+                // If you are using Select2, you may need to trigger an update
+                $('#id_servicetype').trigger('change');
+
+                document.getElementById("id_contact").value     = cells[8].innerText;
+                document.getElementById("id_email").value       = cells[9].innerText;
+                document.getElementById("id_usertype").value    = cells[10].innerText;
+                document.getElementById("id_availability").value  = cells[11].innerText;
             }
         }
         // Scroll the webpage to the top
@@ -415,6 +490,16 @@
                 selectedValues.push(option.value); // Get the value of the selected option
             }            
         }
+
+        const selectElementservice = document.getElementById("id_servicetype");
+        const selectedValues2 = [];
+        for (const option of selectElementservice.options) 
+        {
+            if (option.selected) 
+            {
+                selectedValues2.push(option.value); // Get the value of the selected option
+            }            
+        }
         if(intDebugEnable === 1)    alert("selectedValues :" + selectedValues);
 
         const DataAry = []; 
@@ -430,7 +515,8 @@
         DataAry[8] = document.getElementById("id_contact").value; 
         DataAry[9] = document.getElementById("id_email").value; 
         DataAry[10] = document.getElementById("id_usertype").value;
-        DataAry[11] = document.getElementById("id_availability").value;  
+        DataAry[11] = document.getElementById("id_availability").value;
+        DataAry[12] = selectedValues2;  
 
         if(intDebugEnable === 1)    alert("DataAry : " + DataAry);
         if(DataAry[1] !== "")
@@ -480,6 +566,18 @@
             }            
         }
         DataAry[7] = selectedValues;
+
+        const selectElement2 = document.getElementById("id_servicetype");
+        const selectedValues2 = [];
+        for (const option of selectElement2.options) 
+        {
+            if (option.selected) 
+            {
+                selectedValues2.push(option.value); // Get the value of the selected option
+            }            
+        }
+        DataAry[12] = selectedValues2;
+
         DataAry[8] = document.getElementById("id_contact").value; 
         DataAry[9] = document.getElementById("id_email").value; 
         DataAry[10] = document.getElementById("id_usertype").value;
@@ -530,7 +628,7 @@
         //document.getElementById("id_issuetype").value   = "";
         // Clear all selected values in Select2
         $('#id_issuetype').val(null).trigger('change');
-
+        $('#id_servicetype').val(null).trigger('change');
         document.getElementById("id_contact").value     = ""; 
         document.getElementById("id_email").value       = ""; 
         document.getElementById("id_usertype").value    = "";

@@ -26,7 +26,7 @@
         //----------------------------------------------------------------------------------        
         //SELECT column_name(s) FROM table_name WHERE condition GROUP BY column_name(s) ORDER BY column_name(s);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $stmt = $conn->prepare("SELECT ID,EPF,EmpName,UserName,Password,Department,IssueType,Contact,UserType,Availability FROM tblusers_account WHERE UserName=:unme");
+        $stmt = $conn->prepare("SELECT ID,EPF,EmpName,UserName,Password,Department,IssueType,ServiceType,Contact,UserType,Availability FROM tblusers_account WHERE UserName=:unme");
         $stmt->bindParam(':unme', $UserName); 
         $stmt->execute();
         // set the resulting array to associative
@@ -42,7 +42,8 @@
             $Department_ary[$i]= $row['Department'];  
             $Contact_ary[$i]   = $row['Contact'];  
             $UserType_ary[$i]     = $row['UserType'];  
-            $IssueType_ary[$i]    = $row['IssueType']; 
+            $IssueType_ary[$i]    = $row['IssueType'];
+            $ServiceType_ary[$i]    = $row['ServiceType'];  
             $Availability_ary[$i] = $row['Availability'];                      
             $i++;
             //echo $i;
@@ -64,7 +65,8 @@
             $_SESSION["user_contactno"]     = $Contact_ary[0];
             $_SESSION["user_type"]          = $UserType_ary[0];
             $_SESSION["issue_type"]          = $IssueType_ary[0];
-            $_SESSION["user_availability"]  = $Availability_ary[0];            
+            $_SESSION["user_availability"]  = $Availability_ary[0];  
+            $_SESSION["service_type"]  = $ServiceType_ary[0];           
             //---------------- Find User Access Levels and Store in a Array --------------------------
             try 
             {
