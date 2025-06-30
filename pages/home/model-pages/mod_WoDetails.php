@@ -71,7 +71,7 @@
                 <div class="row">                    
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label><strong>Engaged Mechanics</strong></label>
+                            <label><strong>Engaged Technician</strong></label>
                             <table id="id_tblmod_wocheckin" style="width: 100%">
                                 <thead class="bg-info">
                                     <tr>
@@ -88,7 +88,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label><strong>Allocated Mechanics</strong></label>
+                            <label><strong>Allocated Technician</strong></label>
                             <div class="fixed-height-label overflow-auto" style="height: 80px; max-height: 140px;" id="id_ModWoDetails_AllocatedMc" readonly>                              
                             
                             </div> 
@@ -111,7 +111,7 @@
                 <div class="row">                    
                     <div class="col-md-6">
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary" onclick="funModWoDetails_AllocateMC()" style="width: 32%" <?php echo (in_array('1001812', $roll_areas) ? '' : 'disabled'); ?>>Allocate MC</button>
+                            <button type="submit" class="btn btn-primary" onclick="funModWoDetails_AllocateMC()" style="width: 32%" <?php echo (in_array('1001812', $roll_areas) ? '' : 'disabled'); ?>>Allocate Technician</button>
                             <button type="submit" class="btn btn-primary" onclick="funModWoDetails_CheckIn()" id="id_ModWoDetails_btnCheckIn" style="width: 32%" <?php echo (in_array('1001813', $roll_areas) ? '' : 'disabled'); ?>>Check In</button>
                             <button type="submit" class="btn btn-primary" onclick="funModWoDetails_WoClose()" style="width: 32%" <?php echo (in_array('1001814', $roll_areas) ? '' : 'disabled'); ?>>Close WO</button>
                         </div>

@@ -253,9 +253,12 @@
             $strSearchValue1 = $num[5];
             
             $strSearchField2 = $num[6]; 
-            $strSearchValue2 = $num[7];            
+            $strSearchValue2 = $num[7];    
             
-            $strSQL = "SELECT DISTINCT " . $strFieldName . " FROM " . $strTableName . " WHERE " . $strSearchField1 . "='" . $strSearchValue1 . "' AND " . $strSearchField2 . "='" . $strSearchValue2 . "'";
+            $strSearchField3 = $num[8]; 
+            $strSearchValue3 = $num[9];    
+            
+            $strSQL = "SELECT DISTINCT " . $strFieldName . " FROM " . $strTableName . " WHERE " . $strSearchField1 . "='" . $strSearchValue1 . "' AND " . $strSearchField2 . "='" . $strSearchValue2 . "' AND " . $strSearchField3 . "='" . $strSearchValue3 . "'";
         }
         else if($intNoOfSearchParameters == 4)
         {
@@ -268,8 +271,11 @@
             
             $strSearchField3 = $num[8]; 
             $strSearchValue3 = $num[9]; 
+
+            $strSearchField4 = $num[10]; 
+            $strSearchValue4 = $num[11];
             
-            $strSQL = "SELECT DISTINCT " . $strFieldName . " FROM " . $strTableName . " WHERE " . $strSearchField1 . "='" . $strSearchValue1 . "' AND " . $strSearchField2 . "='" . $strSearchValue2 ."' AND " . $strSearchField3 . "='" . $strSearchValue3 . "'";
+            $strSQL = "SELECT DISTINCT " . $strFieldName . " FROM " . $strTableName . " WHERE " . $strSearchField1 . "='" . $strSearchValue1 . "' AND " . $strSearchField2 . "='" . $strSearchValue2 . "' AND " . $strSearchField3 . "='" . $strSearchValue3 . "' AND " . $strSearchField4 . "='" . $strSearchValue4 . "'";
         }
         else
         {

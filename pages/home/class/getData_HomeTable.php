@@ -34,7 +34,8 @@
         $CurrentUserEPF         = $num[1]; 
         $CurrentUserDepartment  = $num[2]; 
         $CurrentUserType        = $num[3]; 
-        $CurrentIssueType       = $num[4];        
+        $CurrentIssueType       = $num[4];
+        $CurrentServiceType       = $num[5];         
         //$strNoOfFilters = "0";
         try 
         { 
@@ -63,7 +64,7 @@
                     ON 
                         tblwo_event.CreatedUser = tblusers_account.EPF
                     WHERE 
-                        tblwo_event.State < :stat                
+                        (tblwo_event.State < :stat OR tblwo_event.CreatedUser = 0)               
                     ";    
             if($CurrentUserDepartment != "PMD") // Only show own workorders
             {  
@@ -80,30 +81,44 @@
                     $stmt = $conn->prepare($query);
                     $stmt->bindParam(':stat', $intWoState); 
                 }
-                else if($CurrentUserType == "Assistance")   // Filter by Issue Type
-                {                    
-                    // Convert the comma-separated string to an array
-                    $issueTypesArray = explode(',', $CurrentIssueType); 
-                    // Generate named placeholders for the IN clause
+                else if ($CurrentUserType == "Assistance") 
+                {
+                    // Combine issue and service types
+                    $combinedTypesArray = array_merge(
+                        array_map('trim', explode(',', $CurrentIssueType)),
+                        array_map('trim', explode(',', $CurrentServiceType))
+                    );
+
+                    // Remove duplicates if any
+                    $combinedTypesArray = array_unique($combinedTypesArray);
+
+                    // Generate placeholders
                     $placeholders = [];
-                    foreach ($issueTypesArray as $index => $issueType) 
-                    {
-                        $placeholders[] = ":issueType" . $index;
+                    foreach ($combinedTypesArray as $index => $type) {
+                        $placeholders[] = ":type" . $index;
                     }
-                    // Update the query to use named placeholders
-                    $query .= " AND tblwo_event.IssueType IN (" . implode(',', $placeholders) . ")";
+
+                    // Query: check if IssueType is in combined list, or user is the creator
+                    $query .= " AND (tblwo_event.IssueType IN (" . implode(',', $placeholders) . ") ";
+                    $query .= " OR tblwo_event.CreatedUser = :creusr)";
+
                     // Prepare the statement
                     $stmt = $conn->prepare($query);
-                    // Bind the state parameter
+
+                    // Bind parameters
                     $stmt->bindParam(':stat', $intWoState);
-                    // Bind the issue types dynamically
-                    foreach ($issueTypesArray as $index => $issueType) {
-                        $stmt->bindValue(":issueType" . $index, $issueType);
-                    }                
+                    $stmt->bindParam(':creusr', $CurrentUserEPF);
+
+                    // Bind each type
+                    foreach ($combinedTypesArray as $index => $type) {
+                        $stmt->bindValue(":type" . $index, $type);
+                    }
                 }
+
+                
+
                 else if($CurrentUserType == "TeamMember")   // Filter by Allocated Table 
-                {
-                    
+                {                    
                     $query .= "
                     
                             AND EXISTS 
@@ -117,11 +132,13 @@
                                     AND tblwo_allocatedusers.Status = 'Active'
                             )
                         ";
+                        $query .= " OR tblwo_event.CreatedUser = :creusr"; 
 
                         $stmt = $conn->prepare($query);
-                        $stmt->bindParam(':stat', $intWoState); 
+                        $stmt->bindParam(':stat', $intWoState);                         
                         //$stmt->bindParam(':isutp', $CurrentIssueType);
                         $stmt->bindParam(':alwusr', $CurrentUserEPF); 
+                        $stmt->bindParam(':creusr', $CurrentUserEPF);
                     
                     /*
                     $query .= " AND tblwo_event.CreatedUser = :creusr"; 

@@ -307,6 +307,7 @@
     var SESSION_CurrentUserDepartment   = "<?php echo htmlspecialchars($_SESSION["user_department"]); ?>";      
     var SESSION_CurrentUserType   = "<?php echo htmlspecialchars($_SESSION["user_type"]); ?>";
     var SESSION_CurrentIssueType   = "<?php echo htmlspecialchars($_SESSION["issue_type"]); ?>";
+    var SESSION_CurrentServiceType   = "<?php echo htmlspecialchars($_SESSION["service_type"]); ?>";
           
     var roll_areas_ary      = <?php echo json_encode($roll_areas); ?>;
     var roll_other_ary      = <?php echo json_encode($roll_other); ?>;
@@ -329,6 +330,7 @@
                             CurrentUserDepartment: SESSION_CurrentUserDepartment,
                             CurrentUserType: SESSION_CurrentUserType,
                             CurrentIssueType: SESSION_CurrentIssueType,
+                            CurrentserviceType: SESSION_CurrentServiceType,
                             WorkOrderDepartment: "NA",
                             WorkOrderCategory: "NA",
                             NextModelID: 'NA',
@@ -717,8 +719,10 @@
         DataAry[2] = JS_SessionArry[0].CurrentUserDepartment;   // Current Department
         DataAry[3] = JS_SessionArry[0].CurrentUserType;   // Current UserType
         DataAry[4] = JS_SessionArry[0].CurrentIssueType;   // Current User IssueType  
+        DataAry[5] = JS_SessionArry[0].CurrentserviceType;   //   CurrentserviceType
      
         if(intDebugEnable === 1)    alert("DataAry[4] : " + DataAry[4]);
+        if(intDebugEnable === 1)    alert("DataAry[5] : " + DataAry[5]);
 
         if(intDebugEnable === 1)    alert("DataAry : " + DataAry);
         //-------------- Update Home page WO Table ---------------------------------------------

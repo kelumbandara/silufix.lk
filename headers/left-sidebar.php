@@ -206,7 +206,7 @@
                             <li class="nav-item disabled">
                                 <a href="../masterdata_upload/issuetype.php" class="nav-link">
                                     <i class="nav-icon far fa-edit "></i>
-                                    <p>Issue Types</p>
+                                    <p>Issue & Service Types</p>
                                 </a>
                             </li>   
                         <?php endif; ?>

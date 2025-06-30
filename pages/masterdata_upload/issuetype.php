@@ -70,6 +70,8 @@ if (isset($_FILES['file']))
             $IssueType          = isset($row[0]) ? $row[0] : '&nbsp;' ;
             $ResponsiblePerson  = isset($row[1]) ? $row[1] : '&nbsp;' ;
             $TeamMembers        = isset($row[2]) ? $row[2] : '&nbsp;' ;
+            $epf                =isset($row[3]) ? $row[3] : '&nbsp;' ;
+            $ServiceType        = isset($row[4]) ? $row[4] : '&nbsp;' ;
           
             //$Level4 = "1";            
             //if($FaultType == ""){ $FaultType = "NA";}
@@ -80,14 +82,14 @@ if (isset($_FILES['file']))
             //$repIssueDescriptionMain = str_replace(["'", "<", ">", "'", "/"]," ", $IssueDescriptionMain);
             //$repDesignDescription = str_replace(["'", "<", ">", "'"]," ", $DesignDescription);
             
-            echo  $IssueType . '&nbsp;' . $ResponsiblePerson . '&nbsp;' . $TeamMembers;                       
+            echo  $IssueType . '&nbsp;' . $ResponsiblePerson . '&nbsp;' . $TeamMembers. '&nbsp;' . $epf. '&nbsp;' . $ServiceType;                       
             echo '<BR>';
             echo '<BR>';  
                        
             //INSERT INTO tblerrorlevel (ID, Department, McCategory, Level1, Level2, Level3, Level4) VALUES (NULL, 'dep', 'mc', 'l1', 'l2', 'l3', 'l4');
 
-            $sql = "INSERT INTO tblwo_issuetype (IssueType, ResponsiblePerson, TeamMembers) "
-                    . "VALUES ('" .$IssueType. "','" . $ResponsiblePerson . "','" . $TeamMembers . "')";
+            $sql = "INSERT INTO tblwo_issuetype (IssueType, ResponsiblePerson, TeamMembers, epf, ServiceType) "
+                    . "VALUES ('" .$IssueType. "','" . $ResponsiblePerson . "','" . $TeamMembers . "','" .$epf. "','" .$ServiceType. "')";
              
             //$sql = "INSERT INTO tblsmsevent (ServerDateTime, UnitId, UnitModel, MfmID, Region, Province, Area, ECSC, SinNo, FederNo, Status, V1N, V2N, V3N, I1A, I2A, I3A,TotalkW, TotalkVA, kWh, kVAh) "
             //        . "VALUES ('".$server_date."','".$UnitId."','SMS-1470B','".$MfmID."', 'R1', 'CP', 'Kegalle', 'ECSC1', 'SIN1', 'F1_Rotuwa', '".$Status."', '".$V1N."','".$V2N."', '".$V3N."', '".$I1A."', '".$I2A."', '".$I3A."', '".$TotalkW."', '".$TotalkVA."', '".$kWh."', '".$kVAh."')";
@@ -141,7 +143,7 @@ if (isset($_FILES['file']))
                     <!-- /.card-header -->                    
                     <div class="card card-default" >
                         <div class="card-header">
-                            <h2 class="card-title">Issue Type Update </h2>
+                            <h2 class="card-title">Issue & Service Type Update </h2>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                     <i class="fas fa-minus"></i>

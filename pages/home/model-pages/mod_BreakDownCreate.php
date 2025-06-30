@@ -4,7 +4,7 @@
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header bg-primary">
-                <h4 class="modal-title text-center" style="width: 100%">Request a BrkDown Service</h4>
+                <h4 class="modal-title text-center" style="width: 100%">Request a Breakdown Service</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="funModBrkDownCre_Close()">
                     <span aria-hidden="true" class="text-white close-icon"><i class="fas fa-times"></i></span>
                 </button>

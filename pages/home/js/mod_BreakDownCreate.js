@@ -286,7 +286,9 @@ function funModBrkDownCre_SelIssueDescriptionFilter()
      DataAry[7] = document.getElementById("id_ModBrkDownCre_Location").value;
      DataAry[8] = "Building";
      DataAry[9] = document.getElementById("id_ModBrkDownCre_Building").value;
-    
+     DataAry[10] = "Issuetype";
+     DataAry[11] = document.getElementById("id_ModBrkDownCre_IssueType").value;
+
      if(intDebugEnable === 1)    alert("DataAry :" + DataAry); 
     $.post('class/comFunctions.php', { userpara: DataAry}, function(json_data2) 
     {
