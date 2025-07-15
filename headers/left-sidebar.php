@@ -19,7 +19,7 @@
                 <a href="https://www.mas-silueta.com/" class="d-block">MAS Silueta</a>
             </div>
         </div>       
-        <!-- Sidebar Menu -->
+        <!-- Sidebar Menus -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
