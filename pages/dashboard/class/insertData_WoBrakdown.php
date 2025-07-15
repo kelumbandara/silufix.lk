@@ -1,0 +1,147 @@
+<?php
+
+    session_start();   
+    require_once('../../../initialize.php');
+    require_once('../../../config.php');
+    
+    $num = $_POST["userpara"];
+           
+    //$AryLength = array_map('count', $num);
+    //$AryLength = sizeof($num);
+  
+    //----------- Set TimeZone ----------------------------
+    date_default_timezone_set('Asia/Kolkata');
+    $strServerDateTime = date("Y-m-d H:i:s");   
+    
+    //$strWorkOrderNo         = $num[0];    
+    //$strCheckInUser         = $num[1]; 
+    
+    // Sample Data
+   $FactoryCode         = $num[0];    //'WMS-1760A';
+   $Unit                = $num[1];    //'Unit-1';
+   $RelatedDepartment   = $num[2];    //'RelatedDep';
+   $WorkOrderNo         = 'NA';    //'WO_TEMP';
+   $WorkOrderCategory       = $num[3];  //Work order Category
+   $WorkOrderSubCategory    = $num[4];  // Work order Sub Category
+   $WorkOrderSubCategory2   = $num[5]; // Work order Sub Category2
+
+   $Site                = $num[6];      //YourDepartment';
+   $Location            = $num[7];
+   $Building            = $num[8];   
+   $IssueType           = $num[9];
+   $IssueDescriptionMain    = $num[10];
+   $IssueDescriptionSub     = $num[11];
+
+   $Note                = "";
+   $CreatedDateTime     = $num[12];
+   $CreatedDepartment   = $num[13];
+   $CreatedUser         = $num[14];
+   $PlannedDateTime     = $num[15];
+   $AllocatedUser       = ''; // Placeholder value
+   $RespondDateTime     = $num[16];
+   $RespondUser         = ''; // Placeholder value
+   $ClosedDateTime       = $num[17];
+   $ClosedUser          = ''; // Placeholder value
+   $FaultType           = ''; // Placeholder value
+   $UsedSpairParts      = ''; // Placeholder value
+   $Remark              = ''; // Placeholder value
+   $VerifiedDateTime    = $num[18];
+   $VerifiedUser        = ''; // Placeholder value
+   $WoDescription       = "";
+   $WoEventLog          = $num[19];
+   $Shift               = $num[20];
+   $WoStatus            = $num[21];
+   $AlertSentState      = "";
+   $Attachment          = "";
+   $State               = $num[22];
+      
+   //----------- Declare Variables -----------------------    
+    $Status_ary     = array();
+    $ReturnData_ary = array();
+    $ReturnData_ary[0]  = "NA";      
+    //UPDATE tblprod_setting SET ID=?,WorkCenterNo=?,WorkCenterName=?,StyleNo=?,LowerValue=?,UpperValue=?,SMV=?,LowerColor=?,MiddleColor=?,UpperColor=?,State=? WHERE ID=?
+    try
+    {
+        $stmt2 = $conn->prepare("SELECT ID FROM tblwo_event ORDER BY ID DESC LIMIT 1");
+        $stmt2->execute();
+        $lastID = $stmt2->fetchColumn();
+        if ($lastID !== false) 
+        {
+            // Increment the last ID and format it as "WO_00000001"
+            $WorkOrderNo = sprintf("WO_%08d", $lastID + 1);
+        }
+    } 
+    catch (Exception $ex) 
+    {
+        $Status_ary[0] = "false";
+        $Status_ary[1] = 'Error Msg: ' .$ex->getMessage(); 
+    } 
+    //------------------- Insert Data to WO ---------------------------------
+    try 
+    {    
+        $stmt = $conn->prepare("INSERT INTO tblwo_event(ServerDateTime, FactoryCode, Unit, RelatedDepartment, WorkOrderNo, WorkOrderCategory, WorkOrderSubCategory, WorkOrderSubCategory2, Site, Location, Building, IssueType, IssueDescriptionMain, IssueDescriptionSub, Note, CreatedDateTime, CreatedDepartment, CreatedUser, PlannedDateTime, AllocatedUser, RespondDateTime, RespondUser, ClosedDateTime, ClosedUser, FaultType, UsedSpairParts, Remark, VerifiedDateTime, VerifiedUser, WoDescription, WoEventLog, Shift, WoStatus, AlertSentState, Attachment, State) 
+                    VALUES (:svrdt, :faccod, :unit, :reldep, :wono, :wocat, :wosubcat, :wosubcat2, :site1, :location, :bldg, :issuetype, :issuedesc1, :issuedesc2, :note, :credt, :credep, :creusr, :plndt, :alocusr, :stddt, :stdusr, :clsdt, :clsusr, :fltType, :spairparts, :remark, :veridt, :verusr, :wodescrip, :woevntlog, :shft, :wostats, :altsntst, :attach, :stat)");
+                    // Bind parameters
+        $stmt->bindParam(':svrdt', $strServerDateTime);
+        $stmt->bindParam(':faccod', $FactoryCode);
+        $stmt->bindParam(':unit', $Unit);
+        $stmt->bindParam(':reldep', $RelatedDepartment);
+        $stmt->bindParam(':wono', $WorkOrderNo);
+        $stmt->bindParam(':wocat', $WorkOrderCategory);
+        $stmt->bindParam(':wosubcat', $WorkOrderSubCategory);
+        $stmt->bindParam(':wosubcat2', $WorkOrderSubCategory2);
+        $stmt->bindParam(':site1', $Site);
+        $stmt->bindParam(':location', $Location);
+        $stmt->bindParam(':bldg', $Building);
+        $stmt->bindParam(':issuetype', $IssueType);
+        $stmt->bindParam(':issuedesc1', $IssueDescriptionMain);
+        $stmt->bindParam(':issuedesc2', $IssueDescriptionSub);
+        $stmt->bindParam(':note', $Note);
+        $stmt->bindParam(':credt', $CreatedDateTime);
+        $stmt->bindParam(':credep', $CreatedDepartment);
+        $stmt->bindParam(':creusr', $CreatedUser);
+        $stmt->bindParam(':plndt', $PlannedDateTime);
+        $stmt->bindParam(':alocusr', $AllocatedUser);
+        $stmt->bindParam(':stddt', $RespondDateTime);
+        $stmt->bindParam(':stdusr', $RespondUser);
+        $stmt->bindParam(':clsdt', $ClosedDateTime);
+        $stmt->bindParam(':clsusr', $ClosedUser);
+        $stmt->bindParam(':fltType', $FaultType);
+        $stmt->bindParam(':spairparts', $UsedSpairParts);
+        $stmt->bindParam(':remark', $Remark);
+        $stmt->bindParam(':veridt', $VerifiedDateTime);
+        $stmt->bindParam(':verusr', $VerifiedUser);
+        $stmt->bindParam(':wodescrip', $WoDescription);
+        $stmt->bindParam(':woevntlog', $WoEventLog);
+        $stmt->bindParam(':shft', $Shift);
+        $stmt->bindParam(':wostats', $WoStatus);
+        $stmt->bindParam(':altsntst', $AlertSentState);
+        $stmt->bindParam(':attach', $Attachment);
+        $stmt->bindParam(':stat', $State);
+
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) 
+        {
+            $Status_ary[0] = "true";
+            $Status_ary[1] = "Inserted new record"; 
+        } 
+        else
+        {
+            $Status_ary[0] = "false";
+            $Status_ary[1] = "Data not inserted"; 
+        }      
+        //$data[1] = "Dats Saved Successfully";   
+    } 
+    catch (PDOException $ex) 
+    {
+        $Status_ary[0] = "false";
+        $Status_ary[1] = 'Error Msg: ' .$ex->getMessage();         
+    }
+    $conn = null;
+    
+    $data_ary['Status_Ary'] = $Status_ary;
+    $data_ary['Data_Ary']   = $ReturnData_ary;        
+    //print json_encode($error);
+    print json_encode($data_ary); 
+   // print json_encode($ProductQuantity_ary);
+?>
