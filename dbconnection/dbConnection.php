@@ -4,14 +4,14 @@
     $servername = "localhost";
     $username = "root";
     $password = "";
-    $database = "mms1810b";
+    $database = "mms1810b2";
    
 
-    //$servername = "perahara.lk";
-    //$username = "kelum";
-    //$password = "sKy@1234";
-    //$database = "mms1810a";
-    //$database2 = "wms1760g_mcdata";
+    // $servername = "perahara.lk";
+    // $username = "kelum";
+    // $password = "sKy@1234";
+    // $database = "mms1810a";
+    // $database2 = "wms1760g_mcdata";
     
     try 
     {

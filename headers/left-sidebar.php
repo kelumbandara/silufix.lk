@@ -3,7 +3,7 @@
     $username = $_SESSION["user_name"];
     $roll_section   = $_SESSION["user_roll_sections"];
     //$roll_areas     = $_SESSION["user_roll_areas"];
-    //print_r($section);   
+   // print_r($roll_section);   
 ?>
 
 <!-- Main Sidebar Container -->
@@ -31,6 +31,16 @@
                             <p>Dashboard</p>
                         </a>                   
                     </li> 
+                <?php endif; ?>   
+                    <li class="nav-item menu-open">
+                        <?php if (in_array('80' , $roll_section)): ?>
+                        <a href="../../pages/dashboard/dashboard.php" class="nav-link deactive">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>Display Dashboard </p>
+                        </a>                   
+                    </li> 
+                    
+                    
                 <?php endif; ?>     
                 <li class="nav-item">
                     <?php if (in_array('20' , $roll_section)): ?>
@@ -218,6 +228,7 @@
                             <p>User Profile</p>
                         </a>                     
                 </li> 
+                
                 <li class="nav-item">                   
                         <a href="../help/index.php" class="nav-link deactive">
                             <i class="nav-icon far fa-question-circle"></i>

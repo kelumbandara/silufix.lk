@@ -169,7 +169,13 @@
                             <div class="form-check mb-0">
                                 <input class="form-check-input" type="checkbox" value="" id="id_70">
                                 <label class="form-check-label" for="id_70"><strong>User Profile</strong></label>
-                            </div>                            
+                            </div>
+                            <!-- Daily Dashboard -->
+                            <div class="form-check mb-0">
+                                <input class="form-check-input" type="checkbox" value="" id="id_80">
+                                <label class="form-check-label" for="id_80"><strong>Display Dashboard</strong></label>
+                            </div>      
+
                         </div>
                         <div class="col-md-4">
                             <h4>Home Dashboard Access:</h4>
@@ -291,7 +297,8 @@
                                 <input class="form-check-input" type="checkbox" value="" id="id_9001316">
                                 <label class="form-check-label" for="id_1001813">Work Order Table</label>
                             </div>                            
-                        </div>                            
+                        </div>
+                                                    
                     </div><!-- /.container-fluid -->
                     <br/><br/><!-- comment -->
                     <!-- Include Footer -->
@@ -312,7 +319,7 @@
 
 <script>
     
-    var idSectionsArray = ["id_10","id_20","id_201","id_202","id_203","id_204","id_30","id_301","id_302","id_303","id_40", "id_401", "id_402", "id_403", "id_50", "id_501", "id_502", "id_60","id_601","id_602","id_603","id_604","id_70"];
+    var idSectionsArray = ["id_10","id_20","id_201","id_202","id_203","id_204","id_30","id_301","id_302","id_303","id_40", "id_401", "id_402", "id_403", "id_50", "id_501", "id_502", "id_60","id_601","id_602","id_603","id_604","id_70","id_80"];
     var idAreaArray = ["id_10011","id_10012","id_10015","id_10016","id_10017","id_10018","id_1001811","id_1001812","id_1001813","id_1001814","id_1001815","id_1001816","id_1001817","id_1001818","id_10019","id_10020","id_10021","id_10022","id_10023"];
     var idOtherArray = ["id_90011","id_90012","id_90013","id_9001311","id_9001312","id_9001313","id_9001314","id_9001315","id_9001316"];
     //let ArrayRoleDescription    = []; 
