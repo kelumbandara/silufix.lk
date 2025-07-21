@@ -64,7 +64,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- small box -->
+                            <!-- small box --> 
                             <div class="col-lg-2 col-6">
                                 <div class="small-box bg-secondary">
                                     <div class="inner text-center">
