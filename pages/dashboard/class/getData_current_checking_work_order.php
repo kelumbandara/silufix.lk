@@ -23,7 +23,7 @@
     $i = 0; 
     $j = 0; 
     $error = "NA";
-    $State = "Verified";
+    $State = "Inprogress";
     $Status_ary     = array();
     $ReturnData_ary = array();
     $ReturnData_ary[0][0]  = "NA"; 

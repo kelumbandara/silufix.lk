@@ -41,15 +41,15 @@
                     <div class="card-body">
                         <!-- /.Redtag , Breakdown , Services , Count Dashboard -------------->
                           <!-- /.Mechanic Dashboard -------------->
+                           <h4><center><b>Daily Summary</b></center></h4>
                         <div class="row pt-0 d-flex justify-content-between" id="id_McDashboard">  
                             <div class="col-lg-2 col-6">
                                 <!-- small box -->
                                 <div class="small-box bg-danger">
                                     <div class="inner text-center">
                                         <h4 id="id_No_of_Redtag">-</h4>                                            
-                                        <h5>No of Redtag</h5>                                            
+                                        <h5>Redtag</h5>                                            
                                     </div>
-                                    <a href="#" class="small-box-footer" >More info <i class="fas fa-arrow-circle-right"></i></a>
                                 </div>
                             </div>
                             <!-- small box -->
@@ -57,25 +57,23 @@
                                 <div class="small-box bg-warning">
                                     <div class="inner text-center">
                                         <h4 id="id_No_of_Breakdown">-</h4>                                            
-                                        <h5>No of Breakdown</h5> 
+                                        <h5>Breakdown</h5> 
                                     </div>
                                     <div class="icon">
                                         <i class="ion ion-stats-bars"></i>
                                     </div>
-                                    <a href="#" class="small-box-footer" >More info <i class="fas fa-arrow-circle-right"></i></a>
                                 </div>
                             </div>
-                            <!-- small box -->
+                            <!-- small box --> 
                             <div class="col-lg-2 col-6">
                                 <div class="small-box bg-secondary">
                                     <div class="inner text-center">
                                         <h4 id="id_No_of_Services">-</h4>                                            
-                                        <h5>No of Services</h5> 
+                                        <h5>Services</h5> 
                                     </div>
                                     <div class="icon">
                                         <i class="ion ion-stats-bars"></i>
                                     </div>
-                                    <a href="#" class="small-box-footer" >More info <i class="fas fa-arrow-circle-right"></i></a>
                                 </div>
                             </div>  
                             <div class="col-lg-2 col-6">
@@ -83,21 +81,19 @@
                                 <div class="small-box bg-info">
                                     <div class="inner text-center">
                                         <h4 id="id_McDashboard_NoOfAsgnJob_value">-</h4>                                            
-                                        <h5>No of Assign Jobs</h5>                                            
+                                        <h5> Assign Jobs</h5>                                            
                                     </div>
-                                    <a href="#" class="small-box-footer" onclick="funNoOfAsgnJob()">More info <i class="fas fa-arrow-circle-right"></i></a>
                                 </div>
                             </div>
                                <div class="col-lg-2 col-6">
                                 <div class="small-box bg-success">
                                     <div class="inner text-center">
                                         <h4 id="id_McDashboard_NoOfCmplt_value">-</h4>                                            
-                                        <h5>No of Completed Jobs</h5> 
+                                        <h5> Completed Jobs</h5> 
                                     </div>
                                     <div class="icon">
                                         <i class="ion ion-stats-bars"></i>
                                     </div>
-                                    <a href="#" class="small-box-footer" onclick="funNoOfCmpltJob()">More info <i class="fas fa-arrow-circle-right"></i></a>
                                 </div>
                             </div>
                         </div>
