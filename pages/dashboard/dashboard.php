@@ -189,7 +189,7 @@
                          
                                 <div class="col-md-3">
                                     <div style="max-width: 400px; max-height: 200px;">
-                                        <div><h5>Breakdown</h5></div>
+                                        <div><h5><a href="../Breakdown_page/">Breakdown</a></h5></div>
                                         <canvas id="Breakdown_tag_canvas"></canvas>
                                     </div>
                                 </div>
