@@ -196,7 +196,7 @@
 
                                 <div class="col-md-3">
                                     <div style="max-width: 400px; max-height: 200px;">
-                                        <div><h5>Red Tag</h5></div>
+                                        <div><h5><a href="../red_tag_page/">Red Tag</a></h5></div>
                                         <canvas id="red_tag_canvas"></canvas>
                                     </div>
                                 </div>
